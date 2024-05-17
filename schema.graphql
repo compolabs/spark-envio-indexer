@@ -1,6 +1,6 @@
-type User {
+type SpotMarketCreateEvent {
   id: ID!
-  greetings: [String!]!
-  latestGreeting: String!
-  numberOfGreetings: Int!
+  asset_id: String!
+  asset_decimals: Int!
+  timestamp: String! # TODO: Save as Date
 }
