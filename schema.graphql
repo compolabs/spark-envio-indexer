@@ -20,3 +20,16 @@ type SpotOrder {
   base_price: BigInt!
   timestamp: String! # Date
 }
+
+type SpotTradeEvent {
+  id: ID!
+  base_token: String!
+  order_matcher: String!
+  seller: String!
+  buyer: String!
+  trade_size: BigInt!
+  trade_price: BigInt!
+  sell_order: SpotOrder!
+  buy_order: SpotOrder!
+  timestamp: String! # Date
+}

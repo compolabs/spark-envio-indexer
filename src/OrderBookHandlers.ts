@@ -53,3 +53,20 @@ OrderBookContract.OrderChangeEvent.handler(({ event, context }) => {
     context.SpotOrder.set(order);
   }
 });
+
+OrderBookContract.TradeEvent.loader(({ event, context }) => {});
+
+OrderBookContract.TradeEvent.handler(({ event, context }) => {
+  context.SpotTradeEvent.set({
+    id: nanoid(),
+    base_token: event.data.base_token.value,
+    order_matcher: event.data.order_matcher.value,
+    seller: event.data.seller.value,
+    buyer: event.data.buyer.value,
+    trade_size: event.data.trade_size,
+    trade_price: event.data.trade_price,
+    sell_order_id: event.data.sell_order_id,
+    buy_order_id: event.data.buy_order_id,
+    timestamp: tai64ToDate(event.data.timestamp),
+  });
+});
