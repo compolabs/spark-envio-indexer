@@ -1,18 +1,12 @@
 import { OrderBookContract, spotOrderEntity } from "generated";
 import { nanoid } from "nanoid";
 
-function tai64ToDate(tai64nBigInt: bigint) {
-  // Split the BigInt into two parts: the first 8 bytes (seconds) and the next 4 bytes (nanoseconds)
-  let taiSeconds = tai64nBigInt >> 32n;
-  let nanoseconds = tai64nBigInt & 0xffffffffn;
-
-  // Adjust for the 10-second difference between TAI and Unix epochs
-  let unixTimestamp = taiSeconds - 10n;
-
-  // Convert the Unix timestamp to milliseconds
-  let milliseconds = unixTimestamp * 1000n + nanoseconds / 1000000n;
-
-  return new Date(Number(milliseconds)).toISOString();
+function tai64ToDate(tai64: bigint) {
+  const dateStr = (
+    (tai64 - BigInt(Math.pow(2, 62)) - BigInt(10)) *
+    1000n
+  ).toString();
+  return new Date(+dateStr).toUTCString();
 }
 
 function decodeI64(i64: {
