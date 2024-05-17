@@ -2,5 +2,21 @@ type SpotMarketCreateEvent {
   id: ID!
   asset_id: String!
   asset_decimals: Int!
-  timestamp: String! # TODO: Save as Date
+  timestamp: String! # Date
+}
+
+type SpotOrderChangeEvent {
+  id: ID!
+  order: SpotOrder!
+  new_base_size: String!
+  timestamp: String! # Date
+}
+
+type SpotOrder {
+  id: ID!
+  trader: String!
+  base_token: String!
+  base_size: String!
+  base_price: BigInt!
+  timestamp: String! # Date
 }

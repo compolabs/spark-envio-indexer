@@ -8,6 +8,6 @@ networks:
         abi_file_path: ./abis/spark-orderbook.json
         handler: ./src/OrderBookHandlers.ts
         events:
-          # - name: OrderChangeEvent
+          - name: OrderChangeEvent
           # - name: TradeEvent
           - name: MarketCreateEvent
