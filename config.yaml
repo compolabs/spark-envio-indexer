@@ -1,0 +1,13 @@
+name: Spark OrderBook indexer
+networks:
+  - id: 0
+    start_block: 8183375
+    contracts:
+      - name: OrderBook
+        address: 0x0f0c1065a7b82d026069c5cf070b21ee65713fd1ac92ec1d25eacc3100187f78
+        abi_file_path: ./abis/spark-orderbook.json
+        handler: ./src/OrderBookHandlers.ts
+        events:
+          - name: OrderChangeEvent
+          - name: TradeEvent
+          - name: MarketCreateEvent
