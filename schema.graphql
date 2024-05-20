@@ -12,9 +12,14 @@ type SpotOrderChangeEvent {
   timestamp: String! # Date
 }
 
+enum SpotOrderType {
+  sell
+  buy
+}
+
 type SpotOrder {
   id: ID!
-  order_type: String
+  order_type: SpotOrderType
   trader: String!
   base_token: String!
   base_size: String!
