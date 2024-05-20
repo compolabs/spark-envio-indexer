@@ -55,9 +55,6 @@ importers:
       '@envio-dev/hyperfuel-client':
         specifier: 0.0.8
         version: 0.0.8
-      '@fuel-ts/abi-coder':
-        specifier: 0.86.0
-        version: 0.86.0
       '@fuel-ts/crypto':
         specifier: 0.86.0
         version: 0.86.0
@@ -224,19 +221,6 @@ packages:
       '@envio-dev/hyperfuel-client-linux-x64-gnu': 0.0.8
       '@envio-dev/hyperfuel-client-linux-x64-musl': 0.0.8
       '@envio-dev/hyperfuel-client-win32-x64-msvc': 0.0.8
-    dev: false
-
-  /@fuel-ts/abi-coder@0.86.0:
-    resolution: {integrity: sha512-RGCTKNPhINccNfYkuvcXnRIEV+p34Egr7FvZvpHw9MrVfJ/gUGkv+yMQiYD8iwDUWIXx8BeaevPkYo/wQnWa1g==}
-    engines: {node: ^18.18.2 || ^20.0.0}
-    dependencies:
-      '@fuel-ts/crypto': 0.86.0
-      '@fuel-ts/errors': 0.86.0
-      '@fuel-ts/hasher': 0.86.0
-      '@fuel-ts/interfaces': 0.86.0
-      '@fuel-ts/math': 0.86.0
-      '@fuel-ts/utils': 0.86.0
-      type-fest: 3.13.1
     dev: false
 
   /@fuel-ts/crypto@0.86.0:
@@ -2223,11 +2207,6 @@ packages:
   /type-fest@0.21.3:
     resolution: {integrity: sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==}
     engines: {node: '>=10'}
-    dev: false
-
-  /type-fest@3.13.1:
-    resolution: {integrity: sha512-tLq3bSNx+xSpwvAJnzrK0Ep5CLNWjvFTOp71URMaAEWBfRb9nnJiBoUe0tF8bI4ZFO3omgBR6NvnbzVUT3Ly4g==}
-    engines: {node: '>=14.16'}
     dev: false
 
   /type-is@1.6.18:

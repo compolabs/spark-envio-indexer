@@ -14,6 +14,7 @@ type SpotOrderChangeEvent {
 
 type SpotOrder {
   id: ID!
+  order_type: String
   trader: String!
   base_token: String!
   base_size: String!
