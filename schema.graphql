@@ -3,6 +3,7 @@ type SpotMarketCreateEvent {
   asset_id: String!
   asset_decimals: Int!
   timestamp: String! # Date
+  tx_id: ID!
 }
 
 type SpotOrderChangeEvent {
@@ -10,6 +11,7 @@ type SpotOrderChangeEvent {
   order: SpotOrder!
   new_base_size: String!
   timestamp: String! # Date
+  tx_id: ID!
 }
 
 enum SpotOrderType {
@@ -38,4 +40,5 @@ type SpotTradeEvent {
   sell_order: SpotOrder!
   buy_order: SpotOrder!
   timestamp: String! # Date
+  tx_id: ID!
 }

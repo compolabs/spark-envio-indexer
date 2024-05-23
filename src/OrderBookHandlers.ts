@@ -24,6 +24,7 @@ OrderBookContract.MarketCreateEvent.handler(({ event, context }) => {
     asset_decimals: event.data.asset_decimals,
     asset_id: event.data.asset_id.value,
     timestamp: tai64ToDate(event.data.timestamp),
+    tx_id: event.transactionId,
   });
 });
 
@@ -54,6 +55,7 @@ OrderBookContract.OrderChangeEvent.handler(({ event, context }) => {
     order_id: event.data.order_id,
     new_base_size: order ? order.base_size : "0",
     timestamp,
+    tx_id: event.transactionId,
   });
   if (order) {
     context.SpotOrder.set(order);
@@ -74,5 +76,6 @@ OrderBookContract.TradeEvent.handler(({ event, context }) => {
     sell_order_id: event.data.sell_order_id,
     buy_order_id: event.data.buy_order_id,
     timestamp: tai64ToDate(event.data.timestamp),
+    tx_id: event.transactionId,
   });
 });
