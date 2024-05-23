@@ -6,7 +6,7 @@ function tai64ToDate(tai64: bigint) {
     (tai64 - BigInt(Math.pow(2, 62)) - BigInt(10)) *
     1000n
   ).toString();
-  return new Date(+dateStr).toUTCString();
+  return new Date(+dateStr).toISOString();
 }
 
 function decodeI64(i64: {
@@ -16,7 +16,7 @@ function decodeI64(i64: {
   return (i64.negative ? "-" : "") + i64.value.toString();
 }
 
-OrderBookContract.MarketCreateEvent.loader(({ event, context }) => { });
+OrderBookContract.MarketCreateEvent.loader(({ event, context }) => {});
 
 OrderBookContract.MarketCreateEvent.handler(({ event, context }) => {
   context.SpotMarketCreateEvent.set({
@@ -27,23 +27,26 @@ OrderBookContract.MarketCreateEvent.handler(({ event, context }) => {
   });
 });
 
-OrderBookContract.OrderChangeEvent.loader(({ event, context }) => { });
+OrderBookContract.OrderChangeEvent.loader(({ event, context }) => {});
 
 OrderBookContract.OrderChangeEvent.handler(({ event, context }) => {
   const eventOrder = event.data.order;
   const timestamp = tai64ToDate(event.data.timestamp);
   const order: spotOrderEntity | null = eventOrder
     ? {
-      id: eventOrder.id,
-      trader: eventOrder.trader.value,
-      base_token: eventOrder.base_token.value,
-      base_size: decodeI64(eventOrder.base_size),
-      order_type: eventOrder.base_size.value === 0n
-        ? undefined
-        : eventOrder.base_size.negative ? "sell" : "buy",
-      base_price: eventOrder.base_price,
-      timestamp,
-    }
+        id: eventOrder.id,
+        trader: eventOrder.trader.value,
+        base_token: eventOrder.base_token.value,
+        base_size: decodeI64(eventOrder.base_size),
+        order_type:
+          eventOrder.base_size.value === 0n
+            ? undefined
+            : eventOrder.base_size.negative
+            ? "sell"
+            : "buy",
+        base_price: eventOrder.base_price,
+        timestamp,
+      }
     : null;
 
   context.SpotOrderChangeEvent.set({
@@ -57,7 +60,7 @@ OrderBookContract.OrderChangeEvent.handler(({ event, context }) => {
   }
 });
 
-OrderBookContract.TradeEvent.loader(({ event, context }) => { });
+OrderBookContract.TradeEvent.loader(({ event, context }) => {});
 
 OrderBookContract.TradeEvent.handler(({ event, context }) => {
   context.SpotTradeEvent.set({
