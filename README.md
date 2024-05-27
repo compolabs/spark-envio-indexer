@@ -17,7 +17,7 @@ _Please refer to the [documentation website](https://docs.envio.dev) for a thoro
 2. Open it locally
 
    ```sh
-   cd thunder-exchange-fuel
+   cd spark-orderbook-indexer
    ```
 
 3. Install dependencies (requires [pnpm@8](https://pnpm.io/))
