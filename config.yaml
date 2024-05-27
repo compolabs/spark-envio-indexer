@@ -1,6 +1,8 @@
 name: Spark OrderBook indexer
 networks:
   - id: 0
+    hypersync_config:
+      endpoint_url: https://fuel-17.hypersync.xyz
     start_block: 8000000
     contracts:
       - name: OrderBook
