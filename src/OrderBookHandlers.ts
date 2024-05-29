@@ -16,13 +16,13 @@ function decodeI64(i64: {
   return (i64.negative ? "-" : "") + i64.value.toString();
 }
 
-OrderBookContract.MarketCreateEvent.loader(({ event, context }) => {});
+OrderBookContract.MarketCreateEvent.loader(({ event, context }) => { });
 
 OrderBookContract.MarketCreateEvent.handler(({ event, context }) => {
   context.SpotMarketCreateEvent.set({
     id: nanoid(),
     asset_decimals: event.data.asset_decimals,
-    asset_id: event.data.asset_id.value,
+    asset_id: event.data.asset_id.bits,
     timestamp: tai64ToDate(event.data.timestamp),
     tx_id: event.transactionId,
   });
@@ -39,19 +39,19 @@ OrderBookContract.OrderChangeEvent.handler(({ event, context }) => {
   const timestamp = tai64ToDate(event.data.timestamp);
   const order: spotOrderEntity | null = eventOrder
     ? {
-        id: eventOrder.id,
-        trader: eventOrder.trader.value,
-        base_token: eventOrder.base_token.value,
-        base_size: decodeI64(eventOrder.base_size),
-        order_type:
-          eventOrder.base_size.value === 0n
-            ? undefined
-            : eventOrder.base_size.negative
+      id: eventOrder.id,
+      trader: eventOrder.trader.bits,
+      base_token: eventOrder.base_token.bits,
+      base_size: decodeI64(eventOrder.base_size),
+      order_type:
+        eventOrder.base_size.value === 0n
+          ? undefined
+          : eventOrder.base_size.negative
             ? "sell"
             : "buy",
-        base_price: eventOrder.base_price,
-        timestamp,
-      }
+      base_price: eventOrder.base_price,
+      timestamp,
+    }
     : null;
 
   context.SpotOrderChangeEvent.set({
@@ -75,15 +75,15 @@ OrderBookContract.OrderChangeEvent.handler(({ event, context }) => {
   }
 });
 
-OrderBookContract.TradeEvent.loader(({ event, context }) => {});
+OrderBookContract.TradeEvent.loader(({ event, context }) => { });
 
 OrderBookContract.TradeEvent.handler(({ event, context }) => {
   context.SpotTradeEvent.set({
     id: nanoid(),
-    base_token: event.data.base_token.value,
-    order_matcher: event.data.order_matcher.value,
-    seller: event.data.seller.value,
-    buyer: event.data.buyer.value,
+    base_token: event.data.base_token.bits,
+    order_matcher: event.data.order_matcher.bits,
+    seller: event.data.seller.bits,
+    buyer: event.data.buyer.bits,
     trade_size: event.data.trade_size,
     trade_price: event.data.trade_price,
     sell_order_id: event.data.sell_order_id,
