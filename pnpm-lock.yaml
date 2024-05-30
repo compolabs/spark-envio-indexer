@@ -12,18 +12,18 @@ importers:
         specifier: 4.3.10
         version: 4.3.10
       envio:
-        specifier: 0.0.4-fuel
-        version: 0.0.4-fuel
+        specifier: 0.0.6-fuel
+        version: 0.0.6-fuel
       nanoid:
         specifier: 3.3.7
         version: 3.3.7
     optionalDependencies:
       generated:
-        specifier: ./generated
+        specifier: link:generated
         version: link:generated
     devDependencies:
       '@types/chai':
-        specifier: ^4.3.11
+        specifier: ^4.3.16
         version: 4.3.16
       '@types/mocha':
         specifier: 10.0.6
@@ -50,8 +50,8 @@ importers:
         specifier: 1.4.0
         version: 1.4.0
       '@envio-dev/hyperfuel-client':
-        specifier: 1.0.0-rc2
-        version: 1.0.0-rc2
+        specifier: 1.1.0
+        version: 1.1.0
       '@fuel-ts/crypto':
         specifier: 0.79.0
         version: 0.79.0
@@ -164,8 +164,8 @@ packages:
       '@elastic/ecs-helpers': 1.1.0
     dev: false
 
-  /@envio-dev/hyperfuel-client-darwin-arm64@1.0.0-rc2:
-    resolution: {integrity: sha512-C8PYEm3WHMcWsxsBj13AiBQC2CMpU+NCqnWHTJSEcAHjPsjOnyvoo+kToSB7t1mhh+aK7iKaDQBZaimqkuo7lg==}
+  /@envio-dev/hyperfuel-client-darwin-arm64@1.1.0:
+    resolution: {integrity: sha512-Zgu/aSokT8QbsVMWK345mowVCWVQFck++JQPGG9n0HxyKcck2nPdtre1sCcx580LxsX33nLK5re1dRvx9MLdNA==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
@@ -173,8 +173,8 @@ packages:
     dev: false
     optional: true
 
-  /@envio-dev/hyperfuel-client-linux-arm64-gnu@1.0.0-rc2:
-    resolution: {integrity: sha512-PbOB1gzU9G8V4wtjfMZD3uXPLlO7LppjIkpOXnIxircnnoBaEzNbX4w541z+jmQiTfDt8K8Jq7GXq5WI2I0gGQ==}
+  /@envio-dev/hyperfuel-client-linux-arm64-gnu@1.1.0:
+    resolution: {integrity: sha512-W+bBWxhATpVihfRanLy1dbjgY3sWpipMDGOQMz7dNgdHWRPg/ly0U8OkQ+IFTSSQQuJSSCjMzerwqQff89cKAA==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -182,8 +182,8 @@ packages:
     dev: false
     optional: true
 
-  /@envio-dev/hyperfuel-client-linux-x64-gnu@1.0.0-rc2:
-    resolution: {integrity: sha512-pxte5J/R/8LaRcqYi+hzdDZSKG1d4+WgqbiBEjj1Dr18/X9yrsUKI1MrD+z+183oxLy85hjehoRiINeGelp/JQ==}
+  /@envio-dev/hyperfuel-client-linux-x64-gnu@1.1.0:
+    resolution: {integrity: sha512-L7vs+FSsYX/qgHqkQV3M5Sm9oHjV25V3DJ/Wvj5EbPT45f/DFMKYVNcstQbZwJ7ik94gYOtpvYnHzIyLvpeTmw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -191,8 +191,8 @@ packages:
     dev: false
     optional: true
 
-  /@envio-dev/hyperfuel-client-linux-x64-musl@1.0.0-rc2:
-    resolution: {integrity: sha512-8p3wB2ewKH4Lx+E8mUH8qHm5gyx5d5r3RHjH5OaAfoR31/nrRM7vHgb+fsEgreZgRJ/FyOe5zo2crpuqkfLanA==}
+  /@envio-dev/hyperfuel-client-linux-x64-musl@1.1.0:
+    resolution: {integrity: sha512-6ya/UC5ll7BOnqCM+k1mZaok6Qf0KYN9EBotPcwH/X7y0tpi8N/o2c/Q0SxX5KWPA0wFX2n3qh+JQ6GeNkHSZA==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -200,8 +200,8 @@ packages:
     dev: false
     optional: true
 
-  /@envio-dev/hyperfuel-client-win32-x64-msvc@1.0.0-rc2:
-    resolution: {integrity: sha512-hicDYblo+3PCsqBe4HuKuox24Y8ieii6R4sIGPh1EvInHOBKmVAC0TigVUNnOgA9XnPECV7N4zb20r2RC8dWNg==}
+  /@envio-dev/hyperfuel-client-win32-x64-msvc@1.1.0:
+    resolution: {integrity: sha512-HT+qoKuI68Rxf8K99eS87X+BQ5e5xiR0IaJ1Z3XuXc1ScLDw2hffXVPxVuCrFNQJobywKeiUplcG5ydWYtGZeA==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -209,15 +209,15 @@ packages:
     dev: false
     optional: true
 
-  /@envio-dev/hyperfuel-client@1.0.0-rc2:
-    resolution: {integrity: sha512-QE6CLCIjAaaDc0Wenw65EmDcm9lbs2T5o+F5gs1NJUhl0Pm8tJECu6CXJeBq6bR0T8rYVFpHHPUkKnrgk4h/KA==}
+  /@envio-dev/hyperfuel-client@1.1.0:
+    resolution: {integrity: sha512-XyCpqGevwJAjP7jMUvAJT7qRoFZmJ6j0GAwt6aRcyxRbUO+3yULKWOP/5wFgRs6tjgdhLdtxbdA7x7mj5ZrmbQ==}
     engines: {node: '>= 10'}
     optionalDependencies:
-      '@envio-dev/hyperfuel-client-darwin-arm64': 1.0.0-rc2
-      '@envio-dev/hyperfuel-client-linux-arm64-gnu': 1.0.0-rc2
-      '@envio-dev/hyperfuel-client-linux-x64-gnu': 1.0.0-rc2
-      '@envio-dev/hyperfuel-client-linux-x64-musl': 1.0.0-rc2
-      '@envio-dev/hyperfuel-client-win32-x64-msvc': 1.0.0-rc2
+      '@envio-dev/hyperfuel-client-darwin-arm64': 1.1.0
+      '@envio-dev/hyperfuel-client-linux-arm64-gnu': 1.1.0
+      '@envio-dev/hyperfuel-client-linux-x64-gnu': 1.1.0
+      '@envio-dev/hyperfuel-client-linux-x64-musl': 1.1.0
+      '@envio-dev/hyperfuel-client-win32-x64-msvc': 1.1.0
     dev: false
 
   /@fuel-ts/address@0.79.0:
@@ -569,11 +569,11 @@ packages:
     dependencies:
       balanced-match: 1.0.2
 
-  /braces@3.0.2:
-    resolution: {integrity: sha512-b8um+L1RzM3WDSzvhm6gIz1yfTbBt6YTlcEKAvsmqCZZFw46z626lVj9j1yEPW33H5H+lBQpZMP1k8l+78Ha0A==}
+  /braces@3.0.3:
+    resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
     engines: {node: '>=8'}
     dependencies:
-      fill-range: 7.0.1
+      fill-range: 7.1.1
     dev: true
 
   /browser-stdout@1.3.1:
@@ -652,7 +652,7 @@ packages:
     engines: {node: '>= 8.10.0'}
     dependencies:
       anymatch: 3.1.3
-      braces: 3.0.2
+      braces: 3.0.3
       glob-parent: 5.1.2
       is-binary-path: 2.1.0
       is-glob: 4.0.3
@@ -881,46 +881,46 @@ packages:
       once: 1.4.0
     dev: false
 
-  /envio-darwin-arm64@0.0.4-fuel:
-    resolution: {integrity: sha512-p2Hbpc1p0JRSpOnHNiW3Pqicgfn1KYx6KSnyH0f2fXx9PCWN/xDwLl0LOo6D4gB/x8iD4eM/q/wNn3NK2unU+A==}
+  /envio-darwin-arm64@0.0.6-fuel:
+    resolution: {integrity: sha512-SZVsadc2tpXipx+oRL5/JfEZfrULtALxEDtnGRDE1tnCLHqZCv7VOBdT+dkRzta76R6G37bZm0RRFDeMiZO1CA==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio-darwin-x64@0.0.4-fuel:
-    resolution: {integrity: sha512-x1lnT18GDMTgOOJYSrVSkgpvDTrQ1GHugyfXxOIxHXAEwpaDxjPbJUyTENytgIFtgKcgjQ4BTz1s4OWqZJmLHA==}
+  /envio-darwin-x64@0.0.6-fuel:
+    resolution: {integrity: sha512-PNyBByJCJfl3ipSFj2ZJERkEgFYd1muUbWwyOTz4T+lTp7xKC1T93vwkq0aqsRdBhQDuRsJ6Uia0kkzK8cA2Jw==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio-linux-arm64@0.0.4-fuel:
-    resolution: {integrity: sha512-VDiP3CRrD8V9+oPuGZJiq0qpiZTMZpD6x3DkcH9INbI/QROCAbHPuqg6Mx+ydTtM04+Ovc3ko7eBstXsDu2tKg==}
+  /envio-linux-arm64@0.0.6-fuel:
+    resolution: {integrity: sha512-AHyUTRQQNq1hs+YMtP8qQCFo0Jyv6/PuDmIoe1mTUoyK71iJbxHiavVrgJbVlsKY22sS/Oc4apLQ7zTdL0Xfhw==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio-linux-x64@0.0.4-fuel:
-    resolution: {integrity: sha512-HQs1XSODYBSTPlJhhY0r7+kEkIOXij115xP+aerI8UwzxJ5Pb69rEH8w4FbuneJbej+RDSHyJZjd62YR4Nj7iQ==}
+  /envio-linux-x64@0.0.6-fuel:
+    resolution: {integrity: sha512-pXfDEN3TrOqUAlmTOWs0n5ep9/Artao9/QYX82H+/rOE0CIJtm6/SF2aAftHTX3qkSIQDQUF6ew+3dCSCMn3jA==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio@0.0.4-fuel:
-    resolution: {integrity: sha512-031wPwZrZfaEI+p5yMwAS8LlrdGHYju68jSqMc1jdwE0S+CaofJHOUnUfcj33vLb6zGHOD/tXj8292hEnOnUDg==}
+  /envio@0.0.6-fuel:
+    resolution: {integrity: sha512-gjs7rAlboAUzsnbLKLT+makZlUBeRuxZeybvM2/jRmMoe5M3eMwn3+5og6mscCxMuqZ2XwU24i3waP8W71xqZw==}
     hasBin: true
     optionalDependencies:
-      envio-darwin-arm64: 0.0.4-fuel
-      envio-darwin-x64: 0.0.4-fuel
-      envio-linux-arm64: 0.0.4-fuel
-      envio-linux-x64: 0.0.4-fuel
+      envio-darwin-arm64: 0.0.6-fuel
+      envio-darwin-x64: 0.0.6-fuel
+      envio-linux-arm64: 0.0.6-fuel
+      envio-linux-x64: 0.0.6-fuel
     dev: false
 
   /es-define-property@1.0.0:
@@ -1054,8 +1054,8 @@ packages:
     resolution: {integrity: sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==}
     dev: false
 
-  /fill-range@7.0.1:
-    resolution: {integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==}
+  /fill-range@7.1.1:
+    resolution: {integrity: sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==}
     engines: {node: '>=8'}
     dependencies:
       to-regex-range: 5.0.1
