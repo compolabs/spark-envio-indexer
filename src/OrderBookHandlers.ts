@@ -1,5 +1,4 @@
 import { OrderBookContract, spotOrderEntity } from "generated";
-import { nanoid } from "nanoid";
 import crypto from 'crypto';
 
 function tai64ToDate(tai64: bigint) {
@@ -21,8 +20,8 @@ OrderBookContract.MarketCreateEvent.loader(({ event, context }) => { });
 
 
 OrderBookContract.MarketCreateEvent.handler(({ event, context }) => {
-  const id = crypto.createHash('sha256').update(event.transactionId).digest('hex');
-
+  const idSource = `${event.data.asset_decimals}-${event.data.asset_id.bits}-${tai64ToDate(event.data.timestamp)}-${event.transactionId}`;
+  const id = crypto.createHash('sha256').update(idSource).digest('hex');
   context.SpotMarketCreateEvent.set({
     id: id,
     asset_decimals: event.data.asset_decimals,
@@ -57,9 +56,10 @@ OrderBookContract.OrderChangeEvent.handler(({ event, context }) => {
       timestamp,
     }
     : null;
-
+  const idSource = `${event.transactionId}-${timestamp}-${event.data.order_id}`;
+  const id = crypto.createHash('sha256').update(idSource).digest('hex');
   context.SpotOrderChangeEvent.set({
-    id: nanoid(),
+    id: id,
     order_id: event.data.order_id,
     new_base_size: order ? order.base_size : "0",
     timestamp,
@@ -83,8 +83,10 @@ OrderBookContract.OrderChangeEvent.handler(({ event, context }) => {
 OrderBookContract.TradeEvent.loader(({ event, context }) => { });
 
 OrderBookContract.TradeEvent.handler(({ event, context }) => {
+  const idSource = `${event.data.base_token.bits}-${event.data.order_matcher.bits}-${event.data.seller.bits}-${event.data.buyer.bits}-${event.data.trade_size}-${event.data.trade_price}-${event.data.sell_order_id}-${event.data.buy_order_id}-${tai64ToDate(event.data.timestamp)}-${event.transactionId}`;
+  const id = crypto.createHash('sha256').update(idSource).digest('hex');
   context.SpotTradeEvent.set({
-    id: nanoid(),
+    id: id,
     base_token: event.data.base_token.bits,
     order_matcher: event.data.order_matcher.bits,
     seller: event.data.seller.bits,
