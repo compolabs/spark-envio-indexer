@@ -10,6 +10,7 @@ type SpotOrderChangeEvent {
   id: ID!
   order: SpotOrder!
   new_base_size: String!
+  identifier: String!
   timestamp: String! # Date
   tx_id: ID!
 }

@@ -59,6 +59,7 @@ OrderBookContract.OrderChangeEvent.handler(({ event, context }) => {
     order_id: event.data.order_id,
     new_base_size: order ? order.base_size : "0",
     timestamp,
+    identifier: event.data.identifier as any as string,
     tx_id: event.transactionId,
   });
 
