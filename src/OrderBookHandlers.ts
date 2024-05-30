@@ -1,5 +1,6 @@
 import { OrderBookContract, spotOrderEntity } from "generated";
 import { nanoid } from "nanoid";
+import crypto from 'crypto';
 
 function tai64ToDate(tai64: bigint) {
   const dateStr = (
@@ -18,9 +19,12 @@ function decodeI64(i64: {
 
 OrderBookContract.MarketCreateEvent.loader(({ event, context }) => { });
 
+
 OrderBookContract.MarketCreateEvent.handler(({ event, context }) => {
+  const id = crypto.createHash('sha256').update(event.transactionId).digest('hex');
+
   context.SpotMarketCreateEvent.set({
-    id: nanoid(),
+    id: id,
     asset_decimals: event.data.asset_decimals,
     asset_id: event.data.asset_id.bits,
     timestamp: tai64ToDate(event.data.timestamp),
