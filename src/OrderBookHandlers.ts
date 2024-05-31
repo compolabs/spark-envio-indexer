@@ -32,9 +32,7 @@ OrderBookContract.MarketCreateEvent.handler(({ event, context }) => {
 });
 
 OrderBookContract.OrderChangeEvent.loader(({ event, context }) => {
-  if (event.data.order) {
-    context.SpotOrder.load(event.data.order.id);
-  }
+  context.SpotOrder.load(event.data.order_id);
 });
 
 OrderBookContract.OrderChangeEvent.handler(({ event, context }) => {
@@ -58,25 +56,28 @@ OrderBookContract.OrderChangeEvent.handler(({ event, context }) => {
     : null;
   const idSource = `${event.transactionId}-${timestamp}-${event.data.order_id}`;
   const id = crypto.createHash('sha256').update(idSource).digest('hex');
-  context.SpotOrderChangeEvent.set({
+  const newSpotOrderChangeEvent = {
     id: id,
     order_id: event.data.order_id,
     new_base_size: order ? order.base_size : "0",
     timestamp,
     identifier: event.data.identifier.case,
     tx_id: event.transactionId,
-  });
+  };
+  context.SpotOrderChangeEvent.set(newSpotOrderChangeEvent);
+  // console.log("newSpotOrderChangeEvent")
+  // console.log(newSpotOrderChangeEvent)
+  // console.log("associated order")
+  // console.log(order);
 
-  if (order) {
-    const maybeExistingOrder = context.SpotOrder.get(order.id);
-    if (maybeExistingOrder) {
-      context.SpotOrder.set({
-        ...maybeExistingOrder,
-        base_size: order.base_size,
-      });
-    } else {
-      context.SpotOrder.set(order);
-    }
+  const maybeExistingOrder = context.SpotOrder.get(newSpotOrderChangeEvent.order_id);
+  if (maybeExistingOrder) {
+    context.SpotOrder.set({
+      ...maybeExistingOrder,
+      base_size: newSpotOrderChangeEvent.new_base_size,
+    });
+  } else if (order) {
+    context.SpotOrder.set(order);
   }
 });
 
