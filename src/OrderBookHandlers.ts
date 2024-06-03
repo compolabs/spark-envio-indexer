@@ -75,6 +75,12 @@ OrderBookContract.OrderChangeEvent.handler(({ event, context }) => {
     context.SpotOrder.set({
       ...maybeExistingOrder,
       base_size: newSpotOrderChangeEvent.new_base_size,
+      order_type:
+          eventOrder == null || eventOrder.base_size.value === 0n
+              ? undefined
+              : eventOrder.base_size.negative
+                  ? "sell"
+                  : "buy",
     });
   } else if (order) {
     context.SpotOrder.set(order);
