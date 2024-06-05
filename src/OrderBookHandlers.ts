@@ -9,15 +9,11 @@ function tai64ToDate(tai64: bigint) {
   return new Date(+dateStr).toISOString();
 }
 
-function decodeI64(i64: {
-  readonly value: bigint;
-  readonly negative: boolean;
-}) {
-  return (i64.negative ? "-" : "") + i64.value.toString();
+function decodeI64(i64: { readonly value: bigint}) {
+  return i64.value.toString();
 }
 
 OrderBookContract.MarketCreateEvent.loader(({ event, context }) => { });
-
 
 OrderBookContract.MarketCreateEvent.handler(({ event, context }) => {
   const idSource = `${event.data.asset_decimals}-${event.data.asset_id.bits}-${tai64ToDate(event.data.timestamp)}-${event.transactionId}`;
@@ -65,10 +61,6 @@ OrderBookContract.OrderChangeEvent.handler(({ event, context }) => {
     tx_id: event.transactionId,
   };
   context.SpotOrderChangeEvent.set(newSpotOrderChangeEvent);
-  // console.log("newSpotOrderChangeEvent")
-  // console.log(newSpotOrderChangeEvent)
-  // console.log("associated order")
-  // console.log(order);
 
   const maybeExistingOrder = context.SpotOrder.get(newSpotOrderChangeEvent.order_id);
   if (maybeExistingOrder) {
