@@ -50,7 +50,7 @@ OrderBookContract.OrderChangeEvent.handler(({ event, context }) => {
       timestamp,
     }
     : null;
-  const idSource = `${event.transactionId}-${timestamp}-${event.data.order_id}`;
+  const idSource = `${event.transactionId}-${timestamp}-${event.data.order_id}-${event.receiptIndex}`;
   const id = crypto.createHash('sha256').update(idSource).digest('hex');
   const newSpotOrderChangeEvent = {
     id: id,
