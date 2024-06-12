@@ -22,24 +22,24 @@ enum SpotOrderType {
 
 type SpotOrder {
   id: ID!
-  order_type: SpotOrderType
-  trader: String!
-  base_token: String!
-  base_size: String!
-  base_price: BigInt!
+  order_type: SpotOrderType @index
+  trader: String! @index
+  base_token: String! @index
+  base_size: String! @index
+  base_price: BigInt! @index
   timestamp: String! # Date
 }
 
 type SpotTradeEvent {
   id: ID!
-  base_token: String!
-  order_matcher: String!
-  seller: String!
-  buyer: String!
+  base_token: String! @index
+  order_matcher: String! @index
+  seller: String! @index
+  buyer: String! @index
   trade_size: BigInt!
   trade_price: BigInt!
   sell_order: SpotOrder!
   buy_order: SpotOrder!
   timestamp: String! # Date
-  tx_id: ID!
+  tx_id: ID! @index
 }
