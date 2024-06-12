@@ -12,8 +12,8 @@ importers:
         specifier: 4.3.10
         version: 4.3.10
       envio:
-        specifier: 0.0.6-fuel
-        version: 0.0.6-fuel
+        specifier: 1.1.3-fuel
+        version: 1.1.3-fuel
       nanoid:
         specifier: 3.3.7
         version: 3.3.7
@@ -58,24 +58,24 @@ importers:
       '@envio-dev/hyperfuel-client':
         specifier: 1.1.0
         version: 1.1.0
+      '@fuel-ts/address':
+        specifier: 0.89.1
+        version: 0.89.1
       '@fuel-ts/crypto':
-        specifier: 0.79.0
-        version: 0.79.0
+        specifier: 0.89.1
+        version: 0.89.1
       '@fuel-ts/errors':
-        specifier: 0.79.0
-        version: 0.79.0
+        specifier: 0.89.1
+        version: 0.89.1
       '@fuel-ts/hasher':
-        specifier: 0.79.0
-        version: 0.79.0
-      '@fuel-ts/interfaces':
-        specifier: 0.79.0
-        version: 0.79.0
+        specifier: 0.89.1
+        version: 0.89.1
       '@fuel-ts/math':
-        specifier: 0.79.0
-        version: 0.79.0
+        specifier: 0.89.1
+        version: 0.89.1
       '@fuel-ts/utils':
-        specifier: 0.79.0
-        version: 0.79.0
+        specifier: 0.89.1
+        version: 0.89.1
       '@glennsl/rescript-fetch':
         specifier: 0.2.0
         version: 0.2.0
@@ -226,84 +226,77 @@ packages:
       '@envio-dev/hyperfuel-client-win32-x64-msvc': 1.1.0
     dev: false
 
-  /@fuel-ts/address@0.79.0:
-    resolution: {integrity: sha512-KiDWMQB6cyY9sUCi7e7NPx2sCCejYjC/vLQrTnu4AxV2aVVwQ4GWcRpHO1OGYZ5RalR/yvcR9ebQhpidnU0lUw==}
+  /@fuel-ts/address@0.89.1:
+    resolution: {integrity: sha512-muP+leUrBgNyeEfstEwnGK7QE+7ovsT9Ic+kU+VL4TRITmaeL91m2WAq2radnK60AbYw3/Ya7Zg42k9yW8+wsQ==}
     engines: {node: ^18.18.2 || ^20.0.0}
     dependencies:
-      '@fuel-ts/crypto': 0.79.0
-      '@fuel-ts/errors': 0.79.0
-      '@fuel-ts/interfaces': 0.79.0
-      '@fuel-ts/utils': 0.79.0
-      '@fuel-ts/versions': 0.79.0
+      '@fuel-ts/crypto': 0.89.1
+      '@fuel-ts/errors': 0.89.1
+      '@fuel-ts/interfaces': 0.89.1
+      '@fuel-ts/utils': 0.89.1
       '@noble/hashes': 1.4.0
       bech32: 2.0.0
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
     dev: false
 
-  /@fuel-ts/crypto@0.79.0:
-    resolution: {integrity: sha512-kjXhoNK3rVrx0nDGDN9L1nZ6yU6XBVOujhrA5un9RD/hw4DdXfBL4XSIwu6HJ5ZLCcx555kabNHku9VxpIGopg==}
+  /@fuel-ts/crypto@0.89.1:
+    resolution: {integrity: sha512-CyLj2hiBoF1+1MZ+B7L9+bWbu+RdkxbMfU9WuXYIgky/b7XmOSPELaB2ExkPxdxEV1bT28bIlZsAMS4Z+fSpLg==}
     engines: {node: ^18.18.2 || ^20.0.0}
     dependencies:
-      '@fuel-ts/errors': 0.79.0
-      '@fuel-ts/utils': 0.79.0
+      '@fuel-ts/errors': 0.89.1
+      '@fuel-ts/interfaces': 0.89.1
+      '@fuel-ts/math': 0.89.1
+      '@fuel-ts/utils': 0.89.1
       '@noble/hashes': 1.4.0
-      ethers: 6.8.0
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
     dev: false
 
-  /@fuel-ts/errors@0.79.0:
-    resolution: {integrity: sha512-duca9y2b2z2uOgecxSqaCiRnWbu8Mb+O9zcJelXRpML9yAd7RUMn9enCEohCyFJpFCn4O3tKizJvnmNkeDrbew==}
+  /@fuel-ts/errors@0.89.1:
+    resolution: {integrity: sha512-DRfA7Q0OdSGOZv2SAaT926jERmMicwxENxqL3SbCV7VLK4V+Pcp6Ppb3gPqdJsDofdRN+sKGk+wyPsMyeAhjRQ==}
     engines: {node: ^18.18.2 || ^20.0.0}
     dependencies:
-      '@fuel-ts/versions': 0.79.0
+      '@fuel-ts/versions': 0.89.1
     dev: false
 
-  /@fuel-ts/hasher@0.79.0:
-    resolution: {integrity: sha512-y4qcJjIqHxYas3QJm5eI2tcR2Ql/+ReF8avCJ/TS4c/7ZTqESlW4GYHuzgt4+BRawXa+keDfyrbV3gSVS0UByQ==}
+  /@fuel-ts/hasher@0.89.1:
+    resolution: {integrity: sha512-dEQpQy0/q4//a8ZI69oLCbcLKmPg4os/p0wgp5n98YXRNVN1ezrWju6RRLBUPT/3OT8NBzwZ+a0K8UyK9imD/Q==}
     engines: {node: ^18.18.2 || ^20.0.0}
     dependencies:
-      '@fuel-ts/address': 0.79.0
-      '@fuel-ts/crypto': 0.79.0
-      '@fuel-ts/interfaces': 0.79.0
-      '@fuel-ts/math': 0.79.0
-      '@fuel-ts/utils': 0.79.0
+      '@fuel-ts/crypto': 0.89.1
+      '@fuel-ts/interfaces': 0.89.2
+      '@fuel-ts/utils': 0.89.1
       '@noble/hashes': 1.4.0
-      ramda: 0.29.1
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
     dev: false
 
-  /@fuel-ts/interfaces@0.79.0:
-    resolution: {integrity: sha512-L0KrElKvtLRYDzR/SNH26jVLSLBlE+xng9Wm4gyLSrR7Wnf6pB/l+/BrqGdwbWlN9kD205tC7pUa0KD5AugE2w==}
+  /@fuel-ts/interfaces@0.89.1:
+    resolution: {integrity: sha512-tYbs7YpEhtjtLOBr9gvVdxo7po+Dg5kbkhB+ropZPF5VLkaAlmrbsRXkbrK6NM+fSTsCYgxfTI6JkXeGkWXqFA==}
     engines: {node: ^18.18.2 || ^20.0.0}
     dev: false
 
-  /@fuel-ts/math@0.79.0:
-    resolution: {integrity: sha512-x5BxKYzrBF+RfqaUQyWXl4dLn16CMOWQdiVL22ixwFJY42lLKMCaFkN+91dXbF1T0bOlsYclZXfNIlCxGqqfFA==}
+  /@fuel-ts/interfaces@0.89.2:
+    resolution: {integrity: sha512-SPorsch3bmnDgjhsDY+f94tpOwNOWM/SfHEggZS+v6B7mcnUm5PqmVERY/4EP+zsKTETZpys5npcAg0onauwzA==}
+    engines: {node: ^18.18.2 || ^20.0.0}
+    dev: false
+
+  /@fuel-ts/math@0.89.1:
+    resolution: {integrity: sha512-Aq34K6bkpre12Z9PZTtSwMOkZjjT67uLRnKCNV7Q2vtaDgRbWyQkA2kssZ61EZlEnFkI/ZqSKc4S+m/LAQCqGQ==}
     engines: {node: ^18.18.2 || ^20.0.0}
     dependencies:
-      '@fuel-ts/errors': 0.79.0
+      '@fuel-ts/errors': 0.89.1
       '@types/bn.js': 5.1.5
       bn.js: 5.2.1
     dev: false
 
-  /@fuel-ts/utils@0.79.0:
-    resolution: {integrity: sha512-9hESU0q04jKlOvOC3qr9hpmJF2pgf5cdF785sV2apyTOfw9Luzi+O5uzTr9EKmazKr5nl8KhuDKAtTCIiBRfmA==}
+  /@fuel-ts/utils@0.89.1:
+    resolution: {integrity: sha512-xxtuu05Syf3jHS+rOWE4tRSZ8J3SH1MkmuOKzDpXU/IpTFX6k0sTJRmWYd5tKtmIqgKIZcCQAZq/zd031sK5Ig==}
     engines: {node: ^18.18.2 || ^20.0.0}
     dependencies:
-      '@fuel-ts/errors': 0.79.0
-      '@fuel-ts/interfaces': 0.79.0
-      ramda: 0.29.1
-      rimraf: 3.0.2
+      '@fuel-ts/errors': 0.89.1
+      '@fuel-ts/interfaces': 0.89.1
+      '@fuel-ts/math': 0.89.1
+      '@fuel-ts/versions': 0.89.1
     dev: false
 
-  /@fuel-ts/versions@0.79.0:
-    resolution: {integrity: sha512-nTpBnfgYqyaK5snKmUaF43M1jcOQOOteQmsxrLnkrWIff4nR3vXGPM4Dm90pCNATMpz9DNs9gSDuC2oSKqoxnA==}
+  /@fuel-ts/versions@0.89.1:
+    resolution: {integrity: sha512-TzTMmKs1TTFnIwN9nj4MVvGFmDFSpzFWiO4gnA0OuTOcZc98kleVteXcV5dF9BX19xCxmFcybm3oMqPZy0S5Hg==}
     engines: {node: ^18.18.2 || ^20.0.0}
     hasBin: true
     dependencies:
@@ -347,8 +340,8 @@ packages:
     engines: {node: '>= 16'}
     dev: false
 
-  /@opentelemetry/api@1.8.0:
-    resolution: {integrity: sha512-I/s6F7yKUDdtMsoBWXJe8Qz40Tui5vsuKCWJEWVL+5q9sSWRzzx6v2KeNsOBEwd94j0eWkpWCH4yB6rZg9Mf0w==}
+  /@opentelemetry/api@1.9.0:
+    resolution: {integrity: sha512-3giAOQvZiH5F9bMlMiv8+GSPMeqg0dbaeo58/0SlA9sxSqZhnUtxzX9/2FzyhS9sWQf5S0GJE0AKBrFqjpeYcg==}
     engines: {node: '>=8.0.0'}
     dev: false
 
@@ -569,6 +562,7 @@ packages:
     dependencies:
       balanced-match: 1.0.2
       concat-map: 0.0.1
+    dev: true
 
   /brace-expansion@2.0.1:
     resolution: {integrity: sha512-XnAIvQ8eM+kC6aULx6wuQiwVsnzsi9d3WxzV3FpWTGA19F621kwdbsAcFKXgKUHZWsy+mY6iL1sHTxWEFCytDA==}
@@ -633,7 +627,7 @@ packages:
     dependencies:
       assertion-error: 1.1.0
       check-error: 1.0.3
-      deep-eql: 4.1.3
+      deep-eql: 4.1.4
       get-func-name: 2.0.2
       loupe: 2.3.7
       pathval: 1.1.1
@@ -748,6 +742,7 @@ packages:
 
   /concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
+    dev: true
 
   /content-disposition@0.5.4:
     resolution: {integrity: sha512-FveZTNuGw04cxlAiWbzi6zTAL/lhehaWbTtgluJh4/E95DqMwTmha3KZN1aAWA8cFIhHzMZUvLevkw5Rqk+tSQ==}
@@ -816,8 +811,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /deep-eql@4.1.3:
-    resolution: {integrity: sha512-WaEtAOpRA1MQ0eohqZjpGD8zdI0Ovsm8mmFhaDN8dvDZzyoUMcYDnf5Y6iu7HTXxf8JDS23qWa4a+hKCDyOPzw==}
+  /deep-eql@4.1.4:
+    resolution: {integrity: sha512-SUwdGfqdKOwxCPeVYjwSyRpJ7Z+fhpwIAtmCUdZIWZ/YP5R9WAsyuSgpLVDi9bjWoN2LXHNss/dk3urXtdQxGg==}
     engines: {node: '>=6'}
     dependencies:
       type-detect: 4.0.8
@@ -887,46 +882,46 @@ packages:
       once: 1.4.0
     dev: false
 
-  /envio-darwin-arm64@0.0.6-fuel:
-    resolution: {integrity: sha512-SZVsadc2tpXipx+oRL5/JfEZfrULtALxEDtnGRDE1tnCLHqZCv7VOBdT+dkRzta76R6G37bZm0RRFDeMiZO1CA==}
+  /envio-darwin-arm64@1.1.3-fuel:
+    resolution: {integrity: sha512-kzBiCvEnql2fiAiP+nnLUNf857In2zXRkIgWS9dZX+w06vHnAz3rF0ecp8eu6oN3qwkgtMav6X9meG/brqp/fg==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio-darwin-x64@0.0.6-fuel:
-    resolution: {integrity: sha512-PNyBByJCJfl3ipSFj2ZJERkEgFYd1muUbWwyOTz4T+lTp7xKC1T93vwkq0aqsRdBhQDuRsJ6Uia0kkzK8cA2Jw==}
+  /envio-darwin-x64@1.1.3-fuel:
+    resolution: {integrity: sha512-zupUJd3TGhJ2nQTRf20XWGxG/SreQdst6Qu1DusJ5ipBAgMkb7UyQm3Xn2UvHIcWCqe2wNQNoMSWxDE+eHySHg==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio-linux-arm64@0.0.6-fuel:
-    resolution: {integrity: sha512-AHyUTRQQNq1hs+YMtP8qQCFo0Jyv6/PuDmIoe1mTUoyK71iJbxHiavVrgJbVlsKY22sS/Oc4apLQ7zTdL0Xfhw==}
+  /envio-linux-arm64@1.1.3-fuel:
+    resolution: {integrity: sha512-RCjl1qiTqZJutMdhkmp2g3RTHrqexJe+MgscHKdTEq7YUdukyOgNZwKZLhytYidK2LEWfGH/xHss8uRe2QoR3w==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio-linux-x64@0.0.6-fuel:
-    resolution: {integrity: sha512-pXfDEN3TrOqUAlmTOWs0n5ep9/Artao9/QYX82H+/rOE0CIJtm6/SF2aAftHTX3qkSIQDQUF6ew+3dCSCMn3jA==}
+  /envio-linux-x64@1.1.3-fuel:
+    resolution: {integrity: sha512-A4QeglJCkhduu/2S1dFOhcJ7f8Eli73CP07uoopZy3JkoC3Yqc/mHE46HCeCmN4zOvq92CUj3/L+9RgVCKpw5A==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio@0.0.6-fuel:
-    resolution: {integrity: sha512-gjs7rAlboAUzsnbLKLT+makZlUBeRuxZeybvM2/jRmMoe5M3eMwn3+5og6mscCxMuqZ2XwU24i3waP8W71xqZw==}
+  /envio@1.1.3-fuel:
+    resolution: {integrity: sha512-L5aEf1a7+xGU05m5s5itcXF5OZ7weilipC6ZS0JVN2xwsS4EqAYId/njjwWZkeOgK3O4zNV4KXB4BYhAXkstmA==}
     hasBin: true
     optionalDependencies:
-      envio-darwin-arm64: 0.0.6-fuel
-      envio-darwin-x64: 0.0.6-fuel
-      envio-linux-arm64: 0.0.6-fuel
-      envio-linux-x64: 0.0.6-fuel
+      envio-darwin-arm64: 1.1.3-fuel
+      envio-darwin-x64: 1.1.3-fuel
+      envio-linux-arm64: 1.1.3-fuel
+      envio-linux-x64: 1.1.3-fuel
     dev: false
 
   /es-define-property@1.0.0:
@@ -1047,7 +1042,7 @@ packages:
     dependencies:
       ajv: 6.12.6
       deepmerge: 4.3.1
-      rfdc: 1.3.1
+      rfdc: 1.4.1
       string-similarity: 4.0.4
     dev: false
 
@@ -1157,18 +1152,6 @@ packages:
       once: 1.4.0
       path-is-absolute: 1.0.1
     dev: true
-
-  /glob@7.2.3:
-    resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
-    deprecated: Glob versions prior to v9 are no longer supported
-    dependencies:
-      fs.realpath: 1.0.0
-      inflight: 1.0.6
-      inherits: 2.0.4
-      minimatch: 3.1.2
-      once: 1.4.0
-      path-is-absolute: 1.0.1
-    dev: false
 
   /glob@8.1.0:
     resolution: {integrity: sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==}
@@ -1528,6 +1511,7 @@ packages:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
     dependencies:
       brace-expansion: 1.1.11
+    dev: true
 
   /minimatch@5.0.1:
     resolution: {integrity: sha512-nLDxIFRyhDblz3qMuq+SoRZED4+miJ/G+tdDrjkkkRnjAsBexeGpgjLEQ0blJy7rHhR2b93rhQY4SvyWu9v03g==}
@@ -1691,6 +1675,7 @@ packages:
   /path-is-absolute@1.0.1:
     resolution: {integrity: sha512-AVbw3UJ2e9bq64vSaS9Am0fje1Pa8pbGqTTsmXfaIiMpnr5DlDhfJOuLj9Sf95ZPVDAUerDfEk88MPmPe7UCQg==}
     engines: {node: '>=0.10.0'}
+    dev: true
 
   /path-to-regexp@0.1.7:
     resolution: {integrity: sha512-5DFkuoqlv1uYQKxy8omFBeJPQcdoE07Kv2sferDCrAq1ohOU+MSDswDIbnx3YAM60qIOnYa53wBhXW0EbMonrQ==}
@@ -1778,7 +1763,7 @@ packages:
     resolution: {integrity: sha512-UocpgIrKyA2TKLVZDSfm8rGkL13C19YrQBAiG3xo3aDFWcHedxRxI3z+cIcucoxpSO0h5lff5iv/SXoxyeopeA==}
     engines: {node: ^16 || ^18 || >=20}
     dependencies:
-      '@opentelemetry/api': 1.8.0
+      '@opentelemetry/api': 1.9.0
       tdigest: 0.1.2
     dev: false
 
@@ -1819,10 +1804,6 @@ packages:
 
   /quick-format-unescaped@4.0.4:
     resolution: {integrity: sha512-tYC1Q1hgyRuHgloV/YXs2w15unPVh8qfu/qCTfhTYamaw7fyhumKa2yGpdSo87vY32rIclj+4fWYQXUMs9EHvg==}
-    dev: false
-
-  /ramda@0.29.1:
-    resolution: {integrity: sha512-OfxIeWzd4xdUNxlWhgFazxsA/nl3mS4/jGZI5n00uWOoSSFRhC1b6gl6xvmzUamgmqELraWp0J/qqVlXYPDPyA==}
     dev: false
 
   /randombytes@2.1.0:
@@ -1985,16 +1966,8 @@ packages:
       signal-exit: 3.0.7
     dev: false
 
-  /rfdc@1.3.1:
-    resolution: {integrity: sha512-r5a3l5HzYlIC68TpmYKlxWjmOP6wiPJ1vWv2HeLhNsRZMrCkxeqxiHlQ21oXmQ4F3SiryXBHhAD7JZqvOJjFmg==}
-    dev: false
-
-  /rimraf@3.0.2:
-    resolution: {integrity: sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==}
-    deprecated: Rimraf versions prior to v4 are no longer supported
-    hasBin: true
-    dependencies:
-      glob: 7.2.3
+  /rfdc@1.4.1:
+    resolution: {integrity: sha512-q1b3N5QkRUWUl7iyylaaj3kOpIT0N2i9MqIEQXP73GVsN9cw3fdx8X63cEmWhJGi2PPCF23Ijp7ktmd39rawIA==}
     dev: false
 
   /safe-buffer@5.2.1:
