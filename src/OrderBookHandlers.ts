@@ -54,7 +54,7 @@ OrderBookContract.OrderChangeEvent.handler(({ event, context }) => {
       timestamp,
     }
     : null;
-  const idSource = `${event.transactionId}-${timestamp}-${event.data.order_id}`;
+  const idSource = `${event.transactionId}-${timestamp}-${event.data.order_id}-${event.receiptIndex}`;
   const id = crypto.createHash('sha256').update(idSource).digest('hex');
   const newSpotOrderChangeEvent = {
     id: id,
@@ -72,16 +72,18 @@ OrderBookContract.OrderChangeEvent.handler(({ event, context }) => {
 
   const maybeExistingOrder = context.SpotOrder.get(newSpotOrderChangeEvent.order_id);
   if (maybeExistingOrder) {
-    context.SpotOrder.set({
-      ...maybeExistingOrder,
-      base_size: newSpotOrderChangeEvent.new_base_size,
-      order_type:
-          eventOrder == null || eventOrder.base_size.value === 0n
-              ? undefined
-              : eventOrder.base_size.negative
-                  ? "sell"
-                  : "buy",
-    });
+    if (maybeExistingOrder.order_type != undefined) { // do not re-open an alreday closed order  
+      context.SpotOrder.set({
+        ...maybeExistingOrder,
+        base_size: newSpotOrderChangeEvent.new_base_size,
+        order_type:
+            eventOrder == null || eventOrder.base_size.value === 0n
+                ? undefined
+                : eventOrder.base_size.negative
+                    ? "sell"
+                    : "buy",
+      });
+    }
   } else if (order) {
     context.SpotOrder.set(order);
   }
