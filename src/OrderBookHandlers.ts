@@ -65,10 +65,6 @@ OrderBookContract.OrderChangeEvent.handler(({ event, context }) => {
     tx_id: event.transactionId,
   };
   context.SpotOrderChangeEvent.set(newSpotOrderChangeEvent);
-  // console.log("newSpotOrderChangeEvent")
-  // console.log(newSpotOrderChangeEvent)
-  // console.log("associated order")
-  // console.log(order);
 
   const maybeExistingOrder = context.SpotOrder.get(newSpotOrderChangeEvent.order_id);
   if (maybeExistingOrder) {
