@@ -33,3 +33,4 @@ build
 generated
 .idea
 /envio
+.env

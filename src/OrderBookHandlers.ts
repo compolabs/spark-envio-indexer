@@ -29,13 +29,13 @@ MarketContract.CancelOrderEvent.handler(({ event, context }: { event: any; conte
 MarketContract.DepositEvent.loader(({ event, context }: { event: any; context: any }) => { });
 
 MarketContract.DepositEvent.handler(({ event, context }: { event: any; context: any }) => {
-  const idSource = `${event.data.amount}-${event.data.asset}-${event.data.trader.bits}-${event.transactionId}`;
+  const idSource = `${event.data.amount}-${event.data.asset}-${event.data.trader}-${event.transactionId}`;
   const id = crypto.createHash('sha256').update(idSource).digest('hex');
   context.DepositEvent.set({
     id: id,
     amount: event.data.amount,
     asset: event.data.asset,
-    trader: event.data.trader.bits,
+    trader: event.data.trader ? event.data.trader : null,
   });
 });
 
@@ -43,17 +43,23 @@ MarketContract.DepositEvent.handler(({ event, context }: { event: any; context: 
 MarketContract.OpenOrderEvent.loader(({ event, context }: { event: any; context: any }) => { });
 
 MarketContract.OpenOrderEvent.handler(({ event, context }: { event: any; context: any }) => {
-  const idSource = `${event.data.amount}-${event.data.asset}-${event.data.asset_type}-${event.data.order_type}-${event.data.order_id}-${event.data.price}-${event.data.trader.bits}-${event.transactionId}`;
+  const eventOrder = event.data.order;
+  const idSource = `${event.data.amount}-${event.data.asset}-${event.data.asset_type.case}-${event.data.order_type.case}-${event.data.order_id}-${event.data.price}-${event.data.trader}-${event.transactionId}`;
   const id = crypto.createHash('sha256').update(idSource).digest('hex');
   context.OpenOrderEvent.set({
     id: id,
     amount: event.data.amount,
     asset: event.data.asset,
-    asset_type: event.data.asset_type,
-    order_type: event.data.order_type,
+    asset_type: event.data.asset_type.case,
+    order_type:
+      eventOrder.amount.value === 0n
+        ? undefined
+        : eventOrder.amount.negative
+          ? "sell"
+          : "buy",
     order_id: event.data.order_id,
     price: event.data.price,
-    trader: event.data.trader.bits,
+    trader: event.data.trader ? event.data.trader.bits : null,
   });
 });
 

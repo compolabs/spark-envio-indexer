@@ -1,6 +1,6 @@
 enum SpotOrderType {
-  sell
-  buy
+  Sell
+  Buy
 }
 
 enum AssetType {
@@ -52,5 +52,5 @@ type WithdrawEvent {
   id: ID!
   amount: BigInt! @index
   asset: String! @index
-  trader: String @index
+  trader: String! @index
 }
