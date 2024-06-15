@@ -50,50 +50,6 @@ importers:
         specifier: 5.2.2
         version: 5.2.2
 
-  envio:
-    dependencies:
-      chai:
-        specifier: 4.3.10
-        version: 4.3.10
-      envio:
-        specifier: 1.1.3-fuel
-        version: 1.1.3-fuel
-      nanoid:
-        specifier: 3.3.7
-        version: 3.3.7
-      react:
-        specifier: 17.0.2
-        version: 17.0.2
-      react-dom:
-        specifier: 17.0.2
-        version: 17.0.2(react@17.0.2)
-    optionalDependencies:
-      generated:
-        specifier: link:generated
-        version: link:generated
-    devDependencies:
-      '@types/chai':
-        specifier: ^4.3.16
-        version: 4.3.16
-      '@types/mocha':
-        specifier: 10.0.6
-        version: 10.0.6
-      '@types/node':
-        specifier: 20.8.8
-        version: 20.8.8
-      mocha:
-        specifier: 10.2.0
-        version: 10.2.0
-      ts-mocha:
-        specifier: ^10.0.0
-        version: 10.0.0(mocha@10.2.0)
-      ts-node:
-        specifier: 10.9.1
-        version: 10.9.1(@types/node@20.8.8)(typescript@5.2.2)
-      typescript:
-        specifier: 5.2.2
-        version: 5.2.2
-
   generated:
     dependencies:
       '@elastic/ecs-pino-format':
@@ -926,25 +882,9 @@ packages:
       once: 1.4.0
     dev: false
 
-  /envio-darwin-arm64@1.1.3-fuel:
-    resolution: {integrity: sha512-kzBiCvEnql2fiAiP+nnLUNf857In2zXRkIgWS9dZX+w06vHnAz3rF0ecp8eu6oN3qwkgtMav6X9meG/brqp/fg==}
-    cpu: [arm64]
-    os: [darwin]
-    requiresBuild: true
-    dev: false
-    optional: true
-
   /envio-darwin-arm64@1.1.4-fuel:
     resolution: {integrity: sha512-6H/QLDMeT1LJItT/64uk+RRAmbO664FcyrYGS0JgEbmSP+8r8+oI6+CckXYI9ZyTzhKF+xEW3/BJHMEurb5Wmg==}
     cpu: [arm64]
-    os: [darwin]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /envio-darwin-x64@1.1.3-fuel:
-    resolution: {integrity: sha512-zupUJd3TGhJ2nQTRf20XWGxG/SreQdst6Qu1DusJ5ipBAgMkb7UyQm3Xn2UvHIcWCqe2wNQNoMSWxDE+eHySHg==}
-    cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: false
@@ -958,25 +898,9 @@ packages:
     dev: false
     optional: true
 
-  /envio-linux-arm64@1.1.3-fuel:
-    resolution: {integrity: sha512-RCjl1qiTqZJutMdhkmp2g3RTHrqexJe+MgscHKdTEq7YUdukyOgNZwKZLhytYidK2LEWfGH/xHss8uRe2QoR3w==}
-    cpu: [arm64]
-    os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
-
   /envio-linux-arm64@1.1.4-fuel:
     resolution: {integrity: sha512-lA/Ggw6YS6CNB9IqqEr10wNZbljlVGdDpAEWpFF1anOCzfQVsssuolEWZrlMD15J3Y4suTJ2DXhUeGaD11NVAQ==}
     cpu: [arm64]
-    os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  /envio-linux-x64@1.1.3-fuel:
-    resolution: {integrity: sha512-A4QeglJCkhduu/2S1dFOhcJ7f8Eli73CP07uoopZy3JkoC3Yqc/mHE46HCeCmN4zOvq92CUj3/L+9RgVCKpw5A==}
-    cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: false
@@ -989,16 +913,6 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
-
-  /envio@1.1.3-fuel:
-    resolution: {integrity: sha512-L5aEf1a7+xGU05m5s5itcXF5OZ7weilipC6ZS0JVN2xwsS4EqAYId/njjwWZkeOgK3O4zNV4KXB4BYhAXkstmA==}
-    hasBin: true
-    optionalDependencies:
-      envio-darwin-arm64: 1.1.3-fuel
-      envio-darwin-x64: 1.1.3-fuel
-      envio-linux-arm64: 1.1.3-fuel
-      envio-linux-x64: 1.1.3-fuel
-    dev: false
 
   /envio@1.1.4-fuel:
     resolution: {integrity: sha512-JCvUKNdWnngbTh+k2G0+bIzDRyqh0HUK13Unm0E/PqQUaozDFlsGNpKAzzN7GtJEDFfIswTSZCfpbfXA/oGkJA==}

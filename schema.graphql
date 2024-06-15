@@ -1,49 +1,12 @@
-# type SpotMarketCreateEvent {
-#   id: ID!
-#   asset_id: String!
-#   asset_decimals: Int!
-#   timestamp: String! # Date
-#   tx_id: ID!
-# }
-
-# type SpotOrderChangeEvent {
-#   id: ID!
-#   order: SpotOrder!
-#   new_base_size: String!
-#   identifier: String!
-#   timestamp: String! # Date
-#   tx_id: ID!
-# }
-
-# type SpotOrder {
-#   id: ID!
-#   order_type: SpotOrderType @index
-#   trader: String! @index
-#   base_token: String! @index
-#   base_size: String! @index
-#   base_price: BigInt! @index
-#   timestamp: String! # Date
-# }
-
-# type SpotTradeEvent {
-#   id: ID!
-#   base_token: String! @index
-#   order_matcher: String! @index
-#   seller: String! @index
-#   buyer: String! @index
-#   trade_size: BigInt!
-#   trade_price: BigInt!
-#   sell_order: SpotOrder!
-#   buy_order: SpotOrder!
-#   timestamp: String! # Date
-#   tx_id: ID! @index
-# }
-
 enum SpotOrderType {
   sell
   buy
 }
 
+enum AssetType {
+  Base
+  Quote
+}
 
 type CancelOrderEvent {
   id: ID!
@@ -55,11 +18,6 @@ type DepositEvent {
   amount: String! @index
   asset: String! @index
   trader: String! @index
-}
-
-enum AssetType {
-  Base
-  Quote
 }
 
 type OpenOrderEvent {
