@@ -5,14 +5,14 @@ networks:
     contracts:
       - name: OrderBook
         address: 0xf88a9eea6c45e2a77cf2f684fbb7d175cbf8cf58c079d07f9d24f51329de4418
-        abi_file_path: ./abis/orderbook-contract.json
+        abi_file_path: ./abis/orderbook-contract-abi.json
         handler: ./src/OrderBookHandlers.ts
         events:
           - name: MarketRegisterEvent
           - name: MarketUnregisterEvent
       - name: Market
         address: 0xfd43d9a986af19930b8478f8533376a747e0d050087874d965860cfe549aaf98
-        abi_file_path: ./abis/market-contract.json
+        abi_file_path: ./abis/market-contract-abi.json
         handler: ./src/OrderBookHandlers.ts
         events:
           - name: CancelOrderEvent

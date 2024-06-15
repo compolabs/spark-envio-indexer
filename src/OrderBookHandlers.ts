@@ -16,91 +16,85 @@ function decodeI64(i64: {
   return (i64.negative ? "-" : "") + i64.value.toString();
 }
 
-OrderBookContract.MarketCreateEvent.loader(({ event, context }) => { });
+OrderBookContract.CancelOrderEvent.loader(({ event, context }) => { });
 
-
-OrderBookContract.MarketCreateEvent.handler(({ event, context }) => {
-  const idSource = `${event.data.asset_decimals}-${event.data.asset_id.bits}-${tai64ToDate(event.data.timestamp)}-${event.transactionId}`;
+OrderBookContract.CancelOrderEvent.handler(({ event, context }) => {
+  const idSource = `${event.data.order_id}-${event.transactionId}`;
   const id = crypto.createHash('sha256').update(idSource).digest('hex');
-  context.SpotMarketCreateEvent.set({
+  context.CancelOrderEvent.set({
     id: id,
-    asset_decimals: event.data.asset_decimals,
-    asset_id: event.data.asset_id.bits,
-    timestamp: tai64ToDate(event.data.timestamp),
-    tx_id: event.transactionId,
+    order_id: event.data.order_id,
   });
 });
 
-OrderBookContract.OrderChangeEvent.loader(({ event, context }) => {
-  context.SpotOrder.load(event.data.order_id);
+// Новый обработчик для DepositEvent
+OrderBookContract.DepositEvent.loader(({ event, context }) => { });
+
+OrderBookContract.DepositEvent.handler(({ event, context }) => {
+  const idSource = `${event.data.amount}-${event.data.asset}-${event.data.trader.bits}-${event.transactionId}`;
+  const id = crypto.createHash('sha256').update(idSource).digest('hex');
+  context.DepositEvent.set({
+    id: id,
+    amount: event.data.amount,
+    asset: event.data.asset,
+    trader: event.data.trader.bits,
+  });
 });
 
-OrderBookContract.OrderChangeEvent.handler(({ event, context }) => {
-  const eventOrder = event.data.order;
-  const timestamp = tai64ToDate(event.data.timestamp);
-  const order: spotOrderEntity | null = eventOrder
-    ? {
-      id: eventOrder.id,
-      trader: eventOrder.trader.bits,
-      base_token: eventOrder.base_token.bits,
-      base_size: decodeI64(eventOrder.base_size),
-      order_type:
-        eventOrder.base_size.value === 0n
-          ? undefined
-          : eventOrder.base_size.negative
-            ? "sell"
-            : "buy",
-      base_price: eventOrder.base_price,
-      timestamp,
-    }
-    : null;
-  const idSource = `${event.transactionId}-${timestamp}-${event.data.order_id}-${event.receiptIndex}`;
+// Новый обработчик для OpenOrderEvent
+OrderBookContract.OpenOrderEvent.loader(({ event, context }) => { });
+
+OrderBookContract.OpenOrderEvent.handler(({ event, context }) => {
+  const idSource = `${event.data.amount}-${event.data.asset}-${event.data.asset_type}-${event.data.order_type}-${event.data.order_id}-${event.data.price}-${event.data.trader.bits}-${event.transactionId}`;
   const id = crypto.createHash('sha256').update(idSource).digest('hex');
-  const newSpotOrderChangeEvent = {
+  context.OpenOrderEvent.set({
     id: id,
+    amount: event.data.amount,
+    asset: event.data.asset,
+    asset_type: event.data.asset_type,
+    order_type: event.data.order_type,
     order_id: event.data.order_id,
-    new_base_size: order ? order.base_size : "0",
-    timestamp,
-    identifier: event.data.identifier.case,
-    tx_id: event.transactionId,
-  };
-  context.SpotOrderChangeEvent.set(newSpotOrderChangeEvent);
-
-  const maybeExistingOrder = context.SpotOrder.get(newSpotOrderChangeEvent.order_id);
-  if (maybeExistingOrder) {
-    if (maybeExistingOrder.order_type != undefined) { // do not re-open an alreday closed order  
-      context.SpotOrder.set({
-        ...maybeExistingOrder,
-        base_size: newSpotOrderChangeEvent.new_base_size,
-        order_type:
-            eventOrder == null || eventOrder.base_size.value === 0n
-                ? undefined
-                : eventOrder.base_size.negative
-                    ? "sell"
-                    : "buy",
-      });
-    }
-  } else if (order) {
-    context.SpotOrder.set(order);
-  }
+    price: event.data.price,
+    trader: event.data.trader.bits,
+  });
 });
 
-OrderBookContract.TradeEvent.loader(({ event, context }) => { });
+// Новый обработчик для SetFeeEvent
+OrderBookContract.SetFeeEvent.loader(({ event, context }) => { });
 
-OrderBookContract.TradeEvent.handler(({ event, context }) => {
-  const idSource = `${event.data.base_token.bits}-${event.data.order_matcher.bits}-${event.data.seller.bits}-${event.data.buyer.bits}-${event.data.trade_size}-${event.data.trade_price}-${event.data.sell_order_id}-${event.data.buy_order_id}-${tai64ToDate(event.data.timestamp)}-${event.transactionId}`;
+OrderBookContract.SetFeeEvent.handler(({ event, context }) => {
+  const idSource = `${event.data.amount}-${event.data.trader ? event.data.trader.bits : 'null'}-${event.transactionId}`;
   const id = crypto.createHash('sha256').update(idSource).digest('hex');
-  context.SpotTradeEvent.set({
+  context.SetFeeEvent.set({
     id: id,
-    base_token: event.data.base_token.bits,
-    order_matcher: event.data.order_matcher.bits,
-    seller: event.data.seller.bits,
-    buyer: event.data.buyer.bits,
-    trade_size: event.data.trade_size,
-    trade_price: event.data.trade_price,
-    sell_order_id: event.data.sell_order_id,
-    buy_order_id: event.data.buy_order_id,
-    timestamp: tai64ToDate(event.data.timestamp),
-    tx_id: event.transactionId,
+    amount: event.data.amount,
+    trader: event.data.trader ? event.data.trader.bits : null,
+  });
+});
+
+// Новый обработчик для MatchOrderEvent
+OrderBookContract.MatchOrderEvent.loader(({ event, context }) => { });
+
+OrderBookContract.MatchOrderEvent.handler(({ event, context }) => {
+  const idSource = `${event.data.amount}-${event.data.asset}-${event.data.trader ? event.data.trader.bits : 'null'}-${event.transactionId}`;
+  const id = crypto.createHash('sha256').update(idSource).digest('hex');
+  context.MatchOrderEvent.set({
+    id: id,
+    amount: event.data.amount,
+    asset: event.data.asset,
+    trader: event.data.trader ? event.data.trader.bits : null,
+  });
+});
+
+OrderBookContract.WithdrawEvent.loader(({ event, context }) => { });
+
+OrderBookContract.WithdrawEvent.handler(({ event, context }) => {
+  const idSource = `${event.data.amount}-${event.data.asset}-${event.data.trader ? event.data.trader.bits : 'null'}-${event.transactionId}`;
+  const id = crypto.createHash('sha256').update(idSource).digest('hex');
+  context.WithdrawEvent.set({
+    id: id,
+    amount: event.data.amount,
+    asset: event.data.asset,
+    trader: event.data.trader ? event.data.trader.bits : null,
   });
 });
