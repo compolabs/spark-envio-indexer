@@ -1,16 +1,25 @@
 enum SpotOrderType {
-  Sell
-  Buy
+  sell
+  buy
 }
 
 enum AssetType {
-  Base
-  Quote
+  base
+  quote
+}
+
+type SpotOrder {
+  id: ID!
+  order_type: SpotOrderType @index
+  trader: String! @index
+  base_token: String! @index
+  base_size: String! @index
+  base_price: BigInt! @index
 }
 
 type CancelOrderEvent {
   id: ID!
-  order_id: BigInt! @index
+  order: SpotOrder!
 }
 
 type DepositEvent {
@@ -22,7 +31,7 @@ type DepositEvent {
 
 type OpenOrderEvent {
   id: ID!
-  amount: BigInt! @index
+  amount: String! @index
   asset: String! @index
   asset_type: AssetType! @index
   order_type: SpotOrderType @index
@@ -33,7 +42,7 @@ type OpenOrderEvent {
 
 type SetFeeEvent {
   id: ID!
-  amount: BigInt! @index
+  amount: String! @index
   trader: String @index
 }
 
@@ -50,7 +59,7 @@ type MatchOrderEvent {
 
 type WithdrawEvent {
   id: ID!
-  amount: BigInt! @index
+  amount: String! @index
   asset: String! @index
   trader: String! @index
 }
