@@ -1,45 +1,77 @@
-type SpotMarketCreateEvent {
-  id: ID!
-  asset_id: String!
-  asset_decimals: Int!
-  timestamp: String! # Date
-  tx_id: ID!
+
+enum OrderType {
+  Sell
+  Buy
 }
 
-type SpotOrderChangeEvent {
-  id: ID!
-  order: SpotOrder!
-  new_base_size: String!
-  identifier: String!
-  timestamp: String! # Date
-  tx_id: ID!
+enum OrderStatus {
+  Active
+  Closed
+  Canceled
 }
 
-enum SpotOrderType {
-  sell
-  buy
+enum AssetType {
+  Base
+  Quote
 }
 
-type SpotOrder {
+
+type OpenOrderEvent {
   id: ID!
-  order_type: SpotOrderType @index
-  trader: String! @index
-  base_token: String! @index
-  base_size: String! @index
-  base_price: BigInt! @index
-  timestamp: String! # Date
+  order_id: String! @index
+  asset: String! 
+  amount: BigInt!
+  asset_type: AssetType!
+  order_type: OrderType!
+  price: BigInt! 
+  user: String! 
 }
 
-type SpotTradeEvent {
+type CancelOrderEvent {
   id: ID!
-  base_token: String! @index
-  order_matcher: String! @index
-  seller: String! @index
-  buyer: String! @index
-  trade_size: BigInt!
-  trade_price: BigInt!
-  sell_order: SpotOrder!
-  buy_order: SpotOrder!
-  timestamp: String! # Date
-  tx_id: ID! @index
+  order_id: String! @index
+}
+
+type MatchOrderEvent {
+  id: ID!
+  order_id: String! @index
+  asset: String!
+  order_matcher: String!
+  owner: String!
+  counterparty: String!
+  match_size: BigInt!
+  match_price: BigInt!
+}
+
+type Order {
+  id: ID!
+  asset: String! @index
+  amount: BigInt!
+  asset_type: AssetType! 
+  order_type: OrderType! @index
+  price: BigInt! @index
+  user: String! @index
+  status: OrderStatus! @index # order status
+  initail_amount: BigInt! # initial order amount 
+}
+
+type DepositEvent {
+  id: ID!
+  amount: BigInt!
+  asset: String! @index
+  user: String! @index
+}
+
+type WithdrawEvent {
+  id: ID!
+  amount: BigInt!
+  asset: String! @index
+  user: String! @index
+}
+
+type Balance {
+  id: ID!
+  amount: BigInt!
+  asset: String! @index
+  user: String! @index
 }

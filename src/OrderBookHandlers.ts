@@ -1,5 +1,8 @@
-import { OrderBookContract, spotOrderEntity } from "generated";
+import { OrderBookContract } from "generated";
+import { orderStatus } from "generated/src/Enums.gen";
+import { nanoid } from "nanoid";
 import crypto from 'crypto';
+
 
 function tai64ToDate(tai64: bigint) {
   const dateStr = (
@@ -16,91 +19,164 @@ function decodeI64(i64: {
   return (i64.negative ? "-" : "") + i64.value.toString();
 }
 
-OrderBookContract.MarketCreateEvent.loader(({ event, context }) => { });
+/* 
+pub struct OpenOrderEvent {
+  pub order_id: b256,
+  pub asset: AssetId,
+  pub amount: u64,
+  pub asset_type: AssetType,
+  pub order_type: OrderType,
+  pub price: u64,
+  pub user: Identity,
+}
+*/
+OrderBookContract.OpenOrderEvent.loader(({ event, context }) => { });
+OrderBookContract.OpenOrderEvent.handler(({ event, context }) => {
+  // ? Этим логом можно пользоваться чтобы узнать какие данные приходят в обработчик
+  // context.log.info(event as any)
 
-
-OrderBookContract.MarketCreateEvent.handler(({ event, context }) => {
-  const idSource = `${event.data.asset_decimals}-${event.data.asset_id.bits}-${tai64ToDate(event.data.timestamp)}-${event.transactionId}`;
-  const id = crypto.createHash('sha256').update(idSource).digest('hex');
-  context.SpotMarketCreateEvent.set({
-    id: id,
-    asset_decimals: event.data.asset_decimals,
-    asset_id: event.data.asset_id.bits,
-    timestamp: tai64ToDate(event.data.timestamp),
-    tx_id: event.transactionId,
-  });
-});
-
-OrderBookContract.OrderChangeEvent.loader(({ event, context }) => {
-  context.SpotOrder.load(event.data.order_id);
-});
-
-OrderBookContract.OrderChangeEvent.handler(({ event, context }) => {
-  const eventOrder = event.data.order;
-  const timestamp = tai64ToDate(event.data.timestamp);
-  const order: spotOrderEntity | null = eventOrder
-    ? {
-      id: eventOrder.id,
-      trader: eventOrder.trader.bits,
-      base_token: eventOrder.base_token.bits,
-      base_size: decodeI64(eventOrder.base_size),
-      order_type:
-        eventOrder.base_size.value === 0n
-          ? undefined
-          : eventOrder.base_size.negative
-            ? "sell"
-            : "buy",
-      base_price: eventOrder.base_price,
-      timestamp,
-    }
-    : null;
-  const idSource = `${event.transactionId}-${timestamp}-${event.data.order_id}-${event.receiptIndex}`;
-  const id = crypto.createHash('sha256').update(idSource).digest('hex');
-  const newSpotOrderChangeEvent = {
-    id: id,
+  // ? Создаем OpenOrderEvent и записываем его в базу данных
+  const openOrderEvent = {
+    id: nanoid(),
     order_id: event.data.order_id,
-    new_base_size: order ? order.base_size : "0",
-    timestamp,
-    identifier: event.data.identifier.case,
-    tx_id: event.transactionId,
+    asset: event.data.asset.bits,
+    amount: event.data.amount,
+    asset_type: event.data.asset_type.case,
+    order_type: event.data.order_type.case,
+    price: event.data.price,
+    user: event.data.user.payload.bits
   };
-  context.SpotOrderChangeEvent.set(newSpotOrderChangeEvent);
+  context.OpenOrderEvent.set(openOrderEvent);
 
-  const maybeExistingOrder = context.SpotOrder.get(newSpotOrderChangeEvent.order_id);
-  if (maybeExistingOrder) {
-    if (maybeExistingOrder.order_type != undefined) { // do not re-open an alreday closed order  
-      context.SpotOrder.set({
-        ...maybeExistingOrder,
-        base_size: newSpotOrderChangeEvent.new_base_size,
-        order_type:
-            eventOrder == null || eventOrder.base_size.value === 0n
-                ? undefined
-                : eventOrder.base_size.negative
-                    ? "sell"
-                    : "buy",
-      });
-    }
-  } else if (order) {
-    context.SpotOrder.set(order);
+  // ? Создаем Order и записываем его в базу данных
+  let order = {
+    ...openOrderEvent,
+    id: event.data.order_id,
+    initail_amount: event.data.amount,
+    status: "Active" as orderStatus
+  };
+  context.Order.set(order);
+});
+
+/* 
+pub struct CancelOrderEvent {
+  pub order_id: b256,
+}
+*/
+OrderBookContract.CancelOrderEvent.loader(({ event, context }) => { });
+OrderBookContract.CancelOrderEvent.handler(({ event, context }) => {
+  const cancelOrderEvent = {
+    id: nanoid(),
+    order_id: event.data.order_id,
+  };
+  context.CancelOrderEvent.set(cancelOrderEvent);
+
+  let order = context.Order.get(event.data.order_id);
+  if (order != null) {
+    context.Order.set({ ...order, amount: 0n, status: "Canceled" });
+  } else {
+    context.log.error(`Cannot find an order ${event.data.order_id}`);
   }
 });
 
-OrderBookContract.TradeEvent.loader(({ event, context }) => { });
+/* 
+pub struct MatchOrderEvent {
+  pub order_id: b256,
+  pub asset: AssetId,
+  pub order_matcher: Identity,
+  pub owner: Identity,
+  pub counterparty: Identity,
+  pub match_size: u64,
+  pub match_price: u64,
+}
+*/
+OrderBookContract.MatchOrderEvent.loader(({ event, context }) => { });
+OrderBookContract.MatchOrderEvent.handler(({ event, context }) => {
+  const matchOrderEvent = {
+    id: nanoid(),
+    order_id: event.data.order_id,
+    asset: event.data.asset.bits,
+    order_matcher: event.data.order_matcher.payload.bits,
+    owner: event.data.owner.payload.bits,
+    counterparty: event.data.counterparty.payload.bits,
+    match_size: event.data.match_size,
+    match_price: event.data.match_price,
+  };
+  context.MatchOrderEvent.set(matchOrderEvent);
 
-OrderBookContract.TradeEvent.handler(({ event, context }) => {
-  const idSource = `${event.data.base_token.bits}-${event.data.order_matcher.bits}-${event.data.seller.bits}-${event.data.buyer.bits}-${event.data.trade_size}-${event.data.trade_price}-${event.data.sell_order_id}-${event.data.buy_order_id}-${tai64ToDate(event.data.timestamp)}-${event.transactionId}`;
-  const id = crypto.createHash('sha256').update(idSource).digest('hex');
-  context.SpotTradeEvent.set({
-    id: id,
-    base_token: event.data.base_token.bits,
-    order_matcher: event.data.order_matcher.bits,
-    seller: event.data.seller.bits,
-    buyer: event.data.buyer.bits,
-    trade_size: event.data.trade_size,
-    trade_price: event.data.trade_price,
-    sell_order_id: event.data.sell_order_id,
-    buy_order_id: event.data.buy_order_id,
-    timestamp: tai64ToDate(event.data.timestamp),
-    tx_id: event.transactionId,
-  });
+  let order = context.Order.get(event.data.order_id);
+  if (order != null) {
+    const amount = order.amount - event.data.match_size;
+    context.Order.set({ ...order, amount, status: amount == 0n ? "Closed" : "Active" });
+  } else {
+    context.log.error(`Cannot find an order ${event.data.order_id}`);
+  }
 });
+
+/* 
+pub struct DepositEvent {
+  pub amount: u64,
+  pub asset: AssetId,
+  pub user: Identity,
+}
+*/
+OrderBookContract.DepositEvent.loader(({ event, context }) => { });
+OrderBookContract.DepositEvent.handler(({ event, context }) => {
+  // context.log.info(event as any)
+  const depositEvent = {
+    id: nanoid(),
+    amount: event.data.amount,
+    asset: event.data.asset.bits,
+    user: event.data.user.payload.bits
+  };
+  context.DepositEvent.set(depositEvent);
+
+  const idSource = `${event.data.asset.bits}-${event.data.user.payload.bits}`;
+  const id = crypto.createHash('sha256').update(idSource).digest('hex');
+  let balance = context.Balance.get(id);
+  if (balance != null) {
+    const amount = balance.amount + event.data.amount;
+    context.Balance.set({ ...balance, amount });
+  } else {
+    context.Balance.set({ ...depositEvent, id });
+  }
+});
+
+/* 
+pub struct WithdrawEvent {
+  pub amount: u64,
+  pub asset: AssetId,
+  pub user: Identity,
+}
+*/
+OrderBookContract.WithdrawEvent.loader(({ event, context }) => { });
+OrderBookContract.WithdrawEvent.handler(({ event, context }) => {
+  // context.log.info(event as any)
+  const withdrawEvent = {
+    id: nanoid(),
+    amount: event.data.amount,
+    asset: event.data.asset.bits,
+    user: event.data.user.payload.bits
+  };
+  context.WithdrawEvent.set(withdrawEvent);
+
+  const idSource = `${event.data.asset.bits}-${event.data.user.payload.bits}`;
+  const id = crypto.createHash('sha256').update(idSource).digest('hex');
+  let balance = context.Balance.get(id);
+  if (balance != null) {
+    const amount = balance.amount - event.data.amount;
+    context.Balance.set({ ...balance, amount });
+  } else {
+    context.log.error(`Cannot find a balance; user:${event.data.user}; asset: ${event.data.asset.bits}; id: ${id}`);
+  }
+});
+
+
+/*
+pub struct SetFeeEvent {
+  pub amount: u64,
+  pub user: Option<Identity>,
+}
+*/
+// OrderBookContract.WithdrawEvent.loader(({ event, context }) => { });
+// OrderBookContract.WithdrawEvent.handler(({ event, context }) => {});
