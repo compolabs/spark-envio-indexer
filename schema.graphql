@@ -43,6 +43,17 @@ type MatchOrderEvent {
   match_price: BigInt!
 }
 
+type TradeOrderEvent {
+  id: ID!
+  base_sell_order_id: String! @index
+  base_buy_order_id: String! @index
+  order_matcher: String! @index
+  trade_size: BigInt! @index
+  trade_price: BigInt! @index
+  # block_height: BigInt! @index
+  tx_id: String! @index
+}
+
 type Order {
   id: ID!
   asset: String! @index

@@ -33,7 +33,7 @@ pub struct OpenOrderEvent {
 OrderBookContract.OpenOrderEvent.loader(({ event, context }) => { });
 OrderBookContract.OpenOrderEvent.handler(({ event, context }) => {
   // ? Этим логом можно пользоваться чтобы узнать какие данные приходят в обработчик
-  // context.log.info(event as any)
+  //context.log.info(event as any)
 
   // ? Создаем OpenOrderEvent и записываем его в базу данных
   const openOrderEvent = {
@@ -112,6 +112,36 @@ OrderBookContract.MatchOrderEvent.handler(({ event, context }) => {
     context.log.error(`Cannot find an order ${event.data.order_id}`);
   }
 });
+
+// pub struct TradeOrderEvent {
+//     pub base_sell_order_id: b256,
+//     pub base_buy_order_id: b256,
+//     pub order_matcher: Identity,
+//     pub trade_size: u64,
+//     pub trade_price: u64,
+//     pub block_height: u32,
+//     pub tx_id: b256,
+// }
+
+OrderBookContract.TradeOrderEvent.loader(({ event, context }) => { });
+OrderBookContract.TradeOrderEvent.handler(({ event, context }) => {
+  context.log.info(event as any)
+  const idSource = `${event.data.order_matcher}-${event.data.trade_size}-${event.data.trade_price}-${event.data.base_sell_order_id}-${event.data.base_buy_order_id}-${event.data.tx_id}`;
+  const id = crypto.createHash('sha256').update(idSource).digest('hex');
+  const tradeOrderEvent = {
+    id: id,
+    base_sell_order_id: event.data.base_sell_order_id,
+    base_buy_order_id: event.data.base_buy_order_id,
+    order_matcher: event.data.order_matcher.payload.bits,
+    trade_size: event.data.trade_size,
+    trade_price: event.data.trade_price,
+    // block_height: event.data.block_height,
+    tx_id: event.data.tx_id
+  };
+
+  context.TradeOrderEvent.set(tradeOrderEvent);
+});
+
 
 /* 
 pub struct DepositEvent {
