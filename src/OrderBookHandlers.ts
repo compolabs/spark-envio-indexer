@@ -2,6 +2,7 @@ import { OrderBookContract } from "generated";
 import { orderStatus } from "generated/src/Enums.gen";
 import { nanoid } from "nanoid";
 import crypto from 'crypto';
+import { timeStamp } from "console";
 
 
 function tai64ToDate(tai64: bigint) {
@@ -45,9 +46,10 @@ OrderBookContract.OpenOrderEvent.handler(({ event, context }) => {
     asset_type: event.data.asset_type.case,
     order_type: event.data.order_type.case,
     price: event.data.price,
-    user: event.data.user.payload.bits
+    user: event.data.user.payload.bits,
+    timestamp: new Date(event.time * 1000).toISOString(),
   };
-  context.log.info(event as any)
+  context.log.info(openOrderEvent as any)
   context.OpenOrderEvent.set(openOrderEvent);
 
   // ? Создаем Order и записываем его в базу данных
@@ -71,6 +73,7 @@ OrderBookContract.CancelOrderEvent.handler(({ event, context }) => {
     id: nanoid(),
     order_id: event.data.order_id,
     tx_id: event.transactionId,
+    timestamp: new Date(event.time * 1000).toISOString(),
   };
   context.CancelOrderEvent.set(cancelOrderEvent);
 
@@ -105,6 +108,7 @@ OrderBookContract.MatchOrderEvent.handler(({ event, context }) => {
     counterparty: event.data.counterparty.payload.bits,
     match_size: event.data.match_size,
     match_price: event.data.match_price,
+    timestamp: new Date(event.time * 1000).toISOString(),
   };
   context.MatchOrderEvent.set(matchOrderEvent);
 
@@ -141,6 +145,7 @@ OrderBookContract.TradeOrderEvent.handler(({ event, context }) => {
     trade_size: event.data.trade_size,
     trade_price: event.data.trade_price,
     // block_height: event.data.block_height,
+    timestamp: new Date(event.time * 1000).toISOString(),
   };
 
   context.TradeOrderEvent.set(tradeOrderEvent);
@@ -162,7 +167,8 @@ OrderBookContract.DepositEvent.handler(({ event, context }) => {
     tx_id: event.transactionId,
     amount: event.data.amount,
     asset: event.data.asset.bits,
-    user: event.data.user.payload.bits
+    user: event.data.user.payload.bits,
+    timestamp: new Date(event.time * 1000).toISOString(),
   };
   context.DepositEvent.set(depositEvent);
 
@@ -192,7 +198,8 @@ OrderBookContract.WithdrawEvent.handler(({ event, context }) => {
     tx_id: event.transactionId,
     amount: event.data.amount,
     asset: event.data.asset.bits,
-    user: event.data.user.payload.bits
+    user: event.data.user.payload.bits,
+    timestamp: new Date(event.time * 1000).toISOString(),
   };
   context.WithdrawEvent.set(withdrawEvent);
 
