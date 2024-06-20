@@ -19,6 +19,7 @@ enum AssetType {
 type OpenOrderEvent {
   id: ID!
   order_id: String! @index
+  tx_id: String!
   asset: String! 
   amount: BigInt!
   asset_type: AssetType!
@@ -30,17 +31,30 @@ type OpenOrderEvent {
 type CancelOrderEvent {
   id: ID!
   order_id: String! @index
+  tx_id: String!
 }
 
 type MatchOrderEvent {
   id: ID!
   order_id: String! @index
+  tx_id: String!
   asset: String!
   order_matcher: String!
   owner: String!
   counterparty: String!
   match_size: BigInt!
   match_price: BigInt!
+}
+
+type TradeOrderEvent {
+  id: ID!
+  base_sell_order_id: String! @index
+  base_buy_order_id: String! @index
+  tx_id: String! @index
+  order_matcher: String! @index
+  trade_size: BigInt! @index
+  trade_price: BigInt! @index
+  # block_height: BigInt! @index
 }
 
 type Order {
@@ -57,6 +71,7 @@ type Order {
 
 type DepositEvent {
   id: ID!
+  tx_id: String! @index
   amount: BigInt!
   asset: String! @index
   user: String! @index
@@ -64,6 +79,7 @@ type DepositEvent {
 
 type WithdrawEvent {
   id: ID!
+  tx_id: String! @index
   amount: BigInt!
   asset: String! @index
   user: String! @index
