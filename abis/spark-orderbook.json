@@ -222,8 +222,8 @@
           "typeArguments": null
         },
         {
-          "name": "PriceCannotBeZero",
-          "type": 0,
+          "name": "PriceTooSmall",
+          "type": 1,
           "typeArguments": null
         },
         {
@@ -1206,7 +1206,7 @@
         "type": 20,
         "typeArguments": []
       },
-      "offset": 85800
+      "offset": 75056
     },
     {
       "name": "BASE_ASSET_DECIMALS",
@@ -1215,7 +1215,7 @@
         "type": 34,
         "typeArguments": null
       },
-      "offset": 85664
+      "offset": 74912
     },
     {
       "name": "OWNER",
@@ -1224,7 +1224,7 @@
         "type": 19,
         "typeArguments": []
       },
-      "offset": 85744
+      "offset": 74992
     },
     {
       "name": "PRICE_DECIMALS",
@@ -1233,7 +1233,7 @@
         "type": 34,
         "typeArguments": null
       },
-      "offset": 85680
+      "offset": 74928
     },
     {
       "name": "QUOTE_ASSET",
@@ -1242,7 +1242,7 @@
         "type": 20,
         "typeArguments": []
       },
-      "offset": 85832
+      "offset": 75088
     },
     {
       "name": "QUOTE_ASSET_DECIMALS",
@@ -1251,7 +1251,7 @@
         "type": 34,
         "typeArguments": null
       },
-      "offset": 85688
+      "offset": 74936
     }
   ]
 }
