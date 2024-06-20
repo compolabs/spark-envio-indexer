@@ -2,7 +2,6 @@ import { OrderBookContract } from "generated";
 import { orderStatus } from "generated/src/Enums.gen";
 import { nanoid } from "nanoid";
 import crypto from 'crypto';
-import { timeStamp } from "console";
 
 
 function tai64ToDate(tai64: bigint) {
@@ -56,7 +55,7 @@ OrderBookContract.OpenOrderEvent.handler(({ event, context }) => {
   let order = {
     ...openOrderEvent,
     id: event.data.order_id,
-    initail_amount: event.data.amount,
+    initial_amount: event.data.amount,
     status: "Active" as orderStatus
   };
   context.Order.set(order);

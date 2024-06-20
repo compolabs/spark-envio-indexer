@@ -70,7 +70,7 @@ type Order {
   price: BigInt! @index
   user: String! @index
   status: OrderStatus! @index # order status
-  initail_amount: BigInt! # initial order amount 
+  initial_amount: BigInt! # initial order amount 
 }
 
 type DepositEvent {
