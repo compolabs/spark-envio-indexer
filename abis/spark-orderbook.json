@@ -397,14 +397,7 @@
           "name": "order_id",
           "type": 4,
           "typeArguments": null
-        }
-      ],
-      "typeParameters": null
-    },
-    {
-      "typeId": 23,
-      "type": "struct ContractId",
-      "components": [
+        },
         {
           "name": "asset",
           "type": 20,
@@ -614,14 +607,7 @@
           "name": "order_matcher",
           "type": 9,
           "typeArguments": null
-        }
-      ],
-      "typeParameters": null
-    },
-    {
-      "typeId": 29,
-      "type": "struct RawVec",
-      "components": [
+        },
         {
           "name": "trade_size",
           "type": 35,
@@ -631,16 +617,7 @@
           "name": "trade_price",
           "type": 35,
           "typeArguments": null
-        }
-      ],
-      "typeParameters": [
-        16
-      ]
-    },
-    {
-      "typeId": 30,
-      "type": "struct SetFeeEvent",
-      "components": [
+        },
         {
           "name": "block_height",
           "type": 34,
