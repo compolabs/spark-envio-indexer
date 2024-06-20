@@ -75,6 +75,7 @@ OrderBookContract.CancelOrderEvent.handler(({ event, context }) => {
     tx_id: event.transactionId,
     timestamp: new Date(event.time * 1000).toISOString(),
   };
+  
   context.CancelOrderEvent.set(cancelOrderEvent);
 
   let order = context.Order.get(event.data.order_id);
