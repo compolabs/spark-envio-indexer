@@ -1206,7 +1206,7 @@
         "type": 20,
         "typeArguments": []
       },
-      "offset": 75056
+      "offset": 75936
     },
     {
       "name": "BASE_ASSET_DECIMALS",
@@ -1215,7 +1215,7 @@
         "type": 34,
         "typeArguments": null
       },
-      "offset": 74912
+      "offset": 75792
     },
     {
       "name": "OWNER",
@@ -1224,7 +1224,7 @@
         "type": 19,
         "typeArguments": []
       },
-      "offset": 74992
+      "offset": 75872
     },
     {
       "name": "PRICE_DECIMALS",
@@ -1233,7 +1233,7 @@
         "type": 34,
         "typeArguments": null
       },
-      "offset": 74928
+      "offset": 75808
     },
     {
       "name": "QUOTE_ASSET",
@@ -1242,7 +1242,7 @@
         "type": 20,
         "typeArguments": []
       },
-      "offset": 75088
+      "offset": 75968
     },
     {
       "name": "QUOTE_ASSET_DECIMALS",
@@ -1251,7 +1251,7 @@
         "type": 34,
         "typeArguments": null
       },
-      "offset": 74936
+      "offset": 75816
     }
   ]
 }
