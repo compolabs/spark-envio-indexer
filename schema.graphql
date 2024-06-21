@@ -71,6 +71,8 @@ type Order {
   user: String! @index
   status: OrderStatus! @index # order status
   initial_amount: BigInt! # initial order amount 
+  timestamp: String!
+
 }
 
 type DepositEvent {

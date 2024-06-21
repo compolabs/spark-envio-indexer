@@ -33,7 +33,7 @@ pub struct OpenOrderEvent {
 OrderBookContract.OpenOrderEvent.loader(({ event, context }) => { });
 OrderBookContract.OpenOrderEvent.handler(({ event, context }) => {
   // ? Этим логом можно пользоваться чтобы узнать какие данные приходят в обработчик
-  context.log.info(event.time as any)
+  // context.log.info(event.time as any)
 
   // ? Создаем OpenOrderEvent и записываем его в базу данных
   const openOrderEvent = {
@@ -48,12 +48,13 @@ OrderBookContract.OpenOrderEvent.handler(({ event, context }) => {
     user: event.data.user.payload.bits,
     timestamp: new Date(event.time * 1000).toISOString(),
   };
-  context.log.info(openOrderEvent as any)
+  // context.log.info(openOrderEvent as any)
   context.OpenOrderEvent.set(openOrderEvent);
 
   // ? Создаем Order и записываем его в базу данных
   let order = {
     ...openOrderEvent,
+    timestamp: new Date(event.time * 1000).toISOString(),
     id: event.data.order_id,
     initial_amount: event.data.amount,
     status: "Active" as orderStatus
@@ -98,6 +99,7 @@ pub struct MatchOrderEvent {
 */
 OrderBookContract.MatchOrderEvent.loader(({ event, context }) => { });
 OrderBookContract.MatchOrderEvent.handler(({ event, context }) => {
+  context.log.info(event.data as any)
   const matchOrderEvent = {
     id: nanoid(),
     order_id: event.data.order_id,
@@ -113,6 +115,7 @@ OrderBookContract.MatchOrderEvent.handler(({ event, context }) => {
   context.MatchOrderEvent.set(matchOrderEvent);
 
   let order = context.Order.get(event.data.order_id);
+  context.log.info(order as any)
   if (order != null) {
     const amount = order.amount - event.data.match_size;
     context.Order.set({ ...order, amount, status: amount == 0n ? "Closed" : "Active" });
