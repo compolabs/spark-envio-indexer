@@ -30,12 +30,10 @@ pub struct OpenOrderEvent {
   pub user: Identity,
 }
 */
-OrderBookContract.OpenOrderEvent.loader(({ event, context }) => { });
+OrderBookContract.OpenOrderEvent.loader(({ event, context }) => {
+  context.Order.load(event.data.order_id);
+});
 OrderBookContract.OpenOrderEvent.handler(({ event, context }) => {
-  // ? Этим логом можно пользоваться чтобы узнать какие данные приходят в обработчик
-  // context.log.info(event.time as any)
-
-  // ? Создаем OpenOrderEvent и записываем его в базу данных
   const openOrderEvent = {
     id: nanoid(),
     order_id: event.data.order_id,
@@ -51,7 +49,6 @@ OrderBookContract.OpenOrderEvent.handler(({ event, context }) => {
   // context.log.info(openOrderEvent as any)
   context.OpenOrderEvent.set(openOrderEvent);
 
-  // ? Создаем Order и записываем его в базу данных
   let order = {
     ...openOrderEvent,
     // timestamp: new Date(event.time * 1000).toISOString(),
@@ -67,7 +64,9 @@ pub struct CancelOrderEvent {
   pub order_id: b256,
 }
 */
-OrderBookContract.CancelOrderEvent.loader(({ event, context }) => { });
+OrderBookContract.CancelOrderEvent.loader(({ event, context }) => {
+  context.Order.load(event.data.order_id);
+});
 OrderBookContract.CancelOrderEvent.handler(({ event, context }) => {
   const cancelOrderEvent = {
     id: nanoid(),
@@ -75,7 +74,7 @@ OrderBookContract.CancelOrderEvent.handler(({ event, context }) => {
     tx_id: event.transactionId,
     timestamp: new Date(event.time * 1000).toISOString(),
   };
-  
+
   context.CancelOrderEvent.set(cancelOrderEvent);
 
   let order = context.Order.get(event.data.order_id);
@@ -97,9 +96,11 @@ pub struct MatchOrderEvent {
   pub match_price: u64,
 }
 */
-OrderBookContract.MatchOrderEvent.loader(({ event, context }) => { });
+OrderBookContract.MatchOrderEvent.loader(({ event, context }) => {
+  context.Order.load(event.data.order_id);
+});
 OrderBookContract.MatchOrderEvent.handler(({ event, context }) => {
-  context.log.info(event.data as any)
+  // context.log.info(event.data as any)
   const matchOrderEvent = {
     id: nanoid(),
     order_id: event.data.order_id,
@@ -115,10 +116,10 @@ OrderBookContract.MatchOrderEvent.handler(({ event, context }) => {
   context.MatchOrderEvent.set(matchOrderEvent);
 
   let order = context.Order.get(event.data.order_id);
-  context.log.info(order as any)
+  // context.log.info(order as any)
   if (order != null) {
     const amount = order.amount - event.data.match_size;
-    context.Order.set({ ...order, amount, status: amount == 0n ? "Closed" : "Active", timestamp: new Date(event.time * 1000).toISOString()  });
+    context.Order.set({ ...order, amount, status: amount == 0n ? "Closed" : "Active", timestamp: new Date(event.time * 1000).toISOString() });
   } else {
     context.log.error(`Cannot find an order ${event.data.order_id}`);
   }
@@ -162,7 +163,11 @@ pub struct DepositEvent {
   pub user: Identity,
 }
 */
-OrderBookContract.DepositEvent.loader(({ event, context }) => { });
+OrderBookContract.DepositEvent.loader(({ event, context }) => {
+  const idSource = `${event.data.asset.bits}-${event.data.user.payload.bits}`;
+  const id = crypto.createHash('sha256').update(idSource).digest('hex');
+  context.Balance.load(id);
+});
 OrderBookContract.DepositEvent.handler(({ event, context }) => {
   // context.log.info(event as any)
   const depositEvent = {
@@ -193,7 +198,11 @@ pub struct WithdrawEvent {
   pub user: Identity,
 }
 */
-OrderBookContract.WithdrawEvent.loader(({ event, context }) => { });
+OrderBookContract.WithdrawEvent.loader(({ event, context }) => {
+  const idSource = `${event.data.asset.bits}-${event.data.user.payload.bits}`;
+  const id = crypto.createHash('sha256').update(idSource).digest('hex');
+  context.Balance.load(id);
+});
 OrderBookContract.WithdrawEvent.handler(({ event, context }) => {
   // context.log.info(event as any)
   const withdrawEvent = {
