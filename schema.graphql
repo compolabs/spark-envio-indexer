@@ -1,4 +1,3 @@
-
 enum OrderType {
   Sell
   Buy
@@ -15,7 +14,6 @@ enum AssetType {
   Quote
 }
 
-
 type OpenOrderEvent {
   id: ID!
   order_id: String! @index
@@ -26,6 +24,19 @@ type OpenOrderEvent {
   order_type: OrderType!
   price: BigInt! 
   user: String! 
+  timestamp: String!
+}
+
+type Order {
+  id: ID!
+  asset: String! @index
+  amount: BigInt!
+  asset_type: AssetType! 
+  order_type: OrderType! @index
+  price: BigInt! @index
+  user: String! @index
+  status: OrderStatus! @index # order status
+  initial_amount: BigInt! # initial order amount 
   timestamp: String!
 }
 
@@ -59,20 +70,6 @@ type TradeOrderEvent {
   trade_price: BigInt! @index
   # block_height: BigInt! @index
   timestamp: String!
-}
-
-type Order {
-  id: ID!
-  asset: String! @index
-  amount: BigInt!
-  asset_type: AssetType! 
-  order_type: OrderType! @index
-  price: BigInt! @index
-  user: String! @index
-  status: OrderStatus! @index # order status
-  initial_amount: BigInt! # initial order amount 
-  timestamp: String!
-
 }
 
 type DepositEvent {

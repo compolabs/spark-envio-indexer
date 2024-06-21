@@ -54,7 +54,7 @@ OrderBookContract.OpenOrderEvent.handler(({ event, context }) => {
   // ? Создаем Order и записываем его в базу данных
   let order = {
     ...openOrderEvent,
-    timestamp: new Date(event.time * 1000).toISOString(),
+    // timestamp: new Date(event.time * 1000).toISOString(),
     id: event.data.order_id,
     initial_amount: event.data.amount,
     status: "Active" as orderStatus
@@ -80,7 +80,7 @@ OrderBookContract.CancelOrderEvent.handler(({ event, context }) => {
 
   let order = context.Order.get(event.data.order_id);
   if (order != null) {
-    context.Order.set({ ...order, amount: 0n, status: "Canceled" });
+    context.Order.set({ ...order, amount: 0n, status: "Canceled", timestamp: new Date(event.time * 1000).toISOString() });
   } else {
     context.log.error(`Cannot find an order ${event.data.order_id}`);
   }
@@ -118,7 +118,7 @@ OrderBookContract.MatchOrderEvent.handler(({ event, context }) => {
   context.log.info(order as any)
   if (order != null) {
     const amount = order.amount - event.data.match_size;
-    context.Order.set({ ...order, amount, status: amount == 0n ? "Closed" : "Active" });
+    context.Order.set({ ...order, amount, status: amount == 0n ? "Closed" : "Active", timestamp: new Date(event.time * 1000).toISOString()  });
   } else {
     context.log.error(`Cannot find an order ${event.data.order_id}`);
   }
