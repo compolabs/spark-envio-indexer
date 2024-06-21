@@ -46,7 +46,6 @@ OrderBookContract.OpenOrderEvent.handler(({ event, context }) => {
     user: event.data.user.payload.bits,
     timestamp: new Date(event.time * 1000).toISOString(),
   };
-  // context.log.info(openOrderEvent as any)
   context.OpenOrderEvent.set(openOrderEvent);
 
   let order = {
@@ -100,7 +99,6 @@ OrderBookContract.MatchOrderEvent.loader(({ event, context }) => {
   context.Order.load(event.data.order_id);
 });
 OrderBookContract.MatchOrderEvent.handler(({ event, context }) => {
-  // context.log.info(event.data as any)
   const matchOrderEvent = {
     id: nanoid(),
     order_id: event.data.order_id,
@@ -116,7 +114,6 @@ OrderBookContract.MatchOrderEvent.handler(({ event, context }) => {
   context.MatchOrderEvent.set(matchOrderEvent);
 
   let order = context.Order.get(event.data.order_id);
-  // context.log.info(order as any)
   if (order != null) {
     const amount = order.amount - event.data.match_size;
     context.Order.set({ ...order, amount, status: amount == 0n ? "Closed" : "Active", timestamp: new Date(event.time * 1000).toISOString() });
@@ -137,7 +134,6 @@ OrderBookContract.MatchOrderEvent.handler(({ event, context }) => {
 
 OrderBookContract.TradeOrderEvent.loader(({ event, context }) => { });
 OrderBookContract.TradeOrderEvent.handler(({ event, context }) => {
-  // context.log.info(event as any)
   const idSource = `${event.data.order_matcher}-${event.data.trade_size}-${event.data.trade_price}-${event.data.base_sell_order_id}-${event.data.base_buy_order_id}-${event.data.tx_id}`;
   const id = crypto.createHash('sha256').update(idSource).digest('hex');
   const tradeOrderEvent = {
@@ -169,7 +165,6 @@ OrderBookContract.DepositEvent.loader(({ event, context }) => {
   context.Balance.load(id);
 });
 OrderBookContract.DepositEvent.handler(({ event, context }) => {
-  // context.log.info(event as any)
   const depositEvent = {
     id: nanoid(),
     tx_id: event.transactionId,
@@ -204,7 +199,6 @@ OrderBookContract.WithdrawEvent.loader(({ event, context }) => {
   context.Balance.load(id);
 });
 OrderBookContract.WithdrawEvent.handler(({ event, context }) => {
-  // context.log.info(event as any)
   const withdrawEvent = {
     id: nanoid(),
     tx_id: event.transactionId,
