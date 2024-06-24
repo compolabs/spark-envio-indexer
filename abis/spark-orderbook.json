@@ -164,7 +164,7 @@
           "typeArguments": null
         },
         {
-          "name": "CantBatchMatch",
+          "name": "CantMatchMany",
           "type": 0,
           "typeArguments": null
         }
@@ -227,7 +227,12 @@
           "typeArguments": null
         },
         {
-          "name": "AmountCannotBeZero",
+          "name": "ZeroOrderAmount",
+          "type": 0,
+          "typeArguments": null
+        },
+        {
+          "name": "ZeroLockAmount",
           "type": 0,
           "typeArguments": null
         },
@@ -266,7 +271,7 @@
           "typeArguments": null
         },
         {
-          "name": "InvalidLength",
+          "name": "InvalidArrayLength",
           "type": 0,
           "typeArguments": null
         }
@@ -741,17 +746,18 @@
     {
       "inputs": [
         {
-          "name": "order0_id",
-          "type": 4,
-          "typeArguments": null
-        },
-        {
-          "name": "order1_id",
-          "type": 4,
-          "typeArguments": null
+          "name": "orders",
+          "type": 32,
+          "typeArguments": [
+            {
+              "name": "",
+              "type": 4,
+              "typeArguments": null
+            }
+          ]
         }
       ],
-      "name": "match_order_pair",
+      "name": "match_order_many",
       "output": {
         "name": "",
         "type": 0,
@@ -770,18 +776,17 @@
     {
       "inputs": [
         {
-          "name": "orders",
-          "type": 32,
-          "typeArguments": [
-            {
-              "name": "",
-              "type": 4,
-              "typeArguments": null
-            }
-          ]
+          "name": "order0_id",
+          "type": 4,
+          "typeArguments": null
+        },
+        {
+          "name": "order1_id",
+          "type": 4,
+          "typeArguments": null
         }
       ],
-      "name": "match_orders",
+      "name": "match_order_pair",
       "output": {
         "name": "",
         "type": 0,
@@ -1206,7 +1211,7 @@
         "type": 20,
         "typeArguments": []
       },
-      "offset": 75936
+      "offset": 76024
     },
     {
       "name": "BASE_ASSET_DECIMALS",
@@ -1215,7 +1220,7 @@
         "type": 34,
         "typeArguments": null
       },
-      "offset": 75792
+      "offset": 75872
     },
     {
       "name": "OWNER",
@@ -1224,7 +1229,7 @@
         "type": 19,
         "typeArguments": []
       },
-      "offset": 75872
+      "offset": 75960
     },
     {
       "name": "PRICE_DECIMALS",
@@ -1233,7 +1238,7 @@
         "type": 34,
         "typeArguments": null
       },
-      "offset": 75808
+      "offset": 75888
     },
     {
       "name": "QUOTE_ASSET",
@@ -1242,7 +1247,7 @@
         "type": 20,
         "typeArguments": []
       },
-      "offset": 75968
+      "offset": 76056
     },
     {
       "name": "QUOTE_ASSET_DECIMALS",
@@ -1251,7 +1256,7 @@
         "type": 34,
         "typeArguments": null
       },
-      "offset": 75816
+      "offset": 75896
     }
   ]
 }
