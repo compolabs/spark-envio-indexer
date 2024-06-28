@@ -50,7 +50,6 @@ OrderBookContract.OpenOrderEvent.handler(({ event, context }) => {
 
   let order = {
     ...openOrderEvent,
-    // timestamp: new Date(event.time * 1000).toISOString(),
     id: event.data.order_id,
     initial_amount: event.data.amount,
     status: "Active" as orderStatus
