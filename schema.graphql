@@ -18,12 +18,12 @@ type OpenOrderEvent {
   id: ID!
   order_id: String! @index
   tx_id: String!
-  asset: String! 
+  asset: String!
   amount: BigInt!
   asset_type: AssetType!
   order_type: OrderType!
-  price: BigInt! 
-  user: String! 
+  price: BigInt!
+  user: String!
   timestamp: String!
 }
 
@@ -31,12 +31,12 @@ type Order {
   id: ID!
   asset: String! @index
   amount: BigInt!
-  asset_type: AssetType! 
+  asset_type: AssetType!
   order_type: OrderType! @index
   price: BigInt! @index
   user: String! @index
-  status: OrderStatus! @index # order status
-  initial_amount: BigInt! # initial order amount 
+  status: OrderStatus! @index
+  initial_amount: BigInt!
   timestamp: String!
 }
 
@@ -68,7 +68,6 @@ type TradeOrderEvent {
   order_matcher: String! @index
   trade_size: BigInt! @index
   trade_price: BigInt! @index
-  # block_height: BigInt! @index
   timestamp: String!
 }
 
@@ -95,4 +94,12 @@ type Balance {
   amount: BigInt!
   asset: String! @index
   user: String! @index
+}
+
+type Subscription {
+  orderUpdated: Order
+}
+
+type Query {
+  dummy: Boolean
 }
