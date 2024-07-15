@@ -97,9 +97,11 @@ type Balance {
 }
 
 type Subscription {
+  id: ID!
   orderUpdated: Order
 }
 
 type Query {
+  id: ID!
   dummy: Boolean
 }

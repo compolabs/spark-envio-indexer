@@ -7,11 +7,7 @@ import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import path from "path";
-import { fileURLToPath } from "url";
 import resolversModule from "./resolvers";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const typeDefs = loadSchemaSync(path.join(__dirname, "../schema.graphql"), {
   loaders: [new GraphQLFileLoader()]
@@ -25,30 +21,32 @@ const schema = makeExecutableSchema({
   resolvers: resolversModule.resolvers,
 });
 
-const server = new ApolloServer({
-  schema,
-  context: () => ({ pubsub: resolversModule.pubsub }),
-});
+const startServer = async () => {
+  const server = new ApolloServer({
+    schema,
+    context: () => ({ pubsub: resolversModule.pubsub }),
+  });
 
-await server.start();
-server.applyMiddleware({ app });
+  await server.start();
+  server.applyMiddleware({ app });
 
-const wsServer = new WebSocketServer({
-  server: httpServer,
-  path: '/graphql',
-});
+  const wsServer = new WebSocketServer({
+    server: httpServer,
+    path: '/graphql',
+  });
 
-useServer({ schema }, wsServer);
+  useServer({ schema }, wsServer);
 
-app.use(express.static(path.join(__dirname, "../")));
+  app.use(express.static(path.join(__dirname, "../")));
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../index.html"));
-});
+  app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "../index.html"));
+  });
 
-httpServer.listen({ port: 4000 }, () => {
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
-  console.log(
-    `🚀 Subscriptions ready at ws://localhost:4000/graphql`
-  );
-});
+  httpServer.listen({ port: 4000 }, () => {
+    console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+    console.log(`🚀 Subscriptions ready at ws://localhost:4000/graphql`);
+  });
+};
+
+startServer();

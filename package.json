@@ -1,7 +1,6 @@
 {
   "name": "spark-order-book",
   "version": "0.1.0",
-  "type": "module",
   "scripts": {
     "clean": "tsc --clean",
     "build": "tsc --build",
@@ -16,7 +15,6 @@
     "@types/chai": "^4.3.16",
     "@types/mocha": "10.0.6",
     "@types/node": "20.8.8",
-    "@types/ws": "^8.5.11",
     "mocha": "10.2.0",
     "ts-mocha": "^10.0.0",
     "ts-node": "10.9.1",
@@ -26,12 +24,9 @@
     "@graphql-tools/graphql-file-loader": "^8.0.1",
     "@graphql-tools/load": "^8.0.2",
     "@graphql-tools/schema": "^10.0.4",
-    "apollo-server": "^3.13.0",
     "apollo-server-express": "^3.13.0",
     "chai": "4.3.10",
     "envio": "1.1.4-fuel",
-    "express": "4.19.2",
-    "graphql": "^16.9.0",
     "graphql-subscriptions": "^2.0.0",
     "graphql-ws": "^5.16.0",
     "nanoid": "3.3.7",
