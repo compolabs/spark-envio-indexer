@@ -1,25 +1,33 @@
-const { ApolloServer } = require("apollo-server-express")
-const express = require("express")
-const { importSchema } = require("graphql-import")
-const { resolvers, pubsub } = require("./resolvers").default
-const http = require("http")
-const { SubscriptionServer } = require("subscriptions-transport-ws")
-const { execute, subscribe } = require("graphql")
-const { makeExecutableSchema } = require("@graphql-tools/schema")
-const path = require("path")
+import { ApolloServer } from "apollo-server-express"
+import express from "express"
+import { importSchema } from "graphql-import"
+import http from "http"
+import { SubscriptionServer } from "subscriptions-transport-ws"
+import { execute, subscribe } from "graphql"
+import { makeExecutableSchema } from "@graphql-tools/schema"
+import path from "path"
+import { fileURLToPath } from "url"
+import resolversModule from "./resolvers"
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const typeDefs = importSchema(path.join(__dirname, "../schema.graphql"))
 
 const app = express()
 const httpServer = http.createServer(app)
 
-const schema = makeExecutableSchema({ typeDefs, resolvers })
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers: resolversModule.resolvers,
+})
 
 const server = new ApolloServer({
   schema,
-  context: () => ({ pubsub }),
+  context: () => ({ pubsub: resolversModule.pubsub }),
 })
 
+await server.start()
 server.applyMiddleware({ app })
 
 SubscriptionServer.create(
