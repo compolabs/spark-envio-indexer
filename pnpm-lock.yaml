@@ -58,6 +58,9 @@ importers:
       '@types/node':
         specifier: 20.8.8
         version: 20.8.8
+      '@types/ws':
+        specifier: ^8.5.11
+        version: 8.5.11
       mocha:
         specifier: 10.2.0
         version: 10.2.0
@@ -543,6 +546,9 @@ packages:
 
   '@types/serve-static@1.15.7':
     resolution: {integrity: sha512-W8Ym+h8nhuRwaKPaDw34QUkwsGi6Rc4yYqvKFo5rm2FUEhCFbzVWrxXUxuKK8TASjWsysJY0nsmNCGhCOIsrOw==}
+
+  '@types/ws@8.5.11':
+    resolution: {integrity: sha512-4+q7P5h3SpJxaBft0Dzpbr6lmMaqh0Jr2tbhJZ/luAwvD7ohSCniYkwz/pLxuT2h0EOa6QADgJj1Ko+TzRfZ+w==}
 
   '@types/yoga-layout@1.9.2':
     resolution: {integrity: sha512-S9q47ByT2pPvD65IvrWp7qppVMpk9WGMbVq9wbWZOHg6tnXSD4vyhao6nOSBwwfDdV2p3Kx9evA9vI+XWTfDvw==}
@@ -2365,6 +2371,10 @@ snapshots:
       '@types/http-errors': 2.0.4
       '@types/node': 20.8.8
       '@types/send': 0.17.4
+
+  '@types/ws@8.5.11':
+    dependencies:
+      '@types/node': 20.8.8
 
   '@types/yoga-layout@1.9.2': {}
 
