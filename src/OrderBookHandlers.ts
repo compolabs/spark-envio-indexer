@@ -2,7 +2,8 @@ import { OrderBookContract } from "generated";
 import { orderStatus } from "generated/src/Enums.gen";
 import { nanoid } from "nanoid";
 import crypto from 'crypto';
-
+import resolversModule from './resolvers';
+const pubsub = resolversModule.pubsub;
 
 function tai64ToDate(tai64: bigint) {
   const dateStr = (
@@ -55,6 +56,7 @@ OrderBookContract.OpenOrderEvent.handler(({ event, context }) => {
     status: "Active" as orderStatus
   };
   context.Order.set(order);
+  pubsub.publish('ORDER_UPDATED', { orderUpdated: order });
 });
 
 /* 
@@ -77,10 +79,15 @@ OrderBookContract.CancelOrderEvent.handler(({ event, context }) => {
 
   let order = context.Order.get(event.data.order_id);
   if (order != null) {
-    context.Order.set({ ...order, amount: 0n, status: "Canceled", timestamp: new Date(event.time * 1000).toISOString() });
+    const updatedOrder = { ...order, amount: 0n, status: "Canceled" as orderStatus, timestamp: new Date(event.time * 1000).toISOString() };
+    context.Order.set(updatedOrder);
+
+    // Publish the update
+    pubsub.publish('ORDER_UPDATED', { orderUpdated: updatedOrder });
   } else {
     context.log.error(`Cannot find an order ${event.data.order_id}`);
   }
+  
 });
 
 /* 
@@ -115,7 +122,11 @@ OrderBookContract.MatchOrderEvent.handler(({ event, context }) => {
   let order = context.Order.get(event.data.order_id);
   if (order != null) {
     const amount = order.amount - event.data.match_size;
-    context.Order.set({ ...order, amount, status: amount == 0n ? "Closed" : "Active", timestamp: new Date(event.time * 1000).toISOString() });
+    const updatedOrder = { ...order, amount, status: (amount == 0n ? "Closed" : "Active") as orderStatus, timestamp: new Date(event.time * 1000).toISOString() };
+    context.Order.set(updatedOrder);
+
+    // Publish the update
+    pubsub.publish('ORDER_UPDATED', { orderUpdated: updatedOrder });
   } else {
     context.log.error(`Cannot find an order ${event.data.order_id}`);
   }
