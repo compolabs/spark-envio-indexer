@@ -7,9 +7,6 @@ const resolvers = {
       subscribe: () => pubsub.asyncIterator(["ORDER_UPDATED"]),
     },
   },
-  Query: {
-    dummy: () => true,
-  },
 }
 
 export default { resolvers, pubsub }
