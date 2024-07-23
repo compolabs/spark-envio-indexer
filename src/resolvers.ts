@@ -1,12 +1,18 @@
-import { PubSub } from "graphql-subscriptions"
-const pubsub = new PubSub()
+import { PubSub } from 'graphql-subscriptions';
+export const pubsub = new PubSub();
 
-const resolvers = {
+export const activeOrders = new Set(); // Пример хранения активных ордеров
+
+export const resolvers = {
   Subscription: {
     orderUpdated: {
-      subscribe: () => pubsub.asyncIterator(["ORDER_UPDATED"]),
+      subscribe: () => pubsub.asyncIterator(['ORDER_UPDATED']),
+    },
+    activeOrders: {
+      subscribe: () => pubsub.asyncIterator(['ACTIVE_ORDERS']),
+      resolve: () => ({ id: 'activeOrdersCollection', order_ids: Array.from(activeOrders) }),
     },
   },
-}
+};
 
-export default { resolvers, pubsub }
+module.exports = { resolvers, pubsub, activeOrders };

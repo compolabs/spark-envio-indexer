@@ -96,7 +96,13 @@ type Balance {
   user: String! @index
 }
 
+type ActiveOrderReference {
+  id: ID!
+  order_ids: [ID!]! @index
+}
+
 type Subscription {
   id: ID!
-  orderUpdated: Order
+  orderUpdated: Order! @index
+  activeOrders: ActiveOrderReference! @index
 }
