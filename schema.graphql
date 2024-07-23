@@ -38,6 +38,12 @@ type Order {
   status: OrderStatus! @index
   initial_amount: BigInt!
   timestamp: String!
+  activeOrderReference: ID @index
+}
+
+type ActiveOrderReference {
+  id: ID!
+  orders: [Order!]! @derivedFrom(field: "activeOrderReference")
 }
 
 type CancelOrderEvent {
@@ -96,13 +102,7 @@ type Balance {
   user: String! @index
 }
 
-type ActiveOrderReference {
-  id: ID!
-  order_ids: [ID!]! @index
-}
-
 type Subscription {
   id: ID!
-  orderUpdated: Order! @index
   activeOrders: ActiveOrderReference! @index
 }

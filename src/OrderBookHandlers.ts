@@ -20,6 +20,7 @@ OrderBookContract.OpenOrderEvent.handler(({ event, context }) => {
     price: event.data.price,
     user: event.data.user.payload.bits,
     timestamp: new Date(event.time * 1000).toISOString(),
+    activeOrderReference: 'activeOrdersCollection',
   };
   context.OpenOrderEvent.set(openOrderEvent);
 
@@ -27,13 +28,13 @@ OrderBookContract.OpenOrderEvent.handler(({ event, context }) => {
     ...openOrderEvent,
     id: event.data.order_id,
     initial_amount: event.data.amount,
-    status: "Active" as orderStatus
+    status: "Active" as orderStatus,
+    activeOrderReference: 'activeOrdersCollection'
   };
   context.Order.set(order);
-  activeOrders.add(order.id); // Добавляем ордер в Set
+  activeOrders.add(order);
   console.log("Active Orders after OpenOrderEvent:", Array.from(activeOrders));
-  pubsub.publish('ORDER_UPDATED', { orderUpdated: order });
-  pubsub.publish('ACTIVE_ORDERS', { activeOrders: { id: 'activeOrdersCollection', order_ids: Array.from(activeOrders) } });
+  pubsub.publish('ACTIVE_ORDERS', { activeOrders: { id: 'activeOrdersCollection', orders: Array.from(activeOrders) } });
 });
 
 OrderBookContract.CancelOrderEvent.loader(({ event, context }) => {
@@ -54,10 +55,9 @@ OrderBookContract.CancelOrderEvent.handler(({ event, context }) => {
   if (order != null) {
     const updatedOrder = { ...order, amount: 0n, status: "Canceled" as orderStatus, timestamp: new Date(event.time * 1000).toISOString() };
     context.Order.set(updatedOrder);
-    activeOrders.delete(order.id); // Удаляем ордер из Set
+    activeOrders.delete(order);
     console.log("Active Orders after CancelOrderEvent:", Array.from(activeOrders));
-    pubsub.publish('ORDER_UPDATED', { orderUpdated: updatedOrder });
-    pubsub.publish('ACTIVE_ORDERS', { activeOrders: { id: 'activeOrdersCollection', order_ids: Array.from(activeOrders) } });
+    pubsub.publish('ACTIVE_ORDERS', { activeOrders: { id: 'activeOrdersCollection', orders: Array.from(activeOrders) } });
   } else {
     context.log.error(`Cannot find an order ${event.data.order_id}`);
   }
@@ -79,6 +79,7 @@ OrderBookContract.MatchOrderEvent.handler(({ event, context }) => {
     match_size: event.data.match_size,
     match_price: event.data.match_price,
     timestamp: new Date(event.time * 1000).toISOString(),
+    activeOrderReference: 'activeOrdersCollection',
   };
   context.MatchOrderEvent.set(matchOrderEvent);
 
@@ -88,13 +89,12 @@ OrderBookContract.MatchOrderEvent.handler(({ event, context }) => {
     const updatedOrder = { ...order, amount, status: (amount == 0n ? "Closed" : "Active") as orderStatus, timestamp: new Date(event.time * 1000).toISOString() };
     context.Order.set(updatedOrder);
     if (updatedOrder.status === "Active") {
-      activeOrders.add(order.id);
+      activeOrders.add(order);
     } else {
-      activeOrders.delete(order.id);
+      activeOrders.delete(order);
     }
     console.log("Active Orders after MatchOrderEvent:", Array.from(activeOrders));
-    pubsub.publish('ORDER_UPDATED', { orderUpdated: updatedOrder });
-    pubsub.publish('ACTIVE_ORDERS', { activeOrders: { id: 'activeOrdersCollection', order_ids: Array.from(activeOrders) } });
+    pubsub.publish('ACTIVE_ORDERS', { activeOrders: { id: 'activeOrdersCollection', orders: Array.from(activeOrders) } });
   } else {
     context.log.error(`Cannot find an order ${event.data.order_id}`);
   }
@@ -118,71 +118,3 @@ OrderBookContract.TradeOrderEvent.handler(({ event, context }) => {
 
   context.TradeOrderEvent.set(tradeOrderEvent);
 });
-
-
-
-
-
-// OrderBookContract.DepositEvent.loader(({ event, context }) => {
-//   const idSource = `${event.data.asset.bits}-${event.data.user.payload.bits}`;
-//   const id = crypto.createHash('sha256').update(idSource).digest('hex');
-//   context.Balance.load(id);
-// });
-// OrderBookContract.DepositEvent.handler(({ event, context }) => {
-//   const depositEvent = {
-//     id: nanoid(),
-//     tx_id: event.transactionId,
-//     amount: event.data.amount,
-//     asset: event.data.asset.bits,
-//     user: event.data.user.payload.bits,
-//     timestamp: new Date(event.time * 1000).toISOString(),
-//   };
-//   context.DepositEvent.set(depositEvent);
-
-//   const idSource = `${event.data.asset.bits}-${event.data.user.payload.bits}`;
-//   const id = crypto.createHash('sha256').update(idSource).digest('hex');
-//   let balance = context.Balance.get(id);
-//   if (balance != null) {
-//     const amount = balance.amount + event.data.amount;
-//     context.Balance.set({ ...balance, amount });
-//   } else {
-//     context.Balance.set({ ...depositEvent, id });
-//   }
-// });
-
-// OrderBookContract.WithdrawEvent.loader(({ event, context }) => {
-//   const idSource = `${event.data.asset.bits}-${event.data.user.payload.bits}`;
-//   const id = crypto.createHash('sha256').update(idSource).digest('hex');
-//   context.Balance.load(id);
-// });
-// OrderBookContract.WithdrawEvent.handler(({ event, context }) => {
-//   const withdrawEvent = {
-//     id: nanoid(),
-//     tx_id: event.transactionId,
-//     amount: event.data.amount,
-//     asset: event.data.asset.bits,
-//     user: event.data.user.payload.bits,
-//     timestamp: new Date(event.time * 1000).toISOString(),
-//   };
-//   context.WithdrawEvent.set(withdrawEvent);
-
-//   const idSource = `${event.data.asset.bits}-${event.data.user.payload.bits}`;
-//   const id = crypto.createHash('sha256').update(idSource).digest('hex');
-//   let balance = context.Balance.get(id);
-//   if (balance != null) {
-//     const amount = balance.amount - event.data.amount;
-//     context.Balance.set({ ...balance, amount });
-//   } else {
-//     context.log.error(`Cannot find a balance; user:${event.data.user}; asset: ${event.data.asset.bits}; id: ${id}`);
-//   }
-// });
-
-
-/*
-pub struct SetFeeEvent {
-  pub amount: u64,
-  pub user: Option<Identity>,
-}
-*/
-// OrderBookContract.WithdrawEvent.loader(({ event, context }) => { });
-// OrderBookContract.WithdrawEvent.handler(({ event, context }) => {});
