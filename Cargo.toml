@@ -1,0 +1,22 @@
+[package]
+name = "user-state"
+description = "A cargo-generate template for Rust + Sway integration testing."
+version = "0.1.0"
+edition = "2021"
+authors = ["lzhabo <52199564+lzhabo@users.noreply.github.com>"]
+license = "Apache-2.0"
+
+[dev-dependencies]
+fuels = { version = "0.64.0", features = ["fuel-core-lib"] }
+tokio = { version = "1.12", features = ["rt", "macros"] }
+spark-market-sdk = { git = "https://github.com/compolabs/orderbook-contract.git", branch = "feat-contract-split", package = "spark-market-sdk" }
+
+[[test]]
+harness = true
+name = "integration_tests"
+path = "tests/harness.rs"
+
+[dependencies]
+anyhow = "1.0.86"
+dotenv = "0.15.0"
+serde = "1.0.204"
