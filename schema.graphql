@@ -27,6 +27,19 @@ type OpenOrderEvent {
   timestamp: String!
 }
 
+type ActiveOrder {
+  id: ID!
+  asset: String! @index
+  amount: BigInt!
+  asset_type: AssetType!
+  order_type: OrderType! @index
+  price: BigInt! @index
+  user: String! @index
+  status: OrderStatus! @index # not needed
+  initial_amount: BigInt!
+  timestamp: String!
+}
+
 type Order {
   id: ID!
   asset: String! @index
