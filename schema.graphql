@@ -40,6 +40,32 @@ type Order {
   timestamp: String!
 }
 
+type ActiveSellOrder {
+  id: ID!
+  asset: String! @index
+  amount: BigInt!
+  asset_type: AssetType!
+  order_type: OrderType! @index
+  price: BigInt! @index
+  user: String! @index
+  status: OrderStatus!
+  initial_amount: BigInt!
+  timestamp: String!
+}
+
+type ActiveBuyOrder {
+  id: ID!
+  asset: String! @index
+  amount: BigInt!
+  asset_type: AssetType!
+  order_type: OrderType! @index
+  price: BigInt! @index
+  user: String! @index
+  status: OrderStatus!
+  initial_amount: BigInt!
+  timestamp: String!
+}
+
 type CancelOrderEvent {
   id: ID!
   order_id: String! @index
@@ -94,9 +120,4 @@ type Balance {
   amount: BigInt!
   asset: String! @index
   user: String! @index
-}
-
-type Subscription {
-  id: ID!
-  orderUpdated: Order
 }
