@@ -28,7 +28,6 @@ export const withdrawEventHandler = ({
   const balanceId = getHash(
     `${event.data.asset.bits}-${event.data.user.payload.bits}`
   );
-
   const balance = context.Balance.get(balanceId);
 
   if (!balance) {
