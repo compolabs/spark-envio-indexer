@@ -26,5 +26,8 @@
   },
   "optionalDependencies": {
     "generated": "link:generated"
+  },
+  "engines": {
+    "node": "22.x"
   }
 }
