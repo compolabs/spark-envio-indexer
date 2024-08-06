@@ -2,6 +2,7 @@ import {
   OrderBookContract_WithdrawEventEvent_eventArgs,
   OrderBookContract_WithdrawEventEvent_handlerContext,
   WithdrawEventEntity,
+  BalanceEntity
 } from "generated";
 import { handlerArgs } from "generated/src/Handlers.gen";
 import { nanoid } from "nanoid";
@@ -28,15 +29,17 @@ export const withdrawEventHandler = ({
   const balanceId = getHash(
     `${event.data.asset.bits}-${event.data.user.payload.bits}`
   );
-  const balance = context.Balance.get(balanceId);
 
-  if (!balance) {
-    context.log.error(
-      `Cannot find a balance; user:${event.data.user}; asset: ${event.data.asset.bits}; id: ${balanceId}`
-    );
-    return;
-  }
+  const balance: BalanceEntity = {
+    ...withdrawEvent,
+    id: balanceId,
+  };
+  context.Balance.set(balance);
 
-  const amount = balance.amount - event.data.amount;
-  context.Balance.set({ ...balance, amount });
+  const updatedAmount = balance.amount - event.data.amount;
+
+  const updatedBalance: BalanceEntity = { ...balance, amount: updatedAmount };
+  
+  context.Balance.set(updatedBalance);
+
 };
