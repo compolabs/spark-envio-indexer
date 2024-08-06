@@ -14,4 +14,4 @@ networks:
           - name: TradeOrderEvent
           - name: DepositEvent
           - name: WithdrawEvent
-          - name: SetFeeEvent
+#          - name: SetFeeEvent
