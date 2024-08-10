@@ -46,9 +46,17 @@ export const matchOrderEventHandler = ({
   };
   context.Order.set(updatedOrder);
 
-  if (order.order_type === "Buy" && isClosed) {
-    context.ActiveBuyOrder.deleteUnsafe(order.id);
-  } else if (order.order_type === "Sell" && isClosed) {
-    context.ActiveSellOrder.deleteUnsafe(order.id);
+  if (isClosed) {
+    if (order.order_type === "Buy") {
+      context.ActiveBuyOrder.deleteUnsafe(order.id);
+    } else if (order.order_type === "Sell") {
+      context.ActiveSellOrder.deleteUnsafe(order.id);
+    }
+  } else {
+    if (order.order_type === "Buy") {
+      context.ActiveBuyOrder.set(updatedOrder);
+    } else if (order.order_type === "Sell") {
+      context.ActiveSellOrder.set(updatedOrder);
+    }
   }
 };
