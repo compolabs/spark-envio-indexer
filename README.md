@@ -35,3 +35,20 @@ _Please refer to the [documentation website](https://docs.envio.dev) for a thoro
 5. Verify it's working correctly by checking the Hasura:
    1. Open http://localhost:8080
    2. Enter admin-secret `testing`
+
+6. Query the Indexer
+
+```
+query MyQuery {
+  Order(where: {status: {_eq: "Active"}}) {
+    id
+    initial_amount
+    status
+    price
+    amount
+    order_type
+  }
+}
+```
+This query will return a list of orders with the status "Active", including their id, initial_amount, status, price, amount, and order_type.
+
