@@ -50,5 +50,40 @@ query MyQuery {
   }
 }
 ```
+
 This query will return a list of orders with the status "Active", including their id, initial_amount, status, price, amount, and order_type.
 
+```
+query MyQuery {
+  Order(where: {user: {_eq: ""}}) {
+    id
+    initial_amount
+    status
+    price
+    amount
+    order_type
+    asset_type
+  }
+}
+```
+
+This query fetches orders filtered by user, returning their id, initial_amount, status, price, amount, order_type, and asset_type.
+
+```
+query MyQuery {
+  MatchOrderEvent(where: {owner: {_eq: ""}}) {
+    id
+    asset
+    counterparty
+    match_price
+    match_size
+    order_id
+    order_matcher
+    owner
+    timestamp
+    tx_id
+  }
+}
+```
+
+This query fetches match order events based on the owner, including details such as id, asset, counterparty, match_price, match_size, order_id, order_matcher, owner, timestamp, and tx_id.
