@@ -1,7 +1,5 @@
 ## Spark OrderBook indexer
 
-Rebuild the https://github.com/compolabs/orderbook-indexer with Envio.
-
 Contract: https://github.com/compolabs/orderbook-contract/tree/master/market-contract
 
 _Please refer to the [documentation website](https://docs.envio.dev) for a thorough guide on all Envio indexer features_
