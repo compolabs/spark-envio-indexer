@@ -45,10 +45,10 @@ type ActiveSellOrder {
   asset: String! @index
   amount: BigInt!
   asset_type: AssetType!
-  order_type: OrderType! @index
+  # order_type: OrderType! @index
   price: BigInt! @index
   user: String! @index
-  status: OrderStatus!
+  # status: OrderStatus!
   initial_amount: BigInt!
   timestamp: String!
 }
@@ -58,10 +58,10 @@ type ActiveBuyOrder {
   asset: String! @index
   amount: BigInt!
   asset_type: AssetType!
-  order_type: OrderType! @index
+  # order_type: OrderType! @index
   price: BigInt! @index
   user: String! @index
-  status: OrderStatus!
+  # status: OrderStatus!
   initial_amount: BigInt!
   timestamp: String!
 }
