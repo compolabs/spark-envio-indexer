@@ -10,7 +10,7 @@
     "dev": "envio dev",
     "test": "pnpm mocha",
     "start": "ts-node generated/src/Index.bs.js",
-    "release": "standard-version && git push --follow-tags origin main"
+    "release": "standard-version"
   },
   "devDependencies": {
     "@types/mocha": "10.0.6",
