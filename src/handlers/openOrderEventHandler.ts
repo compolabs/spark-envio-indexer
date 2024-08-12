@@ -23,7 +23,6 @@ export const openOrderEventHandler = ({
     tx_id: event.transactionId,
     asset: event.data.asset.bits,
     amount: event.data.amount,
-    asset_type: event.data.asset_type.case,
     order_type: orderType,
     price: event.data.price,
     user: event.data.user.payload.bits,
