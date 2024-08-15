@@ -2,6 +2,8 @@ name: OrderBook indexer
 networks:
   - id: 0
     start_block: 0
+    hypersync_config:
+      url: https://fuel-testnet-5.hypersync.xyz
     contracts:
       - name: OrderBook
         address: 0x7278edd30be6b982d3196ffb2790321d8546814226e51e82c8136c8f6d3c0c97
