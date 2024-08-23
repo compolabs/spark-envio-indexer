@@ -16,5 +16,4 @@ export const depositEventLoader = ({
   const idSource = getHash(
     `${event.data.asset.bits}-${event.data.user.payload.bits}`
   );
-  context.Balance.load(idSource);
 };

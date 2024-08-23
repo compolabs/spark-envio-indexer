@@ -24,17 +24,4 @@ export const depositEventHandler = ({
     timestamp: getISOTime(event.time),
   };
   context.DepositEvent.set(depositEvent);
-
-  const balanceId = getHash(
-    `${event.data.asset.bits}-${event.data.user.payload.bits}`
-  );
-  const balance = context.Balance.get(balanceId);
-
-  if (!balance) {
-    context.Balance.set({ ...depositEvent, id: balanceId });
-    return;
-  }
-
-  const amount = balance.amount + event.data.amount;
-  context.Balance.set({ ...balance, amount });
 };

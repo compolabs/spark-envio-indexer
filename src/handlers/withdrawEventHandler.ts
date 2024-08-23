@@ -24,19 +24,4 @@ export const withdrawEventHandler = ({
     timestamp: getISOTime(event.time),
   };
   context.WithdrawEvent.set(withdrawEvent);
-
-  const balanceId = getHash(
-    `${event.data.asset.bits}-${event.data.user.payload.bits}`
-  );
-  const balance = context.Balance.get(balanceId);
-
-  if (!balance) {
-    context.log.error(
-      `Cannot find a balance; user:${event.data.user}; asset: ${event.data.asset.bits}; id: ${balanceId}`
-    );
-    return;
-  }
-
-  const amount = balance.amount - event.data.amount;
-  context.Balance.set({ ...balance, amount });
 };

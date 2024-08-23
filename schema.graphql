@@ -20,7 +20,6 @@ type OpenOrderEvent {
   tx_id: String!
   asset: String!
   amount: BigInt!
-  asset_type: AssetType!
   order_type: OrderType!
   price: BigInt!
   user: String!
@@ -31,7 +30,6 @@ type Order {
   id: ID!
   asset: String! @index
   amount: BigInt!
-  asset_type: AssetType!
   order_type: OrderType! @index
   price: BigInt! @index
   user: String! @index
@@ -44,7 +42,6 @@ type ActiveSellOrder {
   id: ID!
   asset: String! @index
   amount: BigInt!
-  asset_type: AssetType!
   order_type: OrderType! @index
   price: BigInt! @index
   user: String! @index
@@ -57,7 +54,6 @@ type ActiveBuyOrder {
   id: ID!
   asset: String! @index
   amount: BigInt!
-  asset_type: AssetType!
   order_type: OrderType! @index
   price: BigInt! @index
   user: String! @index
@@ -113,13 +109,6 @@ type WithdrawEvent {
   asset: String! @index
   user: String! @index
   timestamp: String!
-}
-
-type Balance {
-  id: ID!
-  amount: BigInt!
-  asset: String! @index
-  user: String! @index
 }
 
 type Subscription {
