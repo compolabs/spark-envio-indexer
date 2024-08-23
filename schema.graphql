@@ -92,26 +92,3 @@ type TradeOrderEvent {
   trade_price: BigInt! @index
   timestamp: String!
 }
-
-type DepositEvent {
-  id: ID!
-  tx_id: String! @index
-  amount: BigInt!
-  asset: String! @index
-  user: String! @index
-  timestamp: String!
-}
-
-type WithdrawEvent {
-  id: ID!
-  tx_id: String! @index
-  amount: BigInt!
-  asset: String! @index
-  user: String! @index
-  timestamp: String!
-}
-
-type Subscription {
-  id: ID!
-  orderUpdated: Order
-}
