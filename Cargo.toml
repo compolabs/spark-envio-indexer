@@ -7,7 +7,7 @@ authors = ["lzhabo <52199564+lzhabo@users.noreply.github.com>"]
 license = "Apache-2.0"
 
 [dev-dependencies]
-fuels = { version = "0.66.1", features = ["fuel-core-lib"] }
+fuels = { version = "0.64.0", features = ["fuel-core-lib"] }
 tokio = { version = "1.12", features = ["rt", "macros"] }
 spark-market-sdk = { git = "https://github.com/compolabs/orderbook-contract.git", branch = "feat-contract-split", package = "spark-market-sdk" }
 
