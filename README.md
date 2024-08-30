@@ -9,13 +9,13 @@ _Please refer to the [documentation website](https://docs.envio.dev) for a thoro
 1. Clone the repository
 
    ```sh
-   git clone git@github.com:enviodev/spark-orderbook-indexer.git
+   git clone git@github.com:compolabs/spark-envio-indexer.git
    ```
 
 2. Open it locally
 
    ```sh
-   cd spark-orderbook-indexer
+   cd spark-envio-indexer
    ```
 
 3. Install dependencies (requires [pnpm@8](https://pnpm.io/))
