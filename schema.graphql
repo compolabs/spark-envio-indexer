@@ -60,30 +60,32 @@ type ActiveBuyOrder {
 type CancelOrderEvent {
   id: ID!
   order_id: String! @index
+  user: String! @index
   tx_id: String!
   timestamp: String!
 }
 
-type MatchOrderEvent {
-  id: ID!
-  order_id: String! @index
-  tx_id: String!
-  asset: String!
-  order_matcher: String!
-  owner: String!
-  counterparty: String!
-  match_size: BigInt!
-  match_price: BigInt!
-  timestamp: String!
-}
+# type MatchOrderEvent {
+#   id: ID!
+#   order_id: String! @index
+#   tx_id: String!
+#   asset: String!
+#   order_matcher: String!
+#   owner: String!
+#   counterparty: String!
+#   match_size: BigInt!
+#   match_price: BigInt!
+#   timestamp: String!
+# }
 
 type TradeOrderEvent {
   id: ID!
   base_sell_order_id: String! @index
   base_buy_order_id: String! @index
-  tx_id: String! @index
-  order_matcher: String! @index
   trade_size: BigInt! @index
   trade_price: BigInt! @index
+  seller: String!
+  buyer: String!
+  tx_id: String! @index
   timestamp: String!
 }

@@ -72,7 +72,7 @@ importers:
         version: 0.2.0
       '@rescript/react':
         specifier: 0.12.1
-        version: 0.12.1(react-dom@18.3.1)(react@18.2.0)
+        version: 0.12.1(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
       '@ryyppy/rescript-promise':
         specifier: 2.1.0
         version: 2.1.0
@@ -93,10 +93,10 @@ importers:
         version: 3.2.0(react@18.2.0)
       ink-big-text:
         specifier: 1.2.0
-        version: 1.2.0(ink@3.2.0)(react@18.2.0)
+        version: 1.2.0(ink@3.2.0(react@18.2.0))(react@18.2.0)
       ink-spinner:
         specifier: 4.0.3
-        version: 4.0.3(ink@3.2.0)(react@18.2.0)
+        version: 4.0.3(ink@3.2.0(react@18.2.0))(react@18.2.0)
       js-sdsl:
         specifier: 4.4.2
         version: 4.4.2
@@ -123,7 +123,7 @@ importers:
         version: 11.1.0
       rescript-envsafe:
         specifier: 3.1.0
-        version: 3.1.0(rescript-schema@6.4.0)(rescript@11.1.0)
+        version: 3.1.0(rescript-schema@6.4.0(rescript@11.1.0))(rescript@11.1.0)
       rescript-express:
         specifier: 0.4.1
         version: 0.4.1(express@4.19.2)
@@ -1564,7 +1564,7 @@ snapshots:
 
   '@opentelemetry/api@1.9.0': {}
 
-  '@rescript/react@0.12.1(react-dom@18.3.1)(react@18.2.0)':
+  '@rescript/react@0.12.1(react-dom@18.3.1(react@18.2.0))(react@18.2.0)':
     dependencies:
       react: 18.2.0
       react-dom: 18.3.1(react@18.2.0)
@@ -1808,6 +1808,7 @@ snapshots:
   debug@4.3.4(supports-color@8.1.1):
     dependencies:
       ms: 2.1.2
+    optionalDependencies:
       supports-color: 8.1.1
 
   decamelize@4.0.0: {}
@@ -2069,14 +2070,14 @@ snapshots:
 
   inherits@2.0.4: {}
 
-  ink-big-text@1.2.0(ink@3.2.0)(react@18.2.0):
+  ink-big-text@1.2.0(ink@3.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       cfonts: 2.10.1
       ink: 3.2.0(react@18.2.0)
       prop-types: 15.8.1
       react: 18.2.0
 
-  ink-spinner@4.0.3(ink@3.2.0)(react@18.2.0):
+  ink-spinner@4.0.3(ink@3.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       cli-spinners: 2.9.2
       ink: 3.2.0(react@18.2.0)
@@ -2445,7 +2446,7 @@ snapshots:
 
   require-directory@2.1.1: {}
 
-  rescript-envsafe@3.1.0(rescript-schema@6.4.0)(rescript@11.1.0):
+  rescript-envsafe@3.1.0(rescript-schema@6.4.0(rescript@11.1.0))(rescript@11.1.0):
     dependencies:
       rescript: 11.1.0
       rescript-schema: 6.4.0(rescript@11.1.0)

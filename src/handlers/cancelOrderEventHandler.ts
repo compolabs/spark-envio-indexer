@@ -19,6 +19,7 @@ export const cancelOrderEventHandler = ({
   const cancelOrderEvent: CancelOrderEventEntity = {
     id: nanoid(),
     order_id: event.data.order_id,
+    user: event.data.user.payload.bits,
     tx_id: event.transactionId,
     timestamp: getISOTime(event.time),
   };
