@@ -7,6 +7,7 @@ import { handlerArgs } from "generated/src/Handlers.gen";
 import { nanoid } from "nanoid";
 import { getISOTime } from "../utils/getISOTime";
 import { getHash } from "../utils/getHash";
+import { BASE_ASSET, QUOTE_ASSET } from "../utils/marketConfig";
 
 export const depositEventHandler = ({
  event,
@@ -25,9 +26,14 @@ export const depositEventHandler = ({
  };
  context.DepositEvent.set(depositEvent);
 
- const balanceId = getHash(
-  `${event.data.asset.bits}-${event.data.user.payload.bits}`
- );
+ const asset = event.data.asset.bits;
+
+ const isBaseAsset = asset === BASE_ASSET;
+
+ const balanceId = isBaseAsset
+  ? getHash(`${BASE_ASSET}-${event.data.user.payload.bits}`) 
+  : getHash(`${QUOTE_ASSET}-${event.data.user.payload.bits}`);
+
  const balance = context.Balance.get(balanceId);
 
  if (!balance) {
@@ -35,6 +41,6 @@ export const depositEventHandler = ({
   return;
  }
 
- const amount = balance.amount + event.data.amount;
- context.Balance.set({ ...balance, amount });
+ const updatedAmount = balance.amount + event.data.amount;
+ context.Balance.set({ ...balance, amount: updatedAmount });
 };

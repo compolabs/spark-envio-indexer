@@ -3,8 +3,8 @@ import {
  OrderBookContract_DepositEventEvent_loaderContext,
 } from "generated";
 import { handlerArgs } from "generated/src/Handlers.gen";
-import crypto from "crypto";
 import { getHash } from "../utils/getHash";
+import { BASE_ASSET, QUOTE_ASSET } from "../utils/marketConfig";
 
 export const depositEventLoader = ({
  event,
@@ -13,13 +13,13 @@ export const depositEventLoader = ({
  OrderBookContract_DepositEventEvent_eventArgs,
  OrderBookContract_DepositEventEvent_loaderContext
 >) => {
- const idSource = getHash(
-  `${event.data.asset.bits}-${event.data.user.payload.bits}`
- );
- context.Balance.load(idSource);
+ const asset = event.data.asset.bits
 
- const idSource1 = getHash(
-  `0x336b7c06352a4b736ff6f688ba6885788b3df16e136e95310ade51aa32dc6f05-${event.data.user.payload.bits}`
- );
- context.Balance.load(idSource1);
+ const isBaseAsset = asset === BASE_ASSET
+
+ const balanceId = isBaseAsset
+  ? getHash(`${BASE_ASSET}-${event.data.user.payload.bits}`) 
+  : getHash(`${QUOTE_ASSET}-${event.data.user.payload.bits}`)
+
+ context.Balance.load(balanceId)
 };
