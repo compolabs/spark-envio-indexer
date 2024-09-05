@@ -3,10 +3,12 @@ import {
   OrderBookContract_TradeOrderEventEvent_handlerContext,
   TradeOrderEventEntity,
   OrderEntity,
+  BalanceEntity,
 } from "generated";
 import { handlerArgs } from "generated/src/Handlers.gen";
 import { getISOTime } from "../utils/getISOTime";
 import { getHash } from "../utils/getHash";
+import { BASE_ASSET, BASE_DECIMAL, PRICE_DECIMAL, QUOTE_ASSET, QUOTE_DECIMAL } from "../utils/marketConfig";
 
 export const tradeOrderEventHandler = ({
   event,
@@ -75,4 +77,45 @@ export const tradeOrderEventHandler = ({
   } else {
     context.ActiveSellOrder.set(updatedSellOrder);
   }
+
+  const buyerBalanceId = getHash(`${BASE_ASSET}-${event.data.order_buyer.payload.bits}`);
+  let buyerBalance = context.Balance.get(buyerBalanceId);
+
+  if (!buyerBalance) {
+    buyerBalance = {
+      id: buyerBalanceId,
+      user: event.data.order_buyer.payload.bits,
+      asset: BASE_ASSET,
+      amount: 0n,
+      timestamp: getISOTime(event.time),
+    } as BalanceEntity;
+  }
+
+  const updatedBuyerBalance = {
+    ...buyerBalance,
+    amount: buyerBalance.amount + event.data.trade_size,
+  };
+  context.Balance.set(updatedBuyerBalance);
+
+  const sellerBalanceId = getHash(`${QUOTE_ASSET}-${event.data.order_seller.payload.bits}`);
+  let sellerBalance = context.Balance.get(sellerBalanceId);
+
+  if (!sellerBalance) {
+    sellerBalance = {
+      id: sellerBalanceId,
+      user: event.data.order_seller.payload.bits,
+      asset: QUOTE_ASSET,
+      amount: 0n,
+      timestamp: getISOTime(event.time),
+    } as BalanceEntity;
+  }
+
+  const quoteAmountReceived = (event.data.trade_size * event.data.trade_price * BigInt(QUOTE_DECIMAL)) / BigInt(PRICE_DECIMAL) / BigInt(BASE_DECIMAL);
+
+  const updatedSellerBalance = {
+    ...sellerBalance,
+    amount: sellerBalance.amount + quoteAmountReceived,
+  };
+  context.Balance.set(updatedSellerBalance);
+
 };

@@ -9,6 +9,7 @@ import { nanoid } from "nanoid";
 import { orderStatus } from "generated/src/Enums.gen";
 import { getISOTime } from "../utils/getISOTime";
 import { getHash } from "../utils/getHash";
+import { BASE_ASSET, QUOTE_ASSET, BASE_DECIMAL, QUOTE_DECIMAL, PRICE_DECIMAL } from "../utils/marketConfig";
 
 export const cancelOrderEventHandler = ({
   event,
@@ -42,49 +43,43 @@ export const cancelOrderEventHandler = ({
   context.Order.set(updatedOrder);
 
   if (order.order_type === "Buy") {
-    context.ActiveBuyOrder.deleteUnsafe(order.id);
-  } else if (order.order_type === "Sell") {
-    context.ActiveSellOrder.deleteUnsafe(order.id);
-  }
-
-  const price_decimals = 1000000000n;
-  const quote_decimals = 1000000n;
-  const base_decimals = 100000000n;
-
-  if (order.order_type === "Buy") {
-    context.ActiveBuyOrder.deleteUnsafe(order.id);
-
-    const balanceId = getHash(
-      `0x336b7c06352a4b736ff6f688ba6885788b3df16e136e95310ade51aa32dc6f05-${event.data.user}`
+    const quoteBalanceId = getHash(
+      `${QUOTE_ASSET}-${event.data.user.payload.bits}`
     );
-    const balance = context.Balance.get(balanceId)
-    if (!balance) {
+    let quoteBalance = context.Balance.get(quoteBalanceId);
+
+    if (!quoteBalance) {
       context.log.error(
-        `Cannot find a balance buy; user:${order.user}; asset: ${order.asset}; id: ${balanceId}`
+        `Cannot find a quote balance; user:${order.user}; asset: ${QUOTE_ASSET}; id: ${quoteBalanceId}`
       );
       return;
-    };
+    }
 
-    const amount = balance.amount + order.amount * order.price * quote_decimals / price_decimals / base_decimals;
-    context.Balance.set({ ...balance, amount });
+    const amountToReturn = order.amount * order.price * BigInt(QUOTE_DECIMAL) / BigInt(PRICE_DECIMAL) / BigInt(BASE_DECIMAL);
+
+    const updatedQuoteBalance = {
+      ...quoteBalance,
+      amount: quoteBalance.amount + amountToReturn,
+    };
+    context.Balance.set(updatedQuoteBalance);
 
   } else if (order.order_type === "Sell") {
-    context.ActiveSellOrder.deleteUnsafe(order.id);
-
-    const balanceId = getHash(
-      `${order.asset}-${order.user}`
+    const baseBalanceId = getHash(
+      `${BASE_ASSET}-${event.data.user.payload.bits}`
     );
-    const balance = context.Balance.get(balanceId)
+    let baseBalance = context.Balance.get(baseBalanceId);
 
-    if (!balance) {
+    if (!baseBalance) {
       context.log.error(
-        `Cannot find a balance sell; user:${order.user}; asset: ${order.asset}; id: ${balanceId}`
+        `Cannot find a base balance; user:${order.user}; asset: ${BASE_ASSET}; id: ${baseBalanceId}`
       );
       return;
+    }
+
+    const updatedBaseBalance = {
+      ...baseBalance,
+      amount: baseBalance.amount + order.amount,
     };
-
-    const amount = balance.amount + order.amount;
-    context.Balance.set({ ...balance, amount });
-
+    context.Balance.set(updatedBaseBalance);
   }
 };
