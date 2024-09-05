@@ -13,3 +13,5 @@ networks:
           - name: OpenOrderEvent
           - name: CancelOrderEvent
           - name: TradeOrderEvent
+          - name: DepositEvent
+          - name: WithdrawEvent

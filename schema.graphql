@@ -65,19 +65,6 @@ type CancelOrderEvent {
   timestamp: String!
 }
 
-# type MatchOrderEvent {
-#   id: ID!
-#   order_id: String! @index
-#   tx_id: String!
-#   asset: String!
-#   order_matcher: String!
-#   owner: String!
-#   counterparty: String!
-#   match_size: BigInt!
-#   match_price: BigInt!
-#   timestamp: String!
-# }
-
 type TradeOrderEvent {
   id: ID!
   base_sell_order_id: String! @index
@@ -87,5 +74,31 @@ type TradeOrderEvent {
   seller: String!
   buyer: String!
   tx_id: String! @index
+  timestamp: String!
+}
+
+type DepositEvent {
+  id: ID!
+  tx_id: String! @index
+  amount: BigInt!
+  asset: String! @index
+  user: String! @index
+  timestamp: String!
+}
+
+type WithdrawEvent {
+  id: ID!
+  tx_id: String! @index
+  amount: BigInt!
+  asset: String! @index
+  user: String! @index
+  timestamp: String!
+}
+
+type Balance {
+  id: ID!
+  amount: BigInt!
+  asset: String! @index
+  user: String! @index
   timestamp: String!
 }
