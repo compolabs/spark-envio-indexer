@@ -1,3 +1,5 @@
 export * from "./cancelOrderEventLoader";
-export * from "./matchOrderEventLoader";
+export * from "./tradeOrderEventLoader";
 export * from "./openOrderEventLoader";
+export * from "./withdrawEventLoader";
+export * from "./depositEventLoader";

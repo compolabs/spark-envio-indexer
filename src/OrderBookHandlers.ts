@@ -2,15 +2,18 @@ import { OrderBookContract } from "generated";
 
 import {
   cancelOrderEventLoader,
-  matchOrderEventLoader,
   openOrderEventLoader,
+  tradeOrderEventLoader,
+  depositEventLoader,
+  withdrawEventLoader
 } from "./loaders";
 
 import {
   cancelOrderEventHandler,
-  matchOrderEventHandler,
   openOrderEventHandler,
   tradeOrderEventHandler,
+  depositEventHandler,
+  withdrawEventHandler
 } from "./handlers";
 
 OrderBookContract.OpenOrderEvent.loader(openOrderEventLoader);
@@ -19,7 +22,11 @@ OrderBookContract.OpenOrderEvent.handler(openOrderEventHandler);
 OrderBookContract.CancelOrderEvent.loader(cancelOrderEventLoader);
 OrderBookContract.CancelOrderEvent.handler(cancelOrderEventHandler);
 
-OrderBookContract.MatchOrderEvent.loader(matchOrderEventLoader);
-OrderBookContract.MatchOrderEvent.handler(matchOrderEventHandler);
-
+OrderBookContract.TradeOrderEvent.loader(tradeOrderEventLoader);
 OrderBookContract.TradeOrderEvent.handler(tradeOrderEventHandler);
+
+OrderBookContract.DepositEvent.loader(depositEventLoader);
+OrderBookContract.DepositEvent.handler(depositEventHandler);
+
+OrderBookContract.WithdrawEvent.loader(withdrawEventLoader);
+OrderBookContract.WithdrawEvent.handler(withdrawEventHandler);

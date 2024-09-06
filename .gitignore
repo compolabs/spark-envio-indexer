@@ -34,3 +34,4 @@ generated
 .idea
 .env
 target
+.DS_Store
