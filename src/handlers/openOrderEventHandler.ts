@@ -1,8 +1,8 @@
 import {
-  OpenOrderEventEntity,
-  OrderBookContract_OpenOrderEventEvent_eventArgs,
-  OrderBookContract_OpenOrderEventEvent_handlerContext,
-  OrderEntity,
+  OpenOrderEvent,
+  OrderBook_OpenOrderEventEvent_eventArgs,
+  OrderBook_OpenOrderEventEvent_handlerContextAsync,
+  Order,
 } from "generated";
 import { handlerArgs } from "generated/src/Handlers.gen";
 import { nanoid } from "nanoid";
@@ -10,16 +10,16 @@ import { getISOTime } from "../utils/getISOTime";
 import { getHash } from "../utils/getHash";
 import { BASE_ASSET, QUOTE_ASSET, BASE_DECIMAL, QUOTE_DECIMAL, PRICE_DECIMAL } from "../utils/marketConfig";
 
-export const openOrderEventHandler = ({
+export const openOrderEventHandler = async({
   event,
   context,
 }: handlerArgs<
-  OrderBookContract_OpenOrderEventEvent_eventArgs,
-  OrderBookContract_OpenOrderEventEvent_handlerContext
+  OrderBook_OpenOrderEventEvent_eventArgs,
+  OrderBook_OpenOrderEventEvent_handlerContextAsync
 >) => {
   const orderType = event.data.order_type.case;
 
-  const openOrderEvent: OpenOrderEventEntity = {
+  const openOrderEvent: OpenOrderEvent = {
     id: nanoid(),
     order_id: event.data.order_id,
     tx_id: event.transactionId,
@@ -32,7 +32,7 @@ export const openOrderEventHandler = ({
   };
   context.OpenOrderEvent.set(openOrderEvent);
 
-  const order: OrderEntity = {
+  const order: Order = {
     ...openOrderEvent,
     id: event.data.order_id,
     initial_amount: event.data.amount,
@@ -42,7 +42,7 @@ export const openOrderEventHandler = ({
 
   if (orderType === "Buy") {
     const balanceId = getHash(`${QUOTE_ASSET}-${event.data.user.payload.bits}`);
-    const balance = context.Balance.get(balanceId);
+    const balance = await context.Balance.get(balanceId);
 
     if (!balance) {
       context.log.error(
@@ -58,7 +58,7 @@ export const openOrderEventHandler = ({
 
   } else if (orderType === "Sell") {
     const balanceId = getHash(`${BASE_ASSET}-${event.data.user.payload.bits}`);
-    const balance = context.Balance.get(balanceId);
+    const balance = await context.Balance.get(balanceId);
 
     if (!balance) {
       context.log.error(

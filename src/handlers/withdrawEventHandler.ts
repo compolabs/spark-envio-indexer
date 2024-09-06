@@ -1,7 +1,7 @@
 import {
- OrderBookContract_WithdrawEventEvent_eventArgs,
- OrderBookContract_WithdrawEventEvent_handlerContext,
- WithdrawEventEntity,
+ OrderBook_WithdrawEventEvent_eventArgs,
+ OrderBook_WithdrawEventEvent_handlerContextAsync,
+ WithdrawEvent,
 } from "generated";
 import { handlerArgs } from "generated/src/Handlers.gen";
 import { nanoid } from "nanoid";
@@ -9,14 +9,14 @@ import { getISOTime } from "../utils/getISOTime";
 import { getHash } from "../utils/getHash";
 import { BASE_ASSET, QUOTE_ASSET } from "../utils/marketConfig";
 
-export const withdrawEventHandler = ({
+export const withdrawEventHandler = async ({
  event,
  context,
 }: handlerArgs<
- OrderBookContract_WithdrawEventEvent_eventArgs,
- OrderBookContract_WithdrawEventEvent_handlerContext
+ OrderBook_WithdrawEventEvent_eventArgs,
+ OrderBook_WithdrawEventEvent_handlerContextAsync
 >) => {
- const withdrawEvent: WithdrawEventEntity = {
+ const withdrawEvent: WithdrawEvent = {
   id: nanoid(),
   tx_id: event.transactionId,
   amount: event.data.amount,
@@ -34,7 +34,7 @@ export const withdrawEventHandler = ({
   ? getHash(`${BASE_ASSET}-${event.data.user.payload.bits}`)
   : getHash(`${QUOTE_ASSET}-${event.data.user.payload.bits}`);
 
- const balance = context.Balance.get(balanceId);
+ const balance = await context.Balance.get(balanceId);
 
  if (!balance) {
   context.log.error(

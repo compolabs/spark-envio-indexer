@@ -1,8 +1,8 @@
 import {
-  CancelOrderEventEntity,
-  OrderBookContract_CancelOrderEventEvent_eventArgs,
-  OrderBookContract_CancelOrderEventEvent_handlerContext,
-  OrderEntity,
+  CancelOrderEvent,
+  OrderBook_CancelOrderEventEvent_eventArgs,
+  OrderBook_CancelOrderEventEvent_handlerContextAsync,
+  Order,
 } from "generated";
 import { handlerArgs } from "generated/src/Handlers.gen";
 import { nanoid } from "nanoid";
@@ -11,14 +11,14 @@ import { getISOTime } from "../utils/getISOTime";
 import { getHash } from "../utils/getHash";
 import { BASE_ASSET, QUOTE_ASSET, BASE_DECIMAL, QUOTE_DECIMAL, PRICE_DECIMAL } from "../utils/marketConfig";
 
-export const cancelOrderEventHandler = ({
+export const cancelOrderEventHandler = async ({
   event,
   context,
 }: handlerArgs<
-  OrderBookContract_CancelOrderEventEvent_eventArgs,
-  OrderBookContract_CancelOrderEventEvent_handlerContext
+  OrderBook_CancelOrderEventEvent_eventArgs,
+  OrderBook_CancelOrderEventEvent_handlerContextAsync
 >) => {
-  const cancelOrderEvent: CancelOrderEventEntity = {
+  const cancelOrderEvent: CancelOrderEvent = {
     id: nanoid(),
     order_id: event.data.order_id,
     user: event.data.user.payload.bits,
@@ -27,14 +27,14 @@ export const cancelOrderEventHandler = ({
   };
   context.CancelOrderEvent.set(cancelOrderEvent);
 
-  const order = context.Order.get(event.data.order_id);
+  const order = await context.Order.get(event.data.order_id);
 
   if (!order) {
     context.log.error(`Cannot find an order ${event.data.order_id}`);
     return;
   }
 
-  const updatedOrder: OrderEntity = {
+  const updatedOrder: Order = {
     ...order,
     amount: 0n,
     status: "Canceled" as orderStatus,
@@ -46,7 +46,7 @@ export const cancelOrderEventHandler = ({
     const quoteBalanceId = getHash(
       `${QUOTE_ASSET}-${event.data.user.payload.bits}`
     );
-    let quoteBalance = context.Balance.get(quoteBalanceId);
+    let quoteBalance = await context.Balance.get(quoteBalanceId);
 
     if (!quoteBalance) {
       context.log.error(
@@ -67,7 +67,7 @@ export const cancelOrderEventHandler = ({
     const baseBalanceId = getHash(
       `${BASE_ASSET}-${event.data.user.payload.bits}`
     );
-    let baseBalance = context.Balance.get(baseBalanceId);
+    let baseBalance = await context.Balance.get(baseBalanceId);
 
     if (!baseBalance) {
       context.log.error(

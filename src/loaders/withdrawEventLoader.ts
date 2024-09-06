@@ -1,6 +1,6 @@
 import {
- OrderBookContract_WithdrawEventEvent_eventArgs,
- OrderBookContract_WithdrawEventEvent_loaderContext,
+ OrderBook_WithdrawEventEvent_eventArgs,
+ OrderBook_WithdrawEventEvent_loaderContext,
 } from "generated";
 import { handlerArgs } from "generated/src/Handlers.gen";
 import { getHash } from "../utils/getHash";
@@ -10,8 +10,8 @@ export const withdrawEventLoader = ({
  event,
  context,
 }: handlerArgs<
- OrderBookContract_WithdrawEventEvent_eventArgs,
- OrderBookContract_WithdrawEventEvent_loaderContext
+ OrderBook_WithdrawEventEvent_eventArgs,
+ OrderBook_WithdrawEventEvent_loaderContext
 >) => {
  const asset = event.data.asset.bits;
 

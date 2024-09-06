@@ -1,27 +1,27 @@
 import {
-  OrderBookContract_TradeOrderEventEvent_eventArgs,
-  OrderBookContract_TradeOrderEventEvent_handlerContext,
-  TradeOrderEventEntity,
-  OrderEntity,
-  BalanceEntity,
+  OrderBook_TradeOrderEventEvent_eventArgs,
+  OrderBook_TradeOrderEventEvent_handlerContextAsync,
+  TradeOrderEvent,
+  Order,
+  Balance,
 } from "generated";
 import { handlerArgs } from "generated/src/Handlers.gen";
 import { getISOTime } from "../utils/getISOTime";
 import { getHash } from "../utils/getHash";
 import { BASE_ASSET, BASE_DECIMAL, PRICE_DECIMAL, QUOTE_ASSET, QUOTE_DECIMAL } from "../utils/marketConfig";
 
-export const tradeOrderEventHandler = ({
+export const tradeOrderEventHandler = async ({
   event,
   context,
 }: handlerArgs<
-  OrderBookContract_TradeOrderEventEvent_eventArgs,
-  OrderBookContract_TradeOrderEventEvent_handlerContext
+  OrderBook_TradeOrderEventEvent_eventArgs,
+  OrderBook_TradeOrderEventEvent_handlerContextAsync
 >) => {
   const idSource = getHash(
     `${event.data.trade_size}-${event.data.trade_price}-${event.data.base_sell_order_id}-${event.data.base_buy_order_id}-${event.data.tx_id}`
   );
 
-  const tradeOrderEvent: TradeOrderEventEntity = {
+  const tradeOrderEvent: TradeOrderEvent = {
     id: idSource,
     base_sell_order_id: event.data.base_sell_order_id,
     base_buy_order_id: event.data.base_buy_order_id,
@@ -35,8 +35,8 @@ export const tradeOrderEventHandler = ({
 
   context.TradeOrderEvent.set(tradeOrderEvent);
 
-  const buy_order = context.Order.get(event.data.base_buy_order_id);
-  const sell_order = context.Order.get(event.data.base_sell_order_id);
+  const buy_order = await context.Order.get(event.data.base_buy_order_id);
+  const sell_order = await context.Order.get(event.data.base_sell_order_id);
 
   if (!buy_order || !sell_order) {
     context.log.error(`Cannot find orders: buy_order_id: ${event.data.base_buy_order_id}, sell_order_id: ${event.data.base_sell_order_id}`);
@@ -46,7 +46,7 @@ export const tradeOrderEventHandler = ({
   const updatedBuyAmount = buy_order.amount - event.data.trade_size;
   const isBuyOrderClosed = updatedBuyAmount === 0n;
 
-  const updatedBuyOrder: OrderEntity = {
+  const updatedBuyOrder: Order = {
     ...buy_order,
     amount: updatedBuyAmount,
     status: isBuyOrderClosed ? "Closed" : "Active",
@@ -56,7 +56,7 @@ export const tradeOrderEventHandler = ({
   const updatedSellAmount = sell_order.amount - event.data.trade_size;
   const isSellOrderClosed = updatedSellAmount === 0n;
 
-  const updatedSellOrder: OrderEntity = {
+  const updatedSellOrder: Order = {
     ...sell_order,
     amount: updatedSellAmount,
     status: isSellOrderClosed ? "Closed" : "Active",
@@ -79,7 +79,7 @@ export const tradeOrderEventHandler = ({
   }
 
   const buyerBalanceId = getHash(`${BASE_ASSET}-${event.data.order_buyer.payload.bits}`);
-  let buyerBalance = context.Balance.get(buyerBalanceId);
+  let buyerBalance = await context.Balance.get(buyerBalanceId);
 
   if (!buyerBalance) {
     buyerBalance = {
@@ -88,7 +88,7 @@ export const tradeOrderEventHandler = ({
       asset: BASE_ASSET,
       amount: 0n,
       timestamp: getISOTime(event.time),
-    } as BalanceEntity;
+    } as Balance;
   }
 
   const updatedBuyerBalance = {
@@ -98,7 +98,7 @@ export const tradeOrderEventHandler = ({
   context.Balance.set(updatedBuyerBalance);
 
   const sellerBalanceId = getHash(`${QUOTE_ASSET}-${event.data.order_seller.payload.bits}`);
-  let sellerBalance = context.Balance.get(sellerBalanceId);
+  let sellerBalance = await context.Balance.get(sellerBalanceId);
 
   if (!sellerBalance) {
     sellerBalance = {
@@ -107,7 +107,7 @@ export const tradeOrderEventHandler = ({
       asset: QUOTE_ASSET,
       amount: 0n,
       timestamp: getISOTime(event.time),
-    } as BalanceEntity;
+    } as Balance;
   }
 
   const quoteAmountReceived = (event.data.trade_size * event.data.trade_price * BigInt(QUOTE_DECIMAL)) / BigInt(PRICE_DECIMAL) / BigInt(BASE_DECIMAL);

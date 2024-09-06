@@ -1,7 +1,7 @@
 import {
- DepositEventEntity,
- OrderBookContract_DepositEventEvent_eventArgs,
- OrderBookContract_DepositEventEvent_handlerContext,
+ DepositEvent,
+ OrderBook_DepositEventEvent_eventArgs,
+ OrderBook_DepositEventEvent_handlerContextAsync,
 } from "generated";
 import { handlerArgs } from "generated/src/Handlers.gen";
 import { nanoid } from "nanoid";
@@ -9,14 +9,14 @@ import { getISOTime } from "../utils/getISOTime";
 import { getHash } from "../utils/getHash";
 import { BASE_ASSET, QUOTE_ASSET } from "../utils/marketConfig";
 
-export const depositEventHandler = ({
+export const depositEventHandler = async({
  event,
  context,
 }: handlerArgs<
- OrderBookContract_DepositEventEvent_eventArgs,
- OrderBookContract_DepositEventEvent_handlerContext
+ OrderBook_DepositEventEvent_eventArgs,
+ OrderBook_DepositEventEvent_handlerContextAsync
 >) => {
- const depositEvent: DepositEventEntity = {
+ const depositEvent: DepositEvent = {
   id: nanoid(),
   tx_id: event.transactionId,
   amount: event.data.amount,
@@ -34,7 +34,7 @@ export const depositEventHandler = ({
   ? getHash(`${BASE_ASSET}-${event.data.user.payload.bits}`) 
   : getHash(`${QUOTE_ASSET}-${event.data.user.payload.bits}`);
 
- const balance = context.Balance.get(balanceId);
+ const balance = await context.Balance.get(balanceId);
 
  if (!balance) {
   context.Balance.set({ ...depositEvent, id: balanceId });
