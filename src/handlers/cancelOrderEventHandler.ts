@@ -42,7 +42,11 @@ export const cancelOrderEventHandler = ({
   };
   context.Order.set(updatedOrder);
 
+
+
   if (order.order_type === "Buy") {
+    context.ActiveBuyOrder.deleteUnsafe(event.data.order_id);
+
     const quoteBalanceId = getHash(
       `${QUOTE_ASSET}-${event.data.user.payload.bits}`
     );
@@ -64,6 +68,8 @@ export const cancelOrderEventHandler = ({
     context.Balance.set(updatedQuoteBalance);
 
   } else if (order.order_type === "Sell") {
+    context.ActiveSellOrder.deleteUnsafe(event.data.order_id)
+
     const baseBalanceId = getHash(
       `${BASE_ASSET}-${event.data.user.payload.bits}`
     );
