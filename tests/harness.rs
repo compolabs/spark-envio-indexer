@@ -11,7 +11,7 @@ use dotenv::dotenv;
 use serde::Serialize;
 
 
-const ORDER_ID: &str = "0x40128061cf5338219fdb3e23e768ed1e2b73066004a1a478f05da3795bd5ae83";
+const ORDER_ID: &str = "0x24ce931d21f7f98b8442c90f8ebc7b82444940bfdf66fe7beb9c921c9bf27005";
 
 
 #[derive(Debug, Serialize)]
