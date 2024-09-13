@@ -3,7 +3,6 @@ import {
   OrderBook_TradeOrderEventEvent_handlerContextAsync,
   TradeOrderEvent,
   Order,
-  Balance,
 } from "generated";
 import { handlerArgs } from "generated/src/Handlers.gen";
 import { getISOTime } from "../utils/getISOTime";
@@ -17,7 +16,7 @@ export const tradeOrderEventHandler = async ({
   OrderBook_TradeOrderEventEvent_handlerContextAsync
 >) => {
 
-  const tradeOrderEvent: TradeOrderEventEntity = {
+  const tradeOrderEvent: TradeOrderEvent = {
     id: nanoid(),
     base_sell_order_id: event.data.base_sell_order_id,
     base_buy_order_id: event.data.base_buy_order_id,
