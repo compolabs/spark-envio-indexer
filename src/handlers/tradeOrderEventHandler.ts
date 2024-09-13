@@ -7,8 +7,7 @@ import {
 } from "generated";
 import { handlerArgs } from "generated/src/Handlers.gen";
 import { getISOTime } from "../utils/getISOTime";
-import { getHash } from "../utils/getHash";
-import { BASE_ASSET, BASE_DECIMAL, PRICE_DECIMAL, QUOTE_ASSET, QUOTE_DECIMAL } from "../utils/marketConfig";
+import { nanoid } from "nanoid";
 
 export const tradeOrderEventHandler = async ({
   event,
@@ -17,12 +16,9 @@ export const tradeOrderEventHandler = async ({
   OrderBook_TradeOrderEventEvent_eventArgs,
   OrderBook_TradeOrderEventEvent_handlerContextAsync
 >) => {
-  const idSource = getHash(
-    `${event.data.trade_size}-${event.data.trade_price}-${event.data.base_sell_order_id}-${event.data.base_buy_order_id}-${event.data.tx_id}`
-  );
 
-  const tradeOrderEvent: TradeOrderEvent = {
-    id: idSource,
+  const tradeOrderEvent: TradeOrderEventEntity = {
+    id: nanoid(),
     base_sell_order_id: event.data.base_sell_order_id,
     base_buy_order_id: event.data.base_buy_order_id,
     trade_size: event.data.trade_size,
@@ -31,6 +27,10 @@ export const tradeOrderEventHandler = async ({
     buyer: event.data.order_buyer.payload.bits,
     tx_id: event.transactionId,
     timestamp: getISOTime(event.time),
+    seller_base_amount: event.data.s_account_liquid_base,
+    seller_quote_amount: event.data.s_account_liquid_quote,
+    buyer_base_amount: event.data.b_account_liquid_base,
+    buyer_quote_amount: event.data.b_account_liquid_quote
   };
 
   context.TradeOrderEvent.set(tradeOrderEvent);
@@ -78,44 +78,28 @@ export const tradeOrderEventHandler = async ({
     context.ActiveSellOrder.set(updatedSellOrder);
   }
 
-  const buyerBalanceId = getHash(`${BASE_ASSET}-${event.data.order_buyer.payload.bits}`);
-  let buyerBalance = await context.Balance.get(buyerBalanceId);
+  const seller_balance = await context.Balance.get(event.data.order_seller.payload.bits);
+  const buyer_balance = await context.Balance.get(event.data.order_buyer.payload.bits);
 
-  if (!buyerBalance) {
-    buyerBalance = {
-      id: buyerBalanceId,
-      user: event.data.order_buyer.payload.bits,
-      asset: BASE_ASSET,
-      amount: 0n,
-      timestamp: getISOTime(event.time),
-    } as Balance;
+  if (!seller_balance || !buyer_balance) {
+    return;
   }
-
-  const updatedBuyerBalance = {
-    ...buyerBalance,
-    amount: buyerBalance.amount + event.data.trade_size,
-  };
-  context.Balance.set(updatedBuyerBalance);
-
-  const sellerBalanceId = getHash(`${QUOTE_ASSET}-${event.data.order_seller.payload.bits}`);
-  let sellerBalance = await context.Balance.get(sellerBalanceId);
-
-  if (!sellerBalance) {
-    sellerBalance = {
-      id: sellerBalanceId,
-      user: event.data.order_seller.payload.bits,
-      asset: QUOTE_ASSET,
-      amount: 0n,
-      timestamp: getISOTime(event.time),
-    } as Balance;
-  }
-
-  const quoteAmountReceived = (event.data.trade_size * event.data.trade_price * BigInt(QUOTE_DECIMAL)) / BigInt(PRICE_DECIMAL) / BigInt(BASE_DECIMAL);
 
   const updatedSellerBalance = {
-    ...sellerBalance,
-    amount: sellerBalance.amount + quoteAmountReceived,
+    ...seller_balance,
+    base_amount: event.data.s_account_liquid_base,
+    quote_amount: event.data.s_account_liquid_quote,
+    timestamp: getISOTime(event.time),
   };
+
   context.Balance.set(updatedSellerBalance);
 
+  const updatedBuyerBalance = {
+    ...buyer_balance,
+    base_amount: event.data.b_account_liquid_base,
+    quote_amount: event.data.b_account_liquid_quote,
+    timestamp: getISOTime(event.time),
+  };
+
+  context.Balance.set(updatedBuyerBalance);
 };
