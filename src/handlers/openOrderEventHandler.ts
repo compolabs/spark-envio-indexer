@@ -20,15 +20,15 @@ export const openOrderEventHandler = async({
   const openOrderEvent: OpenOrderEvent = {
     id: nanoid(),
     order_id: event.data.order_id,
-    tx_id: event.transactionId,
     asset: event.data.asset.bits,
     amount: event.data.amount,
     order_type: orderType,
     price: event.data.price,
     user: event.data.user.payload.bits,
-    timestamp: getISOTime(event.time),
     base_amount: event.data.liquid_base,
-    quote_amount: event.data.liquid_quote
+    quote_amount: event.data.liquid_quote,
+    tx_id: event.transactionId,
+    timestamp: getISOTime(event.time),
   };
   context.OpenOrderEvent.set(openOrderEvent);
 

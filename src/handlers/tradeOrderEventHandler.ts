@@ -24,12 +24,12 @@ export const tradeOrderEventHandler = async ({
     trade_price: event.data.trade_price,
     seller: event.data.order_seller.payload.bits,
     buyer: event.data.order_buyer.payload.bits,
-    tx_id: event.transactionId,
-    timestamp: getISOTime(event.time),
     seller_base_amount: event.data.s_account_liquid_base,
     seller_quote_amount: event.data.s_account_liquid_quote,
     buyer_base_amount: event.data.b_account_liquid_base,
-    buyer_quote_amount: event.data.b_account_liquid_quote
+    buyer_quote_amount: event.data.b_account_liquid_quote,
+    tx_id: event.transactionId,
+    timestamp: getISOTime(event.time),
   };
 
   context.TradeOrderEvent.set(tradeOrderEvent);

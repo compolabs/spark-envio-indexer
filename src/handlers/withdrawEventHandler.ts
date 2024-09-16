@@ -16,11 +16,13 @@ export const withdrawEventHandler = async ({
 >) => {
  const withdrawEvent: WithdrawEvent = {
   id: nanoid(),
-  tx_id: event.transactionId,
   user: event.data.user.payload.bits,
-  timestamp: getISOTime(event.time),
+  amount: event.data.amount,
+  asset: event.data.asset.bits,
   base_amount: event.data.liquid_base,
   quote_amount: event.data.liquid_quote,
+  tx_id: event.transactionId,
+  timestamp: getISOTime(event.time),
  };
 
  context.WithdrawEvent.set(withdrawEvent);
