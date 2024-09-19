@@ -25,8 +25,8 @@ export const openOrderEventHandler = async({
     order_type: orderType,
     price: event.data.price,
     user: event.data.user.payload.bits,
-    base_amount: event.data.liquid_base,
-    quote_amount: event.data.liquid_quote,
+    base_amount: event.data.balance.liquid.base,
+    quote_amount: event.data.balance.liquid.quote,
     tx_id: event.transactionId,
     timestamp: getISOTime(event.time),
   };
@@ -52,8 +52,8 @@ export const openOrderEventHandler = async({
   }
   const updatedBalance = {
     ...balance,
-    base_amount: event.data.liquid_base,
-    quote_amount: event.data.liquid_quote,
+    base_amount: event.data.balance.liquid.base,
+    quote_amount: event.data.balance.liquid.quote,
     timestamp: getISOTime(event.time),
   };
 

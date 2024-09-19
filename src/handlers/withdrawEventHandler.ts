@@ -19,8 +19,8 @@ export const withdrawEventHandler = async ({
   user: event.data.user.payload.bits,
   amount: event.data.amount,
   asset: event.data.asset.bits,
-  base_amount: event.data.liquid_base,
-  quote_amount: event.data.liquid_quote,
+  base_amount: event.data.balance.liquid.base,
+  quote_amount: event.data.balance.liquid.quote,
   tx_id: event.transactionId,
   timestamp: getISOTime(event.time),
  };
@@ -34,8 +34,8 @@ export const withdrawEventHandler = async ({
 
  const updatedBalance = {
   ...balance,
-  base_amount: event.data.liquid_base,
-  quote_amount: event.data.liquid_quote,
+  base_amount: event.data.balance.liquid.base,
+  quote_amount: event.data.balance.liquid.quote,
   timestamp: getISOTime(event.time),
  };
  context.Balance.set(updatedBalance);

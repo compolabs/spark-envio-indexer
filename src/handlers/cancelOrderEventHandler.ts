@@ -20,8 +20,8 @@ export const cancelOrderEventHandler = async ({
     id: nanoid(),
     user: event.data.user.payload.bits,
     order_id: event.data.order_id,
-    base_amount: event.data.liquid_base,
-    quote_amount: event.data.liquid_quote,
+    base_amount: event.data.balance.liquid.base,
+    quote_amount: event.data.balance.liquid.quote,
     tx_id: event.transactionId,
     timestamp: getISOTime(event.time),
   };
@@ -57,8 +57,8 @@ export const cancelOrderEventHandler = async ({
 
   const updatedBalance = {
     ...balance,
-    base_amount: event.data.liquid_base,
-    quote_amount: event.data.liquid_quote,
+    base_amount: event.data.balance.liquid.base,
+    quote_amount: event.data.balance.liquid.quote,
     timestamp: getISOTime(event.time),
   };
 

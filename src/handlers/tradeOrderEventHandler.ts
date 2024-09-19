@@ -24,10 +24,10 @@ export const tradeOrderEventHandler = async ({
     trade_price: event.data.trade_price,
     seller: event.data.order_seller.payload.bits,
     buyer: event.data.order_buyer.payload.bits,
-    seller_base_amount: event.data.s_account_liquid_base,
-    seller_quote_amount: event.data.s_account_liquid_quote,
-    buyer_base_amount: event.data.b_account_liquid_base,
-    buyer_quote_amount: event.data.b_account_liquid_quote,
+    seller_base_amount: event.data.s_balance.liquid.base,
+    seller_quote_amount: event.data.s_balance.liquid.quote,
+    buyer_base_amount: event.data.b_balance.liquid.base,
+    buyer_quote_amount: event.data.b_balance.liquid.quote,
     tx_id: event.transactionId,
     timestamp: getISOTime(event.time),
   };
@@ -86,8 +86,8 @@ export const tradeOrderEventHandler = async ({
 
   const updatedSellerBalance = {
     ...seller_balance,
-    base_amount: event.data.s_account_liquid_base,
-    quote_amount: event.data.s_account_liquid_quote,
+    base_amount: event.data.s_balance.liquid.base,
+    quote_amount: event.data.s_balance.liquid.quote,
     timestamp: getISOTime(event.time),
   };
 
@@ -95,8 +95,8 @@ export const tradeOrderEventHandler = async ({
 
   const updatedBuyerBalance = {
     ...buyer_balance,
-    base_amount: event.data.b_account_liquid_base,
-    quote_amount: event.data.b_account_liquid_quote,
+    base_amount: event.data.b_balance.liquid.base,
+    quote_amount: event.data.b_balance.liquid.quote,
     timestamp: getISOTime(event.time),
   };
 
