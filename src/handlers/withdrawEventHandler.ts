@@ -1,40 +1,51 @@
 import {
- OrderBook_WithdrawEvent_eventArgs,
- WithdrawEvent,
+  WithdrawEvent,
+  OrderBook
 } from "generated";
-import { handlerArgs } from "generated/src/Handlers.gen";
 import { nanoid } from "nanoid";
 import { getISOTime } from "../utils/getISOTime";
 
-export const withdrawEventHandler = async ({
- event,
- context,
-}: handlerArgs<
- OrderBook_WithdrawEvent_eventArgs
->) => {
- const withdrawEvent: WithdrawEvent = {
-  id: nanoid(),
-  user: event.data.user.payload.bits,
-  amount: event.data.amount,
-  asset: event.data.asset.bits,
-  base_amount: event.data.liquid_base,
-  quote_amount: event.data.liquid_quote,
-  tx_id: event.transactionId,
-  timestamp: getISOTime(event.time),
- };
+OrderBook.WithdrawEvent.handlerWithLoader(
+  {
+    loader: async ({
+      event,
+      context,
+    }) => {
+      return {
+        balance: await context.Balance.get(event.params.user.payload.bits)
+      }
+    },
 
- context.WithdrawEvent.set(withdrawEvent);
- const balance = await context.Balance.get(event.data.user.payload.bits);
+    handler: async ({
+      event,
+      context,
+      loaderReturn
+    }) => {
+      const withdrawEvent: WithdrawEvent = {
+        id: nanoid(),
+        user: event.params.user.payload.bits,
+        amount: event.params.amount,
+        asset: event.params.asset.bits,
+        base_amount: event.params.liquid_base,
+        quote_amount: event.params.liquid_quote,
+        tx_id: event.transaction.id,
+        timestamp: getISOTime(event.block.time),
+      };
 
- if (!balance) {
-  return
- }
+      context.WithdrawEvent.set(withdrawEvent);
+      const balance = loaderReturn.balance;
 
- const updatedBalance = {
-  ...balance,
-  base_amount: event.data.liquid_base,
-  quote_amount: event.data.liquid_quote,
-  timestamp: getISOTime(event.time),
- };
- context.Balance.set(updatedBalance);
-};
+      if (!balance) {
+        return
+      }
+
+      const updatedBalance = {
+        ...balance,
+        base_amount: event.params.liquid_base,
+        quote_amount: event.params.liquid_quote,
+        timestamp: getISOTime(event.block.time),
+      };
+      context.Balance.set(updatedBalance);
+    }
+  }
+)

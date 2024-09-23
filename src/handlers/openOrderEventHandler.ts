@@ -1,11 +1,12 @@
 import {
-  DepositEvent,
+  OpenOrderEvent,
+  Order,
   OrderBook
 } from "generated";
 import { nanoid } from "nanoid";
 import { getISOTime } from "../utils/getISOTime";
 
-OrderBook.DepositEvent.handlerWithLoader(
+OrderBook.OpenOrderEvent.handlerWithLoader(
   {
     loader: async ({
       event,
@@ -21,28 +22,41 @@ OrderBook.DepositEvent.handlerWithLoader(
       context,
       loaderReturn
     }) => {
-      const depositEvent: DepositEvent = {
+      const orderType = event.params.order_type.case;
+
+      const openOrderEvent: OpenOrderEvent = {
         id: nanoid(),
-        user: event.params.user.payload.bits,
-        amount: event.params.amount,
+        order_id: event.params.order_id,
         asset: event.params.asset.bits,
+        amount: event.params.amount,
+        order_type: orderType,
+        price: event.params.price,
+        user: event.params.user.payload.bits,
         base_amount: event.params.liquid_base,
         quote_amount: event.params.liquid_quote,
         tx_id: event.transaction.id,
         timestamp: getISOTime(event.block.time),
       };
+      context.OpenOrderEvent.set(openOrderEvent);
 
-      context.DepositEvent.set(depositEvent);
-      const balance = loaderReturn.balance;
+      const order: Order = {
+        ...openOrderEvent,
+        id: event.params.order_id,
+        initial_amount: event.params.amount,
+        status: "Active",
+      };
+      context.Order.set(order);
 
-      if (!balance) {
-        context.Balance.set({
-          ...depositEvent,
-          id: event.params.user.payload.bits,
-        });
-        return;
+      if (orderType === "Buy") {
+        context.ActiveBuyOrder.set(order);
+      } else if (orderType === "Sell") {
+        context.ActiveSellOrder.set(order);
       }
 
+      const balance = loaderReturn.balance;
+      if (!balance) {
+        return
+      }
       const updatedBalance = {
         ...balance,
         base_amount: event.params.liquid_base,
@@ -51,6 +65,7 @@ OrderBook.DepositEvent.handlerWithLoader(
       };
 
       context.Balance.set(updatedBalance);
+
     }
   }
 )
