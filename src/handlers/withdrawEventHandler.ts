@@ -1,6 +1,5 @@
 import {
- OrderBook_WithdrawEventEvent_eventArgs,
- OrderBook_WithdrawEventEvent_handlerContextAsync,
+ OrderBook_WithdrawEvent_eventArgs,
  WithdrawEvent,
 } from "generated";
 import { handlerArgs } from "generated/src/Handlers.gen";
@@ -11,8 +10,7 @@ export const withdrawEventHandler = async ({
  event,
  context,
 }: handlerArgs<
- OrderBook_WithdrawEventEvent_eventArgs,
- OrderBook_WithdrawEventEvent_handlerContextAsync
+ OrderBook_WithdrawEvent_eventArgs
 >) => {
  const withdrawEvent: WithdrawEvent = {
   id: nanoid(),

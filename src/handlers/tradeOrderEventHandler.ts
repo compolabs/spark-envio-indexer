@@ -1,6 +1,5 @@
 import {
-  OrderBook_TradeOrderEventEvent_eventArgs,
-  OrderBook_TradeOrderEventEvent_handlerContextAsync,
+  OrderBook_TradeOrderEvent_eventArgs,
   TradeOrderEvent,
   Order,
 } from "generated";
@@ -12,8 +11,7 @@ export const tradeOrderEventHandler = async ({
   event,
   context,
 }: handlerArgs<
-  OrderBook_TradeOrderEventEvent_eventArgs,
-  OrderBook_TradeOrderEventEvent_handlerContextAsync
+  OrderBook_TradeOrderEvent_eventArgs
 >) => {
 
   const tradeOrderEvent: TradeOrderEvent = {

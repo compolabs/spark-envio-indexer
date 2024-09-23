@@ -1,18 +1,16 @@
 import {
  DepositEvent,
- OrderBook_DepositEventEvent_eventArgs,
- OrderBook_DepositEventEvent_handlerContextAsync,
+ OrderBook_DepositEvent_eventArgs
 } from "generated";
 import { handlerArgs } from "generated/src/Handlers.gen";
 import { nanoid } from "nanoid";
 import { getISOTime } from "../utils/getISOTime";
 
-export const depositEventHandler = async({
+export const depositEventHandler = async ({
  event,
  context,
 }: handlerArgs<
- OrderBook_DepositEventEvent_eventArgs,
- OrderBook_DepositEventEvent_handlerContextAsync
+ OrderBook_DepositEvent_eventArgs
 >) => {
  const depositEvent: DepositEvent = {
   id: nanoid(),
@@ -38,7 +36,7 @@ export const depositEventHandler = async({
 
  const updatedBalance = {
   ...balance,
-  base_amount: event.data.liquid_base, 
+  base_amount: event.data.liquid_base,
   quote_amount: event.data.liquid_quote,
   timestamp: getISOTime(event.time),
  };

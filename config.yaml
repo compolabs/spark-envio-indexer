@@ -1,8 +1,9 @@
 name: OrderBook indexer
+ecosystem: fuel
 networks:
   - id: 0
     start_block: 0
-    hypersync_config:
+    hyperfuel_config:
        url: https://fuel-testnet.hypersync.xyz
     contracts:
       - name: OrderBook

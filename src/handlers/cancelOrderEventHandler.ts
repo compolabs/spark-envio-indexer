@@ -1,7 +1,6 @@
 import {
   CancelOrderEvent,
-  OrderBook_CancelOrderEventEvent_eventArgs,
-  OrderBook_CancelOrderEventEvent_handlerContextAsync,
+  OrderBook_CancelOrderEvent_eventArgs,
   Order,
 } from "generated";
 import { handlerArgs } from "generated/src/Handlers.gen";
@@ -13,8 +12,7 @@ export const cancelOrderEventHandler = async ({
   event,
   context,
 }: handlerArgs<
-  OrderBook_CancelOrderEventEvent_eventArgs,
-  OrderBook_CancelOrderEventEvent_handlerContextAsync
+  OrderBook_CancelOrderEvent_eventArgs
 >) => {
   const cancelOrderEvent: CancelOrderEvent = {
     id: nanoid(),
