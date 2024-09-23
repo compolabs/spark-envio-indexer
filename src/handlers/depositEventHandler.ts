@@ -1,46 +1,56 @@
 import {
- DepositEvent,
- OrderBook_DepositEvent_eventArgs
+  DepositEvent,
+  OrderBook
 } from "generated";
-import { handlerArgs } from "generated/src/Handlers.gen";
 import { nanoid } from "nanoid";
 import { getISOTime } from "../utils/getISOTime";
 
-export const depositEventHandler = async ({
- event,
- context,
-}: handlerArgs<
- OrderBook_DepositEvent_eventArgs
->) => {
- const depositEvent: DepositEvent = {
-  id: nanoid(),
-  user: event.data.user.payload.bits,
-  amount: event.data.amount,
-  asset: event.data.asset.bits,
-  base_amount: event.data.liquid_base,
-  quote_amount: event.data.liquid_quote,
-  tx_id: event.transactionId,
-  timestamp: getISOTime(event.time),
- };
+OrderBook.DepositEvent.handlerWithLoader(
+  {
+    loader: async ({
+      event,
+      context,
+    }) => {
+      return {
+        balance: await context.Balance.get(event.params.user.payload.bits)
+      }
+    },
 
- context.DepositEvent.set(depositEvent);
- const balance = await context.Balance.get(event.data.user.payload.bits);
+    handler: async ({
+      event,
+      context,
+      loaderReturn
+    }) => {
+      const depositEvent: DepositEvent = {
+        id: nanoid(),
+        user: event.params.user.payload.bits,
+        amount: event.params.amount,
+        asset: event.params.asset.bits,
+        base_amount: event.params.liquid_base,
+        quote_amount: event.params.liquid_quote,
+        tx_id: event.transaction.id,
+        timestamp: getISOTime(event.block.time),
+      };
 
- if (!balance) {
-  context.Balance.set({
-   ...depositEvent,
-   id: event.data.user.payload.bits,
-  });
-  return;
- }
+      context.DepositEvent.set(depositEvent);
+      const balance = loaderReturn.balance;
 
- const updatedBalance = {
-  ...balance,
-  base_amount: event.data.liquid_base,
-  quote_amount: event.data.liquid_quote,
-  timestamp: getISOTime(event.time),
- };
+      if (!balance) {
+        context.Balance.set({
+          ...depositEvent,
+          id: event.params.user.payload.bits,
+        });
+        return;
+      }
 
- context.Balance.set(updatedBalance);
-};
+      const updatedBalance = {
+        ...balance,
+        base_amount: event.params.liquid_base,
+        quote_amount: event.params.liquid_quote,
+        timestamp: getISOTime(event.block.time),
+      };
 
+      context.Balance.set(updatedBalance);
+    }
+  }
+)
