@@ -29,8 +29,8 @@ OrderBook.CancelOrderEvent.handlerWithLoader(
         id: nanoid(),
         user: event.params.user.payload.bits,
         order_id: event.params.order_id,
-        base_amount: event.params.liquid_base,
-        quote_amount: event.params.liquid_quote,
+        base_amount: event.params.balance.liquid.base,
+        quote_amount: event.params.balance.liquid.quote,
         tx_id: event.transaction.id,
         timestamp: getISOTime(event.block.time),
       };
@@ -66,8 +66,8 @@ OrderBook.CancelOrderEvent.handlerWithLoader(
 
       const updatedBalance = {
         ...balance,
-        base_amount: event.params.liquid_base,
-        quote_amount: event.params.liquid_quote,
+        base_amount: event.params.balance.liquid.base,
+        quote_amount: event.params.balance.liquid.quote,
         timestamp: getISOTime(event.block.time),
       };
 

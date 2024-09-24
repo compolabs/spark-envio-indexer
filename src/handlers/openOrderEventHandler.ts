@@ -32,8 +32,8 @@ OrderBook.OpenOrderEvent.handlerWithLoader(
         order_type: orderType,
         price: event.params.price,
         user: event.params.user.payload.bits,
-        base_amount: event.params.liquid_base,
-        quote_amount: event.params.liquid_quote,
+        base_amount: event.params.balance.liquid.base,
+        quote_amount: event.params.balance.liquid.quote,
         tx_id: event.transaction.id,
         timestamp: getISOTime(event.block.time),
       };
@@ -60,8 +60,8 @@ OrderBook.OpenOrderEvent.handlerWithLoader(
       }
       const updatedBalance = {
         ...balance,
-        base_amount: event.params.liquid_base,
-        quote_amount: event.params.liquid_quote,
+        base_amount: event.params.balance.liquid.base,
+        quote_amount: event.params.balance.liquid.quote,
         timestamp: getISOTime(event.block.time),
       };
 
