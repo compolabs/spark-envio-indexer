@@ -77,10 +77,10 @@ type TradeOrderEvent {
   trade_price: BigInt! @index
   seller: String!
   buyer: String!
-  # seller_base_amount: BigInt!
-  # seller_quote_amount: BigInt!
-  # buyer_base_amount: BigInt!
-  # buyer_quote_amount: BigInt!
+  seller_base_amount: BigInt!
+  seller_quote_amount: BigInt!
+  buyer_base_amount: BigInt!
+  buyer_quote_amount: BigInt!
   tx_id: String! @index
   timestamp: String!
 }

@@ -35,10 +35,10 @@ OrderBook.TradeOrderEvent.handlerWithLoader(
         trade_price: event.params.trade_price,
         seller: event.params.order_seller.payload.bits,
         buyer: event.params.order_buyer.payload.bits,
-        // seller_base_amount: event.params.s_account_liquid_base,
-        // seller_quote_amount: event.params.s_account_liquid_quote,
-        // buyer_base_amount: event.params.b_account_liquid_base,
-        // buyer_quote_amount: event.params.b_account_liquid_quote,
+        seller_base_amount: event.params.s_balance.liquid.base,
+        seller_quote_amount: event.params.s_balance.liquid.quote,
+        buyer_base_amount: event.params.b_balance.liquid.base,
+        buyer_quote_amount: event.params.b_balance.liquid.quote,
         tx_id: event.transaction.id,
         timestamp: getISOTime(event.block.time),
       };
@@ -97,8 +97,8 @@ OrderBook.TradeOrderEvent.handlerWithLoader(
 
       const updatedSellerBalance = {
         ...seller_balance,
-        // base_amount: event.params.s_account_liquid_base,
-        // quote_amount: event.params.s_account_liquid_quote,
+        base_amount: event.params.s_balance.liquid.base,
+        quote_amount: event.params.s_balance.liquid.quote,
         timestamp: getISOTime(event.block.time),
       };
 
@@ -106,8 +106,8 @@ OrderBook.TradeOrderEvent.handlerWithLoader(
 
       const updatedBuyerBalance = {
         ...buyer_balance,
-        // base_amount: event.params.b_account_liquid_base,
-        // quote_amount: event.params.b_account_liquid_quote,
+        base_amount: event.params.b_balance.liquid.base,
+        quote_amount: event.params.b_balance.liquid.quote,
         timestamp: getISOTime(event.block.time),
       };
 
