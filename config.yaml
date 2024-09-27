@@ -7,7 +7,7 @@ networks:
        url: https://fuel-testnet.hypersync.xyz
     contracts:
       - name: OrderBook
-        address: 0x21cc465d074200e103a5de0488f6203509c9381eb642668454a7375c89368cf6 
+        address: 0xb1ed073b4dccbff48e2ac1b52a49454e6a2921aa54effee89eb958dc5ddbffbe 
         abi_file_path: ./abis/spark-orderbook.json
         handler: ./src/OrderBookHandlers.ts
         events:
