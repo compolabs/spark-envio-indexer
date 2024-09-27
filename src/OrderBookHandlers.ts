@@ -1,4 +1,4 @@
-import { OrderBookContract } from "generated";
+import { OrderBook } from "generated";
 
 import {
   cancelOrderEventLoader,
@@ -16,17 +16,17 @@ import {
   withdrawEventHandler
 } from "./handlers";
 
-OrderBookContract.OpenOrderEvent.loader(openOrderEventLoader);
-OrderBookContract.OpenOrderEvent.handler(openOrderEventHandler);
+OrderBook.OpenOrderEvent.loader(openOrderEventLoader);
+OrderBook.OpenOrderEvent.handler(openOrderEventHandler);
 
-OrderBookContract.CancelOrderEvent.loader(cancelOrderEventLoader);
-OrderBookContract.CancelOrderEvent.handler(cancelOrderEventHandler);
+OrderBook.CancelOrderEvent.loader(cancelOrderEventLoader);
+OrderBook.CancelOrderEvent.handler(cancelOrderEventHandler);
 
-OrderBookContract.TradeOrderEvent.loader(tradeOrderEventLoader);
-OrderBookContract.TradeOrderEvent.handler(tradeOrderEventHandler);
+OrderBook.TradeOrderEvent.loader(tradeOrderEventLoader);
+OrderBook.TradeOrderEvent.handler(tradeOrderEventHandler);
 
-OrderBookContract.DepositEvent.loader(depositEventLoader);
-OrderBookContract.DepositEvent.handler(depositEventHandler);
+OrderBook.DepositEvent.loader(depositEventLoader);
+OrderBook.DepositEvent.handler(depositEventHandler);
 
-OrderBookContract.WithdrawEvent.loader(withdrawEventLoader);
-OrderBookContract.WithdrawEvent.handler(withdrawEventHandler);
+OrderBook.WithdrawEvent.loader(withdrawEventLoader);
+OrderBook.WithdrawEvent.handler(withdrawEventHandler);
