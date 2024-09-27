@@ -1,20 +1,19 @@
 import {
- MarketRegistry,
   OpenOrderEvent,
   Order,
-  OrderBook
+  Market
 } from "generated";
-import { nanoid } from "nanoid";
 import { getISOTime } from "../utils/getISOTime";
+import { getHash } from "../utils/getHash";
 
-OrderBook.OpenOrderEvent.handlerWithLoader(
+Market.OpenOrderEvent.handlerWithLoader(
   {
     loader: async ({
       event,
       context,
     }) => {
       return {
-        balance: await context.Balance.get(event.params.user.payload.bits)
+        balance: await context.Balance.get(getHash(`${event.params.user.payload.bits}-${event.srcAddress}`))
       }
     },
 
@@ -26,7 +25,8 @@ OrderBook.OpenOrderEvent.handlerWithLoader(
       const orderType = event.params.order_type.case;
 
       const openOrderEvent: OpenOrderEvent = {
-        id: nanoid(),
+        id: event.transaction.id,
+        market: event.srcAddress,
         order_id: event.params.order_id,
         asset: event.params.asset.bits,
         amount: event.params.amount,
@@ -35,8 +35,8 @@ OrderBook.OpenOrderEvent.handlerWithLoader(
         user: event.params.user.payload.bits,
         base_amount: event.params.balance.liquid.base,
         quote_amount: event.params.balance.liquid.quote,
-        tx_id: event.transaction.id,
         timestamp: getISOTime(event.block.time),
+        // tx_id: event.transaction.id,
       };
       context.OpenOrderEvent.set(openOrderEvent);
 
@@ -56,7 +56,7 @@ OrderBook.OpenOrderEvent.handlerWithLoader(
 
       const balance = loaderReturn.balance;
       if (!balance) {
-        context.log.error(`Cannot find an balance ${event.params.user.payload.bits}`);
+        context.log.error(`Cannot find an balance ${getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)}`);
         return
       }
       const updatedBalance = {

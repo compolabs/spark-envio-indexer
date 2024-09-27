@@ -1,10 +1,9 @@
-import { MarketRegistry } from "generated/src/Handlers.gen";
+import { Registry } from "generated/src/Handlers.gen";
 import { nanoid } from "nanoid";
 import { getISOTime } from "../utils/getISOTime";
 import { MarketRegisterEvent } from "generated";
 
-
-MarketRegistry.MarketRegisterEvent.handler(
+Registry.MarketRegisterEvent.handler(
   async ({ event, context }) => {
     const marketRegisterEvent: MarketRegisterEvent = {
       id: nanoid(),
@@ -12,13 +11,14 @@ MarketRegistry.MarketRegisterEvent.handler(
       quote_asset: event.params.quote.bits,
       market: event.params.market.bits,
       timestamp: getISOTime(event.block.time),
+      tx_id: event.transaction.id
     };
     context.MarketRegisterEvent.set(marketRegisterEvent);
 
   },
 );
 
-MarketRegistry.MarketRegisterEvent.contractRegister(({ event, context }) => {
+Registry.MarketRegisterEvent.contractRegister(({ event, context }) => {
   const marketAddress = event.params.market.bits;
-  context.addOrderBook(marketAddress);
+  context.addMarket(marketAddress);
 });
