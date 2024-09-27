@@ -6,13 +6,19 @@ networks:
     hyperfuel_config:
        url: https://fuel-testnet.hypersync.xyz
     contracts:
+      - name: MarketRegistry
+        address: 0x3e05f1c960c2ba146b77c35942930da7d6b381e3457b05a1b429beddbe4ef46f 
+        abi_file_path: ./abis/spark-registry.json
+        handler: ./src/OrderBookHandlers.ts
+        events:
+          - name: MarketRegisterEvent
+          # - name: MarketUnregisterEvent
       - name: OrderBook
-        address: 0x21cc465d074200e103a5de0488f6203509c9381eb642668454a7375c89368cf6 
         abi_file_path: ./abis/spark-orderbook.json
         handler: ./src/OrderBookHandlers.ts
         events:
-          - name: OpenOrderEvent
-          - name: CancelOrderEvent
-          - name: TradeOrderEvent
           - name: DepositEvent
-          - name: WithdrawEvent
+          # - name: WithdrawEvent
+          # - name: OpenOrderEvent
+          # - name: CancelOrderEvent
+          # - name: TradeOrderEvent

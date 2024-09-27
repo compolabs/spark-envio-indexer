@@ -1,5 +1,6 @@
-import "./openOrderEventHandler";
-import "./cancelOrderEventHandler";
-import "./tradeOrderEventHandler";
-import "./withdrawEventHandler";
+// import "./openOrderEventHandler";
+// import "./cancelOrderEventHandler";
+// import "./tradeOrderEventHandler";
+// import "./withdrawEventHandler";
 import "./depositEventHandler";
+import "./marketRegisterEventHandler";
