@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       envio:
-        specifier: 2.3.1
-        version: 2.3.1
+        specifier: 2.3.2
+        version: 2.3.2
       graphql-subscriptions:
         specifier: ^2.0.0
         version: 2.0.0(graphql@16.9.0)
@@ -218,6 +218,10 @@ packages:
 
   '@fuel-ts/interfaces@0.94.6':
     resolution: {integrity: sha512-wR+ZGUT1Jjj7LifmvHfBIAIZRwjXUYddwT6SDptBglDQkJGlMwEHv8xh76FU0W764NwWGRqoX2TeZKIdu4fD/w==}
+    engines: {node: ^18.20.3 || ^20.0.0 || ^22.0.0}
+
+  '@fuel-ts/interfaces@0.94.7':
+    resolution: {integrity: sha512-pJZ08J+dbgNaeO0xUiJFU1XkthHB275V6sSVBa4zUdmcSxks6SSEGpiJwacOt0XtkXzfa1FA6Lh7K6matDKJvQ==}
     engines: {node: ^18.20.3 || ^20.0.0 || ^22.0.0}
 
   '@fuel-ts/math@0.94.6':
@@ -614,28 +618,28 @@ packages:
   end-of-stream@1.4.4:
     resolution: {integrity: sha512-+uw1inIHVPQoaVuHzRyXd21icM+cnt4CzD5rW+NC1wjOUSTOs+Te7FOv7AhN7vS9x/oIyhLP5PR1H+phQAHu5Q==}
 
-  envio-darwin-arm64@2.3.1:
-    resolution: {integrity: sha512-LqrwVdOFYS8hyhjGFjEeYLkvDGWQBzaG2UZPYgIYBK+dapc57GNIuZalQUQ2FCfsEuyYhGNzhOAaIAUYE6CNPA==}
+  envio-darwin-arm64@2.3.2:
+    resolution: {integrity: sha512-CmyG796jrfnvMx/p/JrS6HiqPjyXR8sPmo8TKMSpuEFsM30r0iSRM1+2AJw1+w/3uyfgP/E6GsHPZyD55tsBRg==}
     cpu: [arm64]
     os: [darwin]
 
-  envio-darwin-x64@2.3.1:
-    resolution: {integrity: sha512-gIiUc1UZiCKzED0bfR6hDNLpJ2G1Io0JqV0wpBg+dJv20zOOEjEZYKEckJAZtXvV4l6KclwSVNtLxbZDslqizg==}
+  envio-darwin-x64@2.3.2:
+    resolution: {integrity: sha512-cYgOSgY6qUPV733oORmEQk12nEShaz2E2Js72L3mh3djGrZmTQaIb0whl9uIptYO8B4vmpRPM9j1ox4eoihydA==}
     cpu: [x64]
     os: [darwin]
 
-  envio-linux-arm64@2.3.1:
-    resolution: {integrity: sha512-yC6+0qXx88vwd/Shr51ACWq2litAv3ZFgusMDbH0j1J+Pd2zTYswtZqdfbIjzrXY5XMsEWn2NFS3cBA1RwSc0A==}
+  envio-linux-arm64@2.3.2:
+    resolution: {integrity: sha512-PAgWkP1AVdfBFt1NCH1gsnRAqev2nNjJZhh1zaNJikUOMjBsj1qQDXSgvnji7DyoqbjCPldQTxGBWP9CRTPqOQ==}
     cpu: [arm64]
     os: [linux]
 
-  envio-linux-x64@2.3.1:
-    resolution: {integrity: sha512-LSICUP/8p1/4MmjvaiHkKMMq9byk41uS/0k+Twtc9NUotC7tFFbV5/L0ZundBOzyX/FkP6kpcQ3lrXpextP2aQ==}
+  envio-linux-x64@2.3.2:
+    resolution: {integrity: sha512-oadisYezSR+MOjsQ1hWl3jGNy2vU7EvtX3UBMuU5yx9qnJj+APx8eSo3EZKjUbhRwodBIPg+P667S/UvmvXoFQ==}
     cpu: [x64]
     os: [linux]
 
-  envio@2.3.1:
-    resolution: {integrity: sha512-y/CdfEg405syO8wAEh6ZImZ6Y+11pkOQqENzOoIiionhA0uMQnLD2j9cxCvItGm3ZQTQZuyKiyYbXGOi87dt9w==}
+  envio@2.3.2:
+    resolution: {integrity: sha512-WI9JEZyHri/xx2E0Rdu5PNXioWZiNIncT3ukYMxS2kbUgb1qLBMSPDb5Ffrsb7j1yaI9vVuYciEalxrRv7k7vg==}
     hasBin: true
 
   es-define-property@1.0.0:
@@ -1601,11 +1605,13 @@ snapshots:
   '@fuel-ts/hasher@0.94.6':
     dependencies:
       '@fuel-ts/crypto': 0.94.6
-      '@fuel-ts/interfaces': 0.94.6
+      '@fuel-ts/interfaces': 0.94.7
       '@fuel-ts/utils': 0.94.6
       '@noble/hashes': 1.5.0
 
   '@fuel-ts/interfaces@0.94.6': {}
+
+  '@fuel-ts/interfaces@0.94.7': {}
 
   '@fuel-ts/math@0.94.6':
     dependencies:
@@ -1955,24 +1961,24 @@ snapshots:
     dependencies:
       once: 1.4.0
 
-  envio-darwin-arm64@2.3.1:
+  envio-darwin-arm64@2.3.2:
     optional: true
 
-  envio-darwin-x64@2.3.1:
+  envio-darwin-x64@2.3.2:
     optional: true
 
-  envio-linux-arm64@2.3.1:
+  envio-linux-arm64@2.3.2:
     optional: true
 
-  envio-linux-x64@2.3.1:
+  envio-linux-x64@2.3.2:
     optional: true
 
-  envio@2.3.1:
+  envio@2.3.2:
     optionalDependencies:
-      envio-darwin-arm64: 2.3.1
-      envio-darwin-x64: 2.3.1
-      envio-linux-arm64: 2.3.1
-      envio-linux-x64: 2.3.1
+      envio-darwin-arm64: 2.3.2
+      envio-darwin-x64: 2.3.2
+      envio-linux-arm64: 2.3.2
+      envio-linux-x64: 2.3.2
 
   es-define-property@1.0.0:
     dependencies:
@@ -2822,7 +2828,7 @@ snapshots:
   webauthn-p256@0.0.5:
     dependencies:
       '@noble/curves': 1.4.0
-      '@noble/hashes': 1.5.0
+      '@noble/hashes': 1.4.0
 
   webidl-conversions@3.0.1: {}
 

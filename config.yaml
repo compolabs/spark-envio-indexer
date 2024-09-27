@@ -7,7 +7,7 @@ networks:
        url: https://fuel-testnet.hypersync.xyz
     contracts:
       - name: MarketRegistry
-        address: 0x3e05f1c960c2ba146b77c35942930da7d6b381e3457b05a1b429beddbe4ef46f 
+        address: 0x0f5232e0d927f7a477baa7e6f0380c50f8b3de5c0d6ae42bb29ba8a767e5ff1a 
         abi_file_path: ./abis/spark-registry.json
         handler: ./src/OrderBookHandlers.ts
         events:
@@ -19,6 +19,6 @@ networks:
         events:
           - name: DepositEvent
           # - name: WithdrawEvent
-          # - name: OpenOrderEvent
+          - name: OpenOrderEvent
           # - name: CancelOrderEvent
           # - name: TradeOrderEvent

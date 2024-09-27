@@ -1,4 +1,4 @@
-// import "./openOrderEventHandler";
+import "./openOrderEventHandler";
 // import "./cancelOrderEventHandler";
 // import "./tradeOrderEventHandler";
 // import "./withdrawEventHandler";
