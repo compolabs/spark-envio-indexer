@@ -1,16 +1,23 @@
 import {
-  OrderBook_CancelOrderEventEvent_eventArgs,
-  OrderBook_CancelOrderEventEvent_loaderContext,
+  OrderBookContract_CancelOrderEventEvent_eventArgs,
+  OrderBookContract_CancelOrderEventEvent_loaderContext,
 } from "generated";
 import { handlerArgs } from "generated/src/Handlers.gen";
+import { getHash } from "../utils/getHash";
+import { BASE_ASSET, QUOTE_ASSET } from "../utils/marketConfig";
 
 export const cancelOrderEventLoader = ({
   event,
   context,
 }: handlerArgs<
-  OrderBook_CancelOrderEventEvent_eventArgs,
-  OrderBook_CancelOrderEventEvent_loaderContext
+  OrderBookContract_CancelOrderEventEvent_eventArgs,
+  OrderBookContract_CancelOrderEventEvent_loaderContext
 >) => {
   context.Order.load(event.data.order_id);
-  context.Balance.load(event.data.user.payload.bits);
+
+  const quoteBalance = getHash(`${QUOTE_ASSET}-${event.data.user.payload.bits}`);
+  const baseBalance = getHash(`${BASE_ASSET}-${event.data.user.payload.bits}`);
+
+  context.Balance.load(quoteBalance);
+  context.Balance.load(baseBalance);
 };

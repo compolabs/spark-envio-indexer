@@ -1,48 +1,46 @@
 import {
- DepositEvent,
- OrderBook_DepositEventEvent_eventArgs,
- OrderBook_DepositEventEvent_handlerContextAsync,
+ DepositEventEntity,
+ OrderBookContract_DepositEventEvent_eventArgs,
+ OrderBookContract_DepositEventEvent_handlerContext,
 } from "generated";
 import { handlerArgs } from "generated/src/Handlers.gen";
 import { nanoid } from "nanoid";
 import { getISOTime } from "../utils/getISOTime";
+import { getHash } from "../utils/getHash";
+import { BASE_ASSET, QUOTE_ASSET } from "../utils/marketConfig";
 
-export const depositEventHandler = async({
+export const depositEventHandler = ({
  event,
  context,
 }: handlerArgs<
- OrderBook_DepositEventEvent_eventArgs,
- OrderBook_DepositEventEvent_handlerContextAsync
+ OrderBookContract_DepositEventEvent_eventArgs,
+ OrderBookContract_DepositEventEvent_handlerContext
 >) => {
- const depositEvent: DepositEvent = {
+ const depositEvent: DepositEventEntity = {
   id: nanoid(),
-  user: event.data.user.payload.bits,
+  tx_id: event.transactionId,
   amount: event.data.amount,
   asset: event.data.asset.bits,
-  base_amount: event.data.liquid_base,
-  quote_amount: event.data.liquid_quote,
-  tx_id: event.transactionId,
+  user: event.data.user.payload.bits,
   timestamp: getISOTime(event.time),
  };
-
  context.DepositEvent.set(depositEvent);
- const balance = await context.Balance.get(event.data.user.payload.bits);
+
+ const asset = event.data.asset.bits;
+
+ const isBaseAsset = asset === BASE_ASSET;
+
+ const balanceId = isBaseAsset
+  ? getHash(`${BASE_ASSET}-${event.data.user.payload.bits}`)
+  : getHash(`${QUOTE_ASSET}-${event.data.user.payload.bits}`);
+
+ const balance = context.Balance.get(balanceId);
 
  if (!balance) {
-  context.Balance.set({
-   ...depositEvent,
-   id: event.data.user.payload.bits,
-  });
+  context.Balance.set({ ...depositEvent, id: balanceId });
   return;
  }
 
- const updatedBalance = {
-  ...balance,
-  base_amount: event.data.liquid_base, 
-  quote_amount: event.data.liquid_quote,
-  timestamp: getISOTime(event.time),
- };
-
- context.Balance.set(updatedBalance);
+ const updatedAmount = balance.amount + event.data.amount;
+ context.Balance.set({ ...balance, amount: updatedAmount });
 };
-

@@ -11,16 +11,14 @@ enum OrderStatus {
 
 type OpenOrderEvent {
   id: ID!
-  user: String!
   order_id: String! @index
-  base_amount: BigInt!
-  quote_amount: BigInt!
+  tx_id: String!
   asset: String!
   amount: BigInt!
   order_type: OrderType!
   price: BigInt!
+  user: String!
   timestamp: String!
-  tx_id: String!
 }
 
 type Order {
@@ -61,10 +59,8 @@ type ActiveBuyOrder {
 
 type CancelOrderEvent {
   id: ID!
-  user: String! @index
   order_id: String! @index
-  base_amount: BigInt!
-  quote_amount: BigInt!
+  user: String! @index
   tx_id: String!
   timestamp: String!
 }
@@ -77,40 +73,32 @@ type TradeOrderEvent {
   trade_price: BigInt! @index
   seller: String!
   buyer: String!
-  seller_base_amount: BigInt!
-  seller_quote_amount: BigInt!
-  buyer_base_amount: BigInt!
-  buyer_quote_amount: BigInt!
   tx_id: String! @index
   timestamp: String!
 }
 
 type DepositEvent {
   id: ID!
-  user: String! @index
+  tx_id: String! @index
   amount: BigInt!
   asset: String! @index
-  base_amount: BigInt!
-  quote_amount: BigInt!
-  tx_id: String! @index
+  user: String! @index
   timestamp: String!
 }
 
 type WithdrawEvent {
   id: ID!
-  user: String! @index
+  tx_id: String! @index
   amount: BigInt!
   asset: String! @index
-  base_amount: BigInt!
-  quote_amount: BigInt! 
-  tx_id: String! @index
+  user: String! @index
   timestamp: String!
 }
 
 type Balance {
   id: ID!
+  amount: BigInt!
+  asset: String! @index
   user: String! @index
-  base_amount: BigInt!
-  quote_amount: BigInt!
   timestamp: String!
 }
