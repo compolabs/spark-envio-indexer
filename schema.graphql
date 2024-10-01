@@ -14,12 +14,12 @@ type OpenOrderEvent {
   market: String! @index
   user: String! @index
   order_id: String! @index
-  tx_id: String!
+  base_amount: BigInt!
+  quote_amount: BigInt!
   asset: String!
   amount: BigInt!
   order_type: OrderType!
   price: BigInt!
-  user: String!
   timestamp: String!
   # tx_id: String!
 }
@@ -117,8 +117,6 @@ type WithdrawEvent {
 
 type Balance {
   id: ID!
-  amount: BigInt!
-  asset: String! @index
   user: String! @index
   market: String! @index
   base_amount: BigInt!
