@@ -1,48 +1,53 @@
 import {
- OrderBookContract_WithdrawEventEvent_eventArgs,
- OrderBookContract_WithdrawEventEvent_handlerContext,
- WithdrawEventEntity,
+  WithdrawEvent,
+  Market
 } from "generated";
-import { handlerArgs } from "generated/src/Handlers.gen";
-import { nanoid } from "nanoid";
 import { getISOTime } from "../utils/getISOTime";
 import { getHash } from "../utils/getHash";
-import { BASE_ASSET, QUOTE_ASSET } from "../utils/marketConfig";
 
-export const withdrawEventHandler = ({
- event,
- context,
-}: handlerArgs<
- OrderBookContract_WithdrawEventEvent_eventArgs,
- OrderBookContract_WithdrawEventEvent_handlerContext
->) => {
- const withdrawEvent: WithdrawEventEntity = {
-  id: nanoid(),
-  tx_id: event.transactionId,
-  amount: event.data.amount,
-  asset: event.data.asset.bits,
-  user: event.data.user.payload.bits,
-  timestamp: getISOTime(event.time),
- };
- context.WithdrawEvent.set(withdrawEvent);
+Market.WithdrawEvent.handlerWithLoader(
+  {
+    loader: async ({
+      event,
+      context,
+    }) => {
+      return {
+        balance: await context.Balance.get(getHash(`${event.params.user.payload.bits}-${event.srcAddress}`))
+      }
+    },
 
- const asset = event.data.asset.bits;
+    handler: async ({
+      event,
+      context,
+      loaderReturn
+    }) => {
+      const withdrawEvent: WithdrawEvent = {
+        id: event.transaction.id,
+        market: event.srcAddress,
+        user: event.params.user.payload.bits,
+        amount: event.params.amount,
+        asset: event.params.asset.bits,
+        base_amount: event.params.account.liquid.base,
+        quote_amount: event.params.account.liquid.quote,
+        timestamp: getISOTime(event.block.time),
+        // tx_id: event.transaction.id,
+      };
 
- const isBaseAsset = asset === BASE_ASSET;
+      context.WithdrawEvent.set(withdrawEvent);
+      const balance = loaderReturn.balance;
 
- const balanceId = isBaseAsset
-  ? getHash(`${BASE_ASSET}-${event.data.user.payload.bits}`)
-  : getHash(`${QUOTE_ASSET}-${event.data.user.payload.bits}`);
+      if (!balance) {
+        context.log.error(`Cannot find an balance ${getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)}`);
+        return
+      }
 
- const balance = context.Balance.get(balanceId);
-
- if (!balance) {
-  context.log.error(
-   `Cannot find a balance; user:${event.data.user.payload.bits}; asset: ${event.data.asset.bits}; id: ${balanceId}`
-  );
-  return;
- }
-
- const updatedAmount = balance.amount - event.data.amount;
- context.Balance.set({ ...balance, amount: updatedAmount });
-};
+      const updatedBalance = {
+        ...balance,
+        base_amount: event.params.account.liquid.base,
+        quote_amount: event.params.account.liquid.quote,
+        timestamp: getISOTime(event.block.time),
+      };
+      context.Balance.set(updatedBalance);
+    }
+  }
+)

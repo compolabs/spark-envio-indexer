@@ -1,75 +1,73 @@
 import {
-  OpenOrderEventEntity,
-  OrderBookContract_OpenOrderEventEvent_eventArgs,
-  OrderBookContract_OpenOrderEventEvent_handlerContext,
-  OrderEntity,
+  OpenOrderEvent,
+  Order,
+  Market
 } from "generated";
-import { handlerArgs } from "generated/src/Handlers.gen";
-import { nanoid } from "nanoid";
 import { getISOTime } from "../utils/getISOTime";
 import { getHash } from "../utils/getHash";
-import { BASE_ASSET, QUOTE_ASSET, BASE_DECIMAL, QUOTE_DECIMAL, PRICE_DECIMAL } from "../utils/marketConfig";
 
-export const openOrderEventHandler = ({
-  event,
-  context,
-}: handlerArgs<
-  OrderBookContract_OpenOrderEventEvent_eventArgs,
-  OrderBookContract_OpenOrderEventEvent_handlerContext
->) => {
-  const orderType = event.data.order_type.case;
+Market.OpenOrderEvent.handlerWithLoader(
+  {
+    loader: async ({
+      event,
+      context,
+    }) => {
+      return {
+        balance: await context.Balance.get(getHash(`${event.params.user.payload.bits}-${event.srcAddress}`))
+      }
+    },
 
-  const openOrderEvent: OpenOrderEventEntity = {
-    id: nanoid(),
-    order_id: event.data.order_id,
-    tx_id: event.transactionId,
-    asset: event.data.asset.bits,
-    amount: event.data.amount,
-    order_type: orderType,
-    price: event.data.price,
-    user: event.data.user.payload.bits,
-    timestamp: getISOTime(event.time),
-  };
-  context.OpenOrderEvent.set(openOrderEvent);
+    handler: async ({
+      event,
+      context,
+      loaderReturn
+    }) => {
+      const orderType = event.params.order_type.case;
 
-  const order: OrderEntity = {
-    ...openOrderEvent,
-    id: event.data.order_id,
-    initial_amount: event.data.amount,
-    status: "Active",
-  };
-  context.Order.set(order);
+      const openOrderEvent: OpenOrderEvent = {
+        id: event.transaction.id,
+        market: event.srcAddress,
+        order_id: event.params.order_id,
+        asset: event.params.asset.bits,
+        amount: event.params.amount,
+        order_type: orderType,
+        price: event.params.price,
+        user: event.params.user.payload.bits,
+        base_amount: event.params.balance.liquid.base,
+        quote_amount: event.params.balance.liquid.quote,
+        timestamp: getISOTime(event.block.time),
+        // tx_id: event.transaction.id,
+      };
+      context.OpenOrderEvent.set(openOrderEvent);
 
-  if (orderType === "Buy") {
-    const balanceId = getHash(`${QUOTE_ASSET}-${event.data.user.payload.bits}`);
-    const balance = context.Balance.get(balanceId);
+      const order: Order = {
+        ...openOrderEvent,
+        id: event.params.order_id,
+        initial_amount: event.params.amount,
+        status: "Active",
+      };
+      context.Order.set(order);
 
-    if (!balance) {
-      context.log.error(
-        `Cannot find a balance; user:${event.data.user.payload.bits}; asset: ${QUOTE_ASSET}; id: ${balanceId}`
-      );
-      return;
+      if (orderType === "Buy") {
+        context.ActiveBuyOrder.set(order);
+      } else if (orderType === "Sell") {
+        context.ActiveSellOrder.set(order);
+      }
+
+      const balance = loaderReturn.balance;
+      if (!balance) {
+        context.log.error(`Cannot find an balance ${getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)}`);
+        return
+      }
+      const updatedBalance = {
+        ...balance,
+        base_amount: event.params.balance.liquid.base,
+        quote_amount: event.params.balance.liquid.quote,
+        timestamp: getISOTime(event.block.time),
+      };
+
+      context.Balance.set(updatedBalance);
+
     }
-
-    const updatedAmount = balance.amount - (event.data.amount * event.data.price * BigInt(QUOTE_DECIMAL)) / BigInt(BASE_DECIMAL) / BigInt(PRICE_DECIMAL);
-
-    context.Balance.set({ ...balance, amount: updatedAmount });
-    context.ActiveBuyOrder.set(order);
-
-  } else if (orderType === "Sell") {
-    const balanceId = getHash(`${BASE_ASSET}-${event.data.user.payload.bits}`);
-    const balance = context.Balance.get(balanceId);
-
-    if (!balance) {
-      context.log.error(
-        `Cannot find a balance; user:${event.data.user.payload.bits}; asset: ${BASE_ASSET}; id: ${balanceId}`
-      );
-      return;
-    }
-
-    const updatedAmount = balance.amount - event.data.amount;
-
-    context.Balance.set({ ...balance, amount: updatedAmount });
-    context.ActiveSellOrder.set(order);
   }
-};
+)

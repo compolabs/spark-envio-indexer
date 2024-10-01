@@ -1,90 +1,78 @@
 
 import {
-  CancelOrderEventEntity,
-  OrderBookContract_CancelOrderEventEvent_eventArgs,
-  OrderBookContract_CancelOrderEventEvent_handlerContext,
-  OrderEntity,
+  CancelOrderEvent,
+  Order,
+  Market
 } from "generated";
-import { handlerArgs } from "generated/src/Handlers.gen";
-import { nanoid } from "nanoid";
-import { orderStatus } from "generated/src/Enums.gen";
+import { OrderStatus_t } from "generated/src/db/Enums.gen";
 import { getISOTime } from "../utils/getISOTime";
-import { getHash } from "../utils/getHash";
-import { BASE_ASSET, QUOTE_ASSET, BASE_DECIMAL, QUOTE_DECIMAL, PRICE_DECIMAL } from "../utils/marketConfig";
+import { getHash } from '../utils/getHash';
 
-export const cancelOrderEventHandler = ({
-  event,
-  context,
-}: handlerArgs<
-  OrderBookContract_CancelOrderEventEvent_eventArgs,
-  OrderBookContract_CancelOrderEventEvent_handlerContext
->) => {
-  const cancelOrderEvent: CancelOrderEventEntity = {
-    id: nanoid(),
-    order_id: event.data.order_id,
-    user: event.data.user.payload.bits,
-    tx_id: event.transactionId,
-    timestamp: getISOTime(event.time),
-  };
-  context.CancelOrderEvent.set(cancelOrderEvent);
+Market.CancelOrderEvent.handlerWithLoader(
+  {
+    loader: async ({
+      event,
+      context,
+    }) => {
+      return {
+        balance: await context.Balance.get(getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)),
+        order: await context.Order.get(event.params.order_id)
+      }
+    },
 
-  const order = context.Order.get(event.data.order_id);
+    handler: async ({
+      event,
+      context,
+      loaderReturn
+    }) => {
+      const cancelOrderEvent: CancelOrderEvent = {
+        id: event.transaction.id,
+        market: event.srcAddress,
+        user: event.params.user.payload.bits,
+        order_id: event.params.order_id,
+        base_amount: event.params.balance.liquid.base,
+        quote_amount: event.params.balance.liquid.quote,
+        timestamp: getISOTime(event.block.time),
+        // tx_id: event.transaction.id,
+      };
+      context.CancelOrderEvent.set(cancelOrderEvent);
 
-  if (!order) {
-    context.log.error(`Cannot find an order ${event.data.order_id}`);
-    return;
-  }
+      const order = loaderReturn.order;
 
-  const updatedOrder: OrderEntity = {
-    ...order,
-    amount: 0n,
-    status: "Canceled" as orderStatus,
-    timestamp: getISOTime(event.time),
-  };
-  context.Order.set(updatedOrder);
+      if (!order) {
+        context.log.error(`Cannot find an order ${event.params.order_id}`);
+        return;
+      }
 
-  if (order.order_type === "Buy") {
-    context.ActiveBuyOrder.deleteUnsafe(event.data.order_id);
+      const updatedOrder: Order = {
+        ...order,
+        amount: 0n,
+        status: "Canceled" as OrderStatus_t,
+        timestamp: getISOTime(event.block.time),
+      };
+      context.Order.set(updatedOrder);
 
-    const quoteBalanceId = getHash(
-      `${QUOTE_ASSET}-${event.data.user.payload.bits}`
-    );
-    let quoteBalance = context.Balance.get(quoteBalanceId);
+      if (order.order_type === "Buy") {
+        context.ActiveBuyOrder.deleteUnsafe(event.params.order_id);
 
-    if (!quoteBalance) {
-      context.log.error(
-        `Cannot find a quote balance; user:${order.user}; asset: ${QUOTE_ASSET}; id: ${quoteBalanceId}`
-      );
-      return;
+      } else if (order.order_type === "Sell") {
+        context.ActiveSellOrder.deleteUnsafe(event.params.order_id)
+      }
+
+      const balance = loaderReturn.balance;
+      if (!balance) {
+        context.log.error(`Cannot find an balance ${getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)}`);
+        return
+      }
+
+      const updatedBalance = {
+        ...balance,
+        base_amount: event.params.balance.liquid.base,
+        quote_amount: event.params.balance.liquid.quote,
+        timestamp: getISOTime(event.block.time),
+      };
+
+      context.Balance.set(updatedBalance);
     }
-
-    const amountToReturn = order.amount * order.price * BigInt(QUOTE_DECIMAL) / BigInt(PRICE_DECIMAL) / BigInt(BASE_DECIMAL);
-
-    const updatedQuoteBalance = {
-      ...quoteBalance,
-      amount: quoteBalance.amount + amountToReturn,
-    };
-    context.Balance.set(updatedQuoteBalance);
-
-  } else if (order.order_type === "Sell") {
-    context.ActiveSellOrder.deleteUnsafe(event.data.order_id)
-
-    const baseBalanceId = getHash(
-      `${BASE_ASSET}-${event.data.user.payload.bits}`
-    );
-    let baseBalance = context.Balance.get(baseBalanceId);
-
-    if (!baseBalance) {
-      context.log.error(
-        `Cannot find a base balance; user:${order.user}; asset: ${BASE_ASSET}; id: ${baseBalanceId}`
-      );
-      return;
-    }
-
-    const updatedBaseBalance = {
-      ...baseBalance,
-      amount: baseBalance.amount + order.amount,
-    };
-    context.Balance.set(updatedBaseBalance);
   }
-};
+)

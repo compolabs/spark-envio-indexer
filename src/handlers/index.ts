@@ -1,5 +1,6 @@
-export * from "./openOrderEventHandler";
-export * from "./cancelOrderEventHandler";
-export * from "./tradeOrderEventHandler";
-export * from "./withdrawEventHandler";
-export * from "./depositEventHandler";
+import "./openOrderEventHandler";
+import "./cancelOrderEventHandler";
+import "./tradeOrderEventHandler";
+import "./withdrawEventHandler";
+import "./depositEventHandler";
+import "./marketRegisterEventHandler";

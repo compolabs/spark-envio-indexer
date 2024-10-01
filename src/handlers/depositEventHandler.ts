@@ -1,46 +1,57 @@
 import {
- DepositEventEntity,
- OrderBookContract_DepositEventEvent_eventArgs,
- OrderBookContract_DepositEventEvent_handlerContext,
+  DepositEvent,
+  Market
 } from "generated";
-import { handlerArgs } from "generated/src/Handlers.gen";
-import { nanoid } from "nanoid";
 import { getISOTime } from "../utils/getISOTime";
 import { getHash } from "../utils/getHash";
-import { BASE_ASSET, QUOTE_ASSET } from "../utils/marketConfig";
 
-export const depositEventHandler = ({
- event,
- context,
-}: handlerArgs<
- OrderBookContract_DepositEventEvent_eventArgs,
- OrderBookContract_DepositEventEvent_handlerContext
->) => {
- const depositEvent: DepositEventEntity = {
-  id: nanoid(),
-  tx_id: event.transactionId,
-  amount: event.data.amount,
-  asset: event.data.asset.bits,
-  user: event.data.user.payload.bits,
-  timestamp: getISOTime(event.time),
- };
- context.DepositEvent.set(depositEvent);
+Market.DepositEvent.handlerWithLoader(
+  {
+    loader: async ({
+      event,
+      context,
+    }) => {
+      return {
+        balance: await context.Balance.get(getHash(`${event.params.user.payload.bits}-${event.srcAddress}`))
+      }
+    },
 
- const asset = event.data.asset.bits;
+    handler: async ({
+      event,
+      context,
+      loaderReturn
+    }) => {
+      const depositEvent: DepositEvent = {
+        id: event.transaction.id,
+        market: event.srcAddress,
+        user: event.params.user.payload.bits,
+        amount: event.params.amount,
+        asset: event.params.asset.bits,
+        base_amount: event.params.account.liquid.base,
+        quote_amount: event.params.account.liquid.quote,
+        timestamp: getISOTime(event.block.time),
+        // tx_id: event.transaction.id,
+      };
 
- const isBaseAsset = asset === BASE_ASSET;
+      context.DepositEvent.set(depositEvent);
+      const balance = loaderReturn.balance;
 
- const balanceId = isBaseAsset
-  ? getHash(`${BASE_ASSET}-${event.data.user.payload.bits}`)
-  : getHash(`${QUOTE_ASSET}-${event.data.user.payload.bits}`);
+      if (!balance) {
+        context.Balance.set({
+          ...depositEvent,
+          id: getHash(`${event.params.user.payload.bits}-${event.srcAddress}`),
+        });
+        return;
+      }
 
- const balance = context.Balance.get(balanceId);
+      const updatedBalance = {
+        ...balance,
+        base_amount: event.params.account.liquid.base,
+        quote_amount: event.params.account.liquid.quote,
+        timestamp: getISOTime(event.block.time),
+      };
 
- if (!balance) {
-  context.Balance.set({ ...depositEvent, id: balanceId });
-  return;
- }
-
- const updatedAmount = balance.amount + event.data.amount;
- context.Balance.set({ ...balance, amount: updatedAmount });
-};
+      context.Balance.set(updatedBalance);
+    }
+  }
+)
