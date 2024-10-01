@@ -36,18 +36,18 @@ Market.WithdrawEvent.handlerWithLoader(
       context.WithdrawEvent.set(withdrawEvent);
       const balance = loaderReturn.balance;
 
-      if (!balance) {
-        context.log.error(`Cannot find an balance ${getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)}`);
-        return
+      if (balance) {
+        const updatedBalance = {
+          ...balance,
+          base_amount: event.params.account.liquid.base,
+          quote_amount: event.params.account.liquid.quote,
+          timestamp: getISOTime(event.block.time),
+        };
+        context.Balance.set(updatedBalance);
+      } else {
+        context.log.error(`Cannot find balance in WITHDRAW: ${getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)}`);
       }
 
-      const updatedBalance = {
-        ...balance,
-        base_amount: event.params.account.liquid.base,
-        quote_amount: event.params.account.liquid.quote,
-        timestamp: getISOTime(event.block.time),
-      };
-      context.Balance.set(updatedBalance);
     }
   }
 )
