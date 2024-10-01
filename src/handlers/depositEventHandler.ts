@@ -36,22 +36,21 @@ Market.DepositEvent.handlerWithLoader(
       context.DepositEvent.set(depositEvent);
       const balance = loaderReturn.balance;
 
-      if (!balance) {
+      if (balance) {
+        const updatedBalance = {
+          ...balance,
+          base_amount: event.params.account.liquid.base,
+          quote_amount: event.params.account.liquid.quote,
+          timestamp: getISOTime(event.block.time),
+        };
+
+        context.Balance.set(updatedBalance);
+      } else {
         context.Balance.set({
           ...depositEvent,
           id: getHash(`${event.params.user.payload.bits}-${event.srcAddress}`),
         });
-        return;
       }
-
-      const updatedBalance = {
-        ...balance,
-        base_amount: event.params.account.liquid.base,
-        quote_amount: event.params.account.liquid.quote,
-        timestamp: getISOTime(event.block.time),
-      };
-
-      context.Balance.set(updatedBalance);
     }
   }
 )
