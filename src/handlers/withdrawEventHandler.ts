@@ -27,8 +27,8 @@ Market.WithdrawEvent.handlerWithLoader(
         user: event.params.user.payload.bits,
         amount: event.params.amount,
         asset: event.params.asset.bits,
-        base_amount: event.params.balance.liquid.base,
-        quote_amount: event.params.balance.liquid.quote,
+        base_amount: event.params.account.liquid.base,
+        quote_amount: event.params.account.liquid.quote,
         timestamp: getISOTime(event.block.time),
         // tx_id: event.transaction.id,
       };
@@ -43,8 +43,8 @@ Market.WithdrawEvent.handlerWithLoader(
 
       const updatedBalance = {
         ...balance,
-        base_amount: event.params.balance.liquid.base,
-        quote_amount: event.params.balance.liquid.quote,
+        base_amount: event.params.account.liquid.base,
+        quote_amount: event.params.account.liquid.quote,
         timestamp: getISOTime(event.block.time),
       };
       context.Balance.set(updatedBalance);
