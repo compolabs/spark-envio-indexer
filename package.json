@@ -1,6 +1,6 @@
 {
-  "name": "spark-order-book",
-  "version": "0.4.0",
+  "name": "spark-indexer",
+  "version": "0.5.1",
   "scripts": {
     "clean": "tsc --clean",
     "build": "tsc --build",
@@ -21,8 +21,7 @@
   },
   "dependencies": {
     "envio": "2.3.2",
-    "graphql-subscriptions": "^2.0.0",
-    "nanoid": "3.3.7"
+    "graphql-subscriptions": "^2.0.0"
   },
   "optionalDependencies": {
     "generated": "link:generated"

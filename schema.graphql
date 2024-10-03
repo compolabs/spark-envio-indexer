@@ -131,11 +131,3 @@ type MarketRegisterEvent {
   timestamp: String!
   tx_id: String! @index
 }
-
-# type MarketUnregisterEvent {
-#   id: ID!
-#   base_asset: String! @index
-#   quote_asset: String! @index
-#   market: String! @index
-#   timestamp: String!
-# }

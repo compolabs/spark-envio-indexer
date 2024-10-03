@@ -30,7 +30,6 @@ Market.DepositEvent.handlerWithLoader(
         base_amount: event.params.account.liquid.base,
         quote_amount: event.params.account.liquid.quote,
         timestamp: getISOTime(event.block.time),
-        // tx_id: event.transaction.id,
       };
 
       context.DepositEvent.set(depositEvent);
@@ -43,7 +42,6 @@ Market.DepositEvent.handlerWithLoader(
           quote_amount: event.params.account.liquid.quote,
           timestamp: getISOTime(event.block.time),
         };
-
         context.Balance.set(updatedBalance);
       } else {
         context.Balance.set({

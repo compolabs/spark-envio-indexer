@@ -32,11 +32,11 @@ Market.CancelOrderEvent.handlerWithLoader(
         base_amount: event.params.balance.liquid.base,
         quote_amount: event.params.balance.liquid.quote,
         timestamp: getISOTime(event.block.time),
-        // tx_id: event.transaction.id,
       };
       context.CancelOrderEvent.set(cancelOrderEvent);
 
       const order = loaderReturn.order;
+      const balance = loaderReturn.balance;
 
       if (order) {
         const updatedOrder: Order = {
@@ -53,12 +53,9 @@ Market.CancelOrderEvent.handlerWithLoader(
         } else if (order.order_type === "Sell") {
           context.ActiveSellOrder.deleteUnsafe(event.params.order_id)
         }
-
       } else {
-        context.log.error(`Cannot find order in CANCEL: ${event.params.order_id}`);
+        context.log.error(`Cannot find an order ${event.params.order_id}`);
       }
-
-      const balance = loaderReturn.balance;
 
       if (balance) {
         const updatedBalance = {
@@ -67,12 +64,10 @@ Market.CancelOrderEvent.handlerWithLoader(
           quote_amount: event.params.balance.liquid.quote,
           timestamp: getISOTime(event.block.time),
         };
-
         context.Balance.set(updatedBalance);
       } else {
-        context.log.error(`Cannot find balance in CANCEL: ${getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)}`);
+        context.log.error(`Cannot find an balance ${event.params.user.payload.bits}`);
       }
-
     }
   }
 )

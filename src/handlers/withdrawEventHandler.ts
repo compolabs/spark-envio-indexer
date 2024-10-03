@@ -30,7 +30,6 @@ Market.WithdrawEvent.handlerWithLoader(
         base_amount: event.params.account.liquid.base,
         quote_amount: event.params.account.liquid.quote,
         timestamp: getISOTime(event.block.time),
-        // tx_id: event.transaction.id,
       };
 
       context.WithdrawEvent.set(withdrawEvent);
@@ -45,9 +44,8 @@ Market.WithdrawEvent.handlerWithLoader(
         };
         context.Balance.set(updatedBalance);
       } else {
-        context.log.error(`Cannot find balance in WITHDRAW: ${getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)}`);
+        context.log.error(`Cannot find an balance ${event.params.user.payload.bits}`);
       }
-
     }
   }
 )

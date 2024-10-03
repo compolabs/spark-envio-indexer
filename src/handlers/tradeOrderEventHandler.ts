@@ -4,7 +4,7 @@ import {
   Market
 } from "generated";
 import { getISOTime } from "../utils/getISOTime";
-import { getHash } from "../utils/getHash";
+import { getHash } from '../utils/getHash';
 
 Market.TradeOrderEvent.handlerWithLoader(
   {
@@ -15,6 +15,7 @@ Market.TradeOrderEvent.handlerWithLoader(
       return {
         seller_balance: await context.Balance.get(getHash(`${event.params.order_seller.payload.bits}-${event.srcAddress}`)),
         buyer_balance: await context.Balance.get(getHash(`${event.params.order_buyer.payload.bits}-${event.srcAddress}`)),
+
         sell_order: await context.Order.get(event.params.base_sell_order_id),
         buy_order: await context.Order.get(event.params.base_buy_order_id)
       }
@@ -40,13 +41,15 @@ Market.TradeOrderEvent.handlerWithLoader(
         buyer_base_amount: event.params.b_balance.liquid.base,
         buyer_quote_amount: event.params.b_balance.liquid.quote,
         timestamp: getISOTime(event.block.time),
-        // tx_id: event.transaction.id,
       };
 
       context.TradeOrderEvent.set(tradeOrderEvent);
 
       const buy_order = loaderReturn.buy_order;
       const sell_order = loaderReturn.sell_order;
+
+      const seller_balance = loaderReturn.seller_balance;
+      const buyer_balance = loaderReturn.buyer_balance;
 
       if (buy_order) {
         const updatedBuyAmount = buy_order.amount - event.params.trade_size;
@@ -59,13 +62,14 @@ Market.TradeOrderEvent.handlerWithLoader(
           timestamp: getISOTime(event.block.time),
         };
         context.Order.set(updatedBuyOrder);
+
         if (isBuyOrderClosed) {
           context.ActiveBuyOrder.deleteUnsafe(buy_order.id);
         } else {
           context.ActiveBuyOrder.set(updatedBuyOrder);
         }
       } else {
-        context.log.error(`Cannot find buy order in TRADE: buy_order_id: ${event.params.base_buy_order_id}`);
+        context.log.error(`Cannot find buy order ${event.params.base_buy_order_id}`);
       }
 
       if (sell_order) {
@@ -78,19 +82,16 @@ Market.TradeOrderEvent.handlerWithLoader(
           status: isSellOrderClosed ? "Closed" : "Active",
           timestamp: getISOTime(event.block.time),
         };
-
         context.Order.set(updatedSellOrder);
+
         if (isSellOrderClosed) {
           context.ActiveSellOrder.deleteUnsafe(sell_order.id);
         } else {
           context.ActiveSellOrder.set(updatedSellOrder);
         }
       } else {
-        context.log.error(`Cannot find sell order in TRADE: sell_order_id: ${event.params.base_sell_order_id}`);
+        context.log.error(`Cannot find sell order ${event.params.base_sell_order_id}`);
       }
-
-      const buyer_balance = loaderReturn.buyer_balance;
-      const seller_balance = loaderReturn.seller_balance;
 
       if (buyer_balance) {
         const updatedBuyerBalance = {
@@ -99,10 +100,9 @@ Market.TradeOrderEvent.handlerWithLoader(
           quote_amount: event.params.b_balance.liquid.quote,
           timestamp: getISOTime(event.block.time),
         };
-
         context.Balance.set(updatedBuyerBalance);
       } else {
-        context.log.error(`Cannot find buyer balance in TRADE:  ${getHash(`${event.params.order_buyer.payload.bits}-${event.srcAddress}`)}`);
+        context.log.error(`Cannot find buyer balance ${getHash(`${event.params.order_buyer.payload.bits}-${event.srcAddress}`)}`);
       }
 
       if (seller_balance) {
@@ -112,11 +112,11 @@ Market.TradeOrderEvent.handlerWithLoader(
           quote_amount: event.params.s_balance.liquid.quote,
           timestamp: getISOTime(event.block.time),
         };
-
         context.Balance.set(updatedSellerBalance);
       } else {
-        context.log.error(`Cannot find seller balance in TRADE: ${getHash(`${event.params.order_seller.payload.bits}-${event.srcAddress}`)}`);
+        context.log.error(`Cannot find seller balance ${getHash(`${event.params.order_seller.payload.bits}-${event.srcAddress}`)}`);
       }
+
     }
   }
 )
