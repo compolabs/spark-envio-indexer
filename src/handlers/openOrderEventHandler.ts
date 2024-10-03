@@ -5,6 +5,7 @@ import {
 } from "generated";
 import { nanoid } from "nanoid";
 import { getISOTime } from "../utils/getISOTime";
+import { getHash } from "../utils/getHash";
 
 OrderBook.OpenOrderEvent.handlerWithLoader(
   {
@@ -13,7 +14,7 @@ OrderBook.OpenOrderEvent.handlerWithLoader(
       context,
     }) => {
       return {
-        balance: await context.Balance.get(event.params.user.payload.bits)
+        balance: await context.Balance.get(getHash(`${event.params.user.payload.bits}-${event.srcAddress}`))
       }
     },
 
@@ -26,6 +27,7 @@ OrderBook.OpenOrderEvent.handlerWithLoader(
 
       const openOrderEvent: OpenOrderEvent = {
         id: nanoid(),
+        market: event.srcAddress,
         order_id: event.params.order_id,
         asset: event.params.asset.bits,
         amount: event.params.amount,
@@ -38,6 +40,7 @@ OrderBook.OpenOrderEvent.handlerWithLoader(
         timestamp: getISOTime(event.block.time),
       };
       context.OpenOrderEvent.set(openOrderEvent);
+      const balance = loaderReturn.balance;
 
       const order: Order = {
         ...openOrderEvent,
@@ -53,20 +56,17 @@ OrderBook.OpenOrderEvent.handlerWithLoader(
         context.ActiveSellOrder.set(order);
       }
 
-      const balance = loaderReturn.balance;
-      if (!balance) {
+      if (balance) {
+        const updatedBalance = {
+          ...balance,
+          base_amount: event.params.balance.liquid.base,
+          quote_amount: event.params.balance.liquid.quote,
+          timestamp: getISOTime(event.block.time),
+        };
+        context.Balance.set(updatedBalance);
+      } else {
         context.log.error(`Cannot find an balance ${event.params.user.payload.bits}`);
-        return
       }
-      const updatedBalance = {
-        ...balance,
-        base_amount: event.params.balance.liquid.base,
-        quote_amount: event.params.balance.liquid.quote,
-        timestamp: getISOTime(event.block.time),
-      };
-
-      context.Balance.set(updatedBalance);
-
     }
   }
 )

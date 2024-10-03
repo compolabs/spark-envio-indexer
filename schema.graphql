@@ -11,6 +11,7 @@ enum OrderStatus {
 
 type OpenOrderEvent {
   id: ID!
+  market: String! @index
   user: String!
   order_id: String! @index
   base_amount: BigInt!
@@ -25,6 +26,7 @@ type OpenOrderEvent {
 
 type Order {
   id: ID!
+  market: String! @index
   asset: String! @index
   amount: BigInt!
   order_type: OrderType! @index
@@ -37,6 +39,7 @@ type Order {
 
 type ActiveSellOrder {
   id: ID!
+  market: String! @index
   asset: String! @index
   amount: BigInt!
   order_type: OrderType! @index
@@ -49,6 +52,7 @@ type ActiveSellOrder {
 
 type ActiveBuyOrder {
   id: ID!
+  market: String! @index
   asset: String! @index
   amount: BigInt!
   order_type: OrderType! @index
@@ -61,6 +65,7 @@ type ActiveBuyOrder {
 
 type CancelOrderEvent {
   id: ID!
+  market: String! @index
   user: String! @index
   order_id: String! @index
   base_amount: BigInt!
@@ -71,6 +76,7 @@ type CancelOrderEvent {
 
 type TradeOrderEvent {
   id: ID!
+  market: String! @index
   base_sell_order_id: String! @index
   base_buy_order_id: String! @index
   trade_size: BigInt! @index
@@ -87,6 +93,7 @@ type TradeOrderEvent {
 
 type DepositEvent {
   id: ID!
+  market: String! @index
   user: String! @index
   amount: BigInt!
   asset: String! @index
@@ -98,6 +105,7 @@ type DepositEvent {
 
 type WithdrawEvent {
   id: ID!
+  market: String! @index
   user: String! @index
   amount: BigInt!
   asset: String! @index
@@ -109,6 +117,7 @@ type WithdrawEvent {
 
 type Balance {
   id: ID!
+  market: String! @index
   user: String! @index
   base_amount: BigInt!
   quote_amount: BigInt!
