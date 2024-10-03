@@ -1,12 +1,13 @@
 import {
   OpenOrderEvent,
   Order,
-  Market
+  OrderBook
 } from "generated";
+import { nanoid } from "nanoid";
 import { getISOTime } from "../utils/getISOTime";
 import { getHash } from "../utils/getHash";
 
-Market.OpenOrderEvent.handlerWithLoader(
+OrderBook.OpenOrderEvent.handlerWithLoader(
   {
     loader: async ({
       event,
@@ -25,7 +26,7 @@ Market.OpenOrderEvent.handlerWithLoader(
       const orderType = event.params.order_type.case;
 
       const openOrderEvent: OpenOrderEvent = {
-        id: event.transaction.id,
+        id: nanoid(),
         market: event.srcAddress,
         order_id: event.params.order_id,
         asset: event.params.asset.bits,
@@ -35,10 +36,11 @@ Market.OpenOrderEvent.handlerWithLoader(
         user: event.params.user.payload.bits,
         base_amount: event.params.balance.liquid.base,
         quote_amount: event.params.balance.liquid.quote,
+        tx_id: event.transaction.id,
         timestamp: getISOTime(event.block.time),
-        // tx_id: event.transaction.id,
       };
       context.OpenOrderEvent.set(openOrderEvent);
+      const balance = loaderReturn.balance;
 
       const order: Order = {
         ...openOrderEvent,
@@ -54,7 +56,6 @@ Market.OpenOrderEvent.handlerWithLoader(
         context.ActiveSellOrder.set(order);
       }
 
-      const balance = loaderReturn.balance;
       if (balance) {
         const updatedBalance = {
           ...balance,
@@ -62,10 +63,9 @@ Market.OpenOrderEvent.handlerWithLoader(
           quote_amount: event.params.balance.liquid.quote,
           timestamp: getISOTime(event.block.time),
         };
-
         context.Balance.set(updatedBalance);
       } else {
-        context.log.error(`Cannot find balance in OPEN ORDER: ${getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)}`);
+        context.log.error(`Cannot find an balance ${event.params.user.payload.bits}`);
       }
     }
   }

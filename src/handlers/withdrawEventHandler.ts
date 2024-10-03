@@ -1,11 +1,12 @@
 import {
   WithdrawEvent,
-  Market
+  OrderBook
 } from "generated";
+import { nanoid } from "nanoid";
 import { getISOTime } from "../utils/getISOTime";
 import { getHash } from "../utils/getHash";
 
-Market.WithdrawEvent.handlerWithLoader(
+OrderBook.WithdrawEvent.handlerWithLoader(
   {
     loader: async ({
       event,
@@ -22,15 +23,15 @@ Market.WithdrawEvent.handlerWithLoader(
       loaderReturn
     }) => {
       const withdrawEvent: WithdrawEvent = {
-        id: event.transaction.id,
+        id: nanoid(),
         market: event.srcAddress,
         user: event.params.user.payload.bits,
         amount: event.params.amount,
         asset: event.params.asset.bits,
         base_amount: event.params.account.liquid.base,
         quote_amount: event.params.account.liquid.quote,
+        tx_id: event.transaction.id,
         timestamp: getISOTime(event.block.time),
-        // tx_id: event.transaction.id,
       };
 
       context.WithdrawEvent.set(withdrawEvent);
@@ -45,9 +46,8 @@ Market.WithdrawEvent.handlerWithLoader(
         };
         context.Balance.set(updatedBalance);
       } else {
-        context.log.error(`Cannot find balance in WITHDRAW: ${getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)}`);
+        context.log.error(`Cannot find an balance ${event.params.user.payload.bits}`);
       }
-
     }
   }
 )
