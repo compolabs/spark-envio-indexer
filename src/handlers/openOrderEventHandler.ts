@@ -1,13 +1,12 @@
 import {
   OpenOrderEvent,
   Order,
-  OrderBook
+  Market
 } from "generated";
-import { nanoid } from "nanoid";
 import { getISOTime } from "../utils/getISOTime";
 import { getHash } from "../utils/getHash";
 
-OrderBook.OpenOrderEvent.handlerWithLoader(
+Market.OpenOrderEvent.handlerWithLoader(
   {
     loader: async ({
       event,
@@ -26,7 +25,7 @@ OrderBook.OpenOrderEvent.handlerWithLoader(
       const orderType = event.params.order_type.case;
 
       const openOrderEvent: OpenOrderEvent = {
-        id: nanoid(),
+        id: event.transaction.id,
         market: event.srcAddress,
         order_id: event.params.order_id,
         asset: event.params.asset.bits,
@@ -36,7 +35,6 @@ OrderBook.OpenOrderEvent.handlerWithLoader(
         user: event.params.user.payload.bits,
         base_amount: event.params.balance.liquid.base,
         quote_amount: event.params.balance.liquid.quote,
-        tx_id: event.transaction.id,
         timestamp: getISOTime(event.block.time),
       };
       context.OpenOrderEvent.set(openOrderEvent);

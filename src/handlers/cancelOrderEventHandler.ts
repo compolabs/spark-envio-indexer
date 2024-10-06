@@ -1,14 +1,13 @@
 import {
   CancelOrderEvent,
   Order,
-  OrderBook
+  Market
 } from "generated";
-import { nanoid } from "nanoid";
 import { OrderStatus_t } from "generated/src/db/Enums.gen";
 import { getISOTime } from "../utils/getISOTime";
 import { getHash } from '../utils/getHash';
 
-OrderBook.CancelOrderEvent.handlerWithLoader(
+Market.CancelOrderEvent.handlerWithLoader(
   {
     loader: async ({
       event,
@@ -26,13 +25,12 @@ OrderBook.CancelOrderEvent.handlerWithLoader(
       loaderReturn
     }) => {
       const cancelOrderEvent: CancelOrderEvent = {
-        id: nanoid(),
+        id: event.transaction.id,
         market: event.srcAddress,
         user: event.params.user.payload.bits,
         order_id: event.params.order_id,
         base_amount: event.params.balance.liquid.base,
         quote_amount: event.params.balance.liquid.quote,
-        tx_id: event.transaction.id,
         timestamp: getISOTime(event.block.time),
       };
       context.CancelOrderEvent.set(cancelOrderEvent);

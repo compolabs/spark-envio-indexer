@@ -1,12 +1,11 @@
 import {
   DepositEvent,
-  OrderBook
+  Market
 } from "generated";
-import { nanoid } from "nanoid";
 import { getISOTime } from "../utils/getISOTime";
 import { getHash } from "../utils/getHash";
 
-OrderBook.DepositEvent.handlerWithLoader(
+Market.DepositEvent.handlerWithLoader(
   {
     loader: async ({
       event,
@@ -23,14 +22,13 @@ OrderBook.DepositEvent.handlerWithLoader(
       loaderReturn
     }) => {
       const depositEvent: DepositEvent = {
-        id: nanoid(),
+        id: event.transaction.id,
         market: event.srcAddress,
         user: event.params.user.payload.bits,
         amount: event.params.amount,
         asset: event.params.asset.bits,
         base_amount: event.params.account.liquid.base,
         quote_amount: event.params.account.liquid.quote,
-        tx_id: event.transaction.id,
         timestamp: getISOTime(event.block.time),
       };
 
