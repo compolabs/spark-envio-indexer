@@ -37,7 +37,7 @@ Market.WithdrawEvent.handlerWithLoader(
         timestamp: getISOTime(event.block.time),
       };
       context.WithdrawEvent.set(withdrawEvent);
-      
+
       // Retrieve the user's balance from the loader's return value
       const balance = loaderReturn.balance;
 
