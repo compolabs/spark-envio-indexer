@@ -35,3 +35,4 @@ generated
 .env
 target
 .DS_Store
+tests
