@@ -14,7 +14,7 @@ spark-market-sdk = { git = "https://github.com/compolabs/orderbook-contract.git"
 [[test]]
 harness = true
 name = "integration_tests"
-path = "tests/harness.rs"
+path = "order_checker.rs"
 
 [dependencies]
 anyhow = "1.0.86"

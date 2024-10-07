@@ -1,18 +1,16 @@
 use anyhow::{Context, Result};
+use dotenv::dotenv;
 use fuels::{
     accounts::{provider::Provider, wallet::WalletUnlocked},
     crypto::SecretKey,
     types::{Address, Bits256, ContractId},
 };
+use serde::Serialize;
 use spark_market_sdk::MarketContract;
 use std::env;
 use std::str::FromStr;
-use dotenv::dotenv;
-use serde::Serialize;
-
 
 const ORDER_ID: &str = "0xd8e7ef13fdbfc4e9249f33ab6a5f75f8a6c4ed9f73c6c047d03c467617568cfc";
-
 
 #[derive(Debug, Serialize)]
 struct OrderChangeInfoWithTxId {
@@ -41,16 +39,17 @@ async fn get_order() {
     println!("order = {:#?}", order);
 
     let order_change_info = market.order_change_info(order_id).await.unwrap().value;
-    let order_change_info_with_tx_id: Vec<OrderChangeInfoWithTxId> = order_change_info.iter().map(|info| {
-        OrderChangeInfoWithTxId {
+    let order_change_info_with_tx_id: Vec<OrderChangeInfoWithTxId> = order_change_info
+        .iter()
+        .map(|info| OrderChangeInfoWithTxId {
             change_type: format!("{:?}", info.change_type),
             block_height: info.block_height,
             sender: format!("{:?}", info.sender),
             tx_id: Address::from(info.tx_id.0).to_string(),
             amount_before: info.amount_before,
             amount_after: info.amount_after,
-        }
-    }).collect();
+        })
+        .collect();
 
     for info in &order_change_info_with_tx_id {
         println!("order_change_info_with_tx_id = {:#?}", info);

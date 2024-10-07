@@ -124,3 +124,11 @@ type Balance {
   quote_amount: BigInt!
   timestamp: String!
 }
+
+type MarketRegisterEvent {
+  id: ID!
+  base_asset: String! @index
+  quote_asset: String! @index
+  timestamp: String!
+  tx_id: String! @index
+}

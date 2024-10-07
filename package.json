@@ -1,5 +1,5 @@
 {
-  "name": "spark-order-book",
+  "name": "spark-indexer",
   "version": "0.5.1",
   "scripts": {
     "clean": "tsc --clean",
@@ -20,9 +20,7 @@
     "typescript": "5.2.2"
   },
   "dependencies": {
-    "envio": "2.3.2",
-    "graphql-subscriptions": "^2.0.0",
-    "nanoid": "3.3.7"
+    "envio": "2.4.2"
   },
   "optionalDependencies": {
     "generated": "link:generated"

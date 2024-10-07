@@ -6,22 +6,27 @@ import { nanoid } from "nanoid";
 import { getISOTime } from "../utils/getISOTime";
 import { getHash } from "../utils/getHash";
 
-OrderBook.WithdrawEvent.handlerWithLoader(
+// Define a handler for the WithdrawEvent within a specific market
+Market.WithdrawEvent.handlerWithLoader(
   {
+    // Loader function to pre-fetch the user's balance for the specified market
     loader: async ({
       event,
       context,
     }) => {
       return {
+        // Fetch the balance using a unique hash based on the user and market (srcAddress)
         balance: await context.Balance.get(getHash(`${event.params.user.payload.bits}-${event.srcAddress}`))
       }
     },
 
+    // Handler function that processes the withdraw event and updates the user's balance
     handler: async ({
       event,
       context,
       loaderReturn
     }) => {
+      // Construct the WithdrawEvent object and save in context for tracking
       const withdrawEvent: WithdrawEvent = {
         id: nanoid(),
         market: event.srcAddress,
@@ -33,10 +38,12 @@ OrderBook.WithdrawEvent.handlerWithLoader(
         tx_id: event.transaction.id,
         timestamp: getISOTime(event.block.time),
       };
-
       context.WithdrawEvent.set(withdrawEvent);
+
+      // Retrieve the user's balance from the loader's return value
       const balance = loaderReturn.balance;
 
+      // If balance exists, update it with the new base and quote amounts
       if (balance) {
         const updatedBalance = {
           ...balance,
