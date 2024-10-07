@@ -17,7 +17,9 @@ networks:
         handler: ./src/OrderBookHandlers.ts
         events:
           - name: DepositEvent
+          - name: DepositForEvent
           - name: WithdrawEvent
+          - name: WithdrawToMarketEvent
           - name: OpenOrderEvent
           - name: CancelOrderEvent
           - name: TradeOrderEvent
