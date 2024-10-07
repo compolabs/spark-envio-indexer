@@ -11,7 +11,7 @@ const initialAmount = 400n;
 const depositAmount = 800n;
 const afterDepositAmount = initialAmount + depositAmount;
 
-const withdrawAmount = 1201n;
+const withdrawAmount = 1200n;
 const afterWithdrawAmount = afterDepositAmount - withdrawAmount;
 
 let sharedMockDb: any;

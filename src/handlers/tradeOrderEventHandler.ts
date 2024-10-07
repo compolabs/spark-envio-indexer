@@ -1,7 +1,7 @@
 import {
   TradeOrderEvent,
   Order,
-  OrderBook
+  Market
 } from "generated";
 import { getISOTime } from "../utils/getISOTime";
 import { getHash } from '../utils/getHash';
@@ -34,10 +34,10 @@ Market.TradeOrderEvent.handlerWithLoader(
 
       // Construct the TradeOrderEvent object and save in context for tracking
       const tradeOrderEvent: TradeOrderEvent = {
-        id: nanoid(),
+        id: event.transaction.id,
         market: event.srcAddress,
-        base_sell_order_id: event.params.base_sell_order_id,
-        base_buy_order_id: event.params.base_buy_order_id,
+        sell_order_id: event.params.base_sell_order_id,
+        buy_order_id: event.params.base_buy_order_id,
         trade_size: event.params.trade_size,
         trade_price: event.params.trade_price,
         seller: event.params.order_seller.payload.bits,
@@ -46,7 +46,6 @@ Market.TradeOrderEvent.handlerWithLoader(
         seller_quote_amount: event.params.s_balance.liquid.quote,
         buyer_base_amount: event.params.b_balance.liquid.base,
         buyer_quote_amount: event.params.b_balance.liquid.quote,
-        tx_id: event.transaction.id,
         timestamp: getISOTime(event.block.time),
       };
       context.TradeOrderEvent.set(tradeOrderEvent);
@@ -132,7 +131,6 @@ Market.TradeOrderEvent.handlerWithLoader(
       } else {
         context.log.error(`Cannot find seller balance ${getHash(`${event.params.order_seller.payload.bits}-${event.srcAddress}`)}`);
       }
-
     }
   }
 )
