@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use anyhow::Result;
 use dotenv::dotenv;
 use fuels::{
     accounts::{provider::Provider, wallet::WalletUnlocked},
@@ -6,11 +6,11 @@ use fuels::{
     types::{Address, Bits256, ContractId},
 };
 use serde::Serialize;
-use spark_market_sdk::MarketContract;
+use spark_market_sdk::SparkMarketContract;
 use std::env;
 use std::str::FromStr;
 
-const ORDER_ID: &str = "0xd8e7ef13fdbfc4e9249f33ab6a5f75f8a6c4ed9f73c6c047d03c467617568cfc";
+const ORDER_ID: &str = "0xc32520c590b0bc24b6878b0ca41beffa47629eff028e015c2e0c473b42c63a77";
 
 #[derive(Debug, Serialize)]
 struct OrderChangeInfoWithTxId {
@@ -22,23 +22,54 @@ struct OrderChangeInfoWithTxId {
     amount_after: u64,
 }
 
+pub(crate) async fn setup() -> Result<WalletUnlocked> {
+    // Connect to the provider
+    let provider = Provider::connect("testnet.fuel.network").await?;
+
+    // Try to get the private key from environment
+    if let Ok(private_key) = env::var("PRIVATE_KEY") {
+        let wallet = WalletUnlocked::new_from_private_key(
+            SecretKey::from_str(&private_key)?,
+            Some(provider.clone()),
+        );
+        return Ok(wallet);
+    }
+
+    // If no private key, try to get the mnemonic phrase
+    if let Ok(mnemonic) = env::var("MNEMONIC") {
+        let wallet = WalletUnlocked::new_from_mnemonic_phrase(&mnemonic, Some(provider.clone()))?;
+        return Ok(wallet);
+    }
+
+    // If neither PRIVATE_KEY nor MNEMONIC are provided, return an error
+    Err(anyhow::anyhow!(
+        "No valid private key or mnemonic found in environment"
+    ))
+}
+
 #[tokio::test]
-async fn get_order() {
-    dotenv().ok();
+async fn get_order() -> Result<()> {
+    dotenv().ok(); // Load .env file
 
-    let provider = Provider::connect("testnet.fuel.network").await.unwrap();
-    let private_key = ev("PRIVATE_KEY").unwrap();
-    let contract_id = ev("CONTRACT_ID").unwrap();
-    let wallet = WalletUnlocked::new_from_private_key(
-        SecretKey::from_str(&private_key).unwrap(),
-        Some(provider.clone()),
-    );
-    let market = MarketContract::new(ContractId::from_str(&contract_id).unwrap(), wallet).await;
-    let order_id = Bits256::from_hex_str(ORDER_ID).unwrap();
-    let order = market.order(order_id).await.unwrap().value;
-    println!("order = {:#?}", order);
+    // Setup the wallet
+    let wallet = setup().await?;
 
-    let order_change_info = market.order_change_info(order_id).await.unwrap().value;
+    // Get the contract ID from the environment
+    let contract_id = env::var("CONTRACT_ID").unwrap();
+
+    // Connect to the contract using the wallet
+    let market =
+        SparkMarketContract::new(ContractId::from_str(&contract_id).unwrap(), wallet).await;
+
+    // Fetch the order using the provided ORDER_ID
+    let order_id = Bits256::from_hex_str(ORDER_ID)?;
+    let order = market.order(order_id).await?.value;
+
+    println!("Order = {:#?}", order);
+
+    // Fetch the order change info
+    let order_change_info = market.order_change_info(order_id).await?.value;
+
     let order_change_info_with_tx_id: Vec<OrderChangeInfoWithTxId> = order_change_info
         .iter()
         .map(|info| OrderChangeInfoWithTxId {
@@ -52,10 +83,12 @@ async fn get_order() {
         .collect();
 
     for info in &order_change_info_with_tx_id {
-        println!("order_change_info_with_tx_id = {:#?}", info);
+        println!("OrderChangeInfoWithTxId = {:#?}", info);
     }
+
+    Ok(())
 }
 
 pub fn ev(key: &str) -> Result<String> {
-    env::var(key).context(format!("Environment variable {} not found", key))
+    env::var(key).map_err(|_| anyhow::anyhow!("Environment variable {} not found", key))
 }
