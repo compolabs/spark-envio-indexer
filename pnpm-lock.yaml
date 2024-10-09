@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       envio:
-        specifier: 2.4.2
-        version: 2.4.2
+        specifier: 2.4.3
+        version: 2.4.3
     optionalDependencies:
       generated:
         specifier: link:generated
@@ -214,8 +214,8 @@ packages:
     resolution: {integrity: sha512-wR+ZGUT1Jjj7LifmvHfBIAIZRwjXUYddwT6SDptBglDQkJGlMwEHv8xh76FU0W764NwWGRqoX2TeZKIdu4fD/w==}
     engines: {node: ^18.20.3 || ^20.0.0 || ^22.0.0}
 
-  '@fuel-ts/interfaces@0.94.8':
-    resolution: {integrity: sha512-gSkp6cp0g+vYK7yzoBwvW7x43AzJL6EoPE7HTHoJWUMbLPWhgqOGJtWoNnobGRO1Pxl0etmBLaVyZmrhJdVQqQ==}
+  '@fuel-ts/interfaces@0.94.9':
+    resolution: {integrity: sha512-Sgex+u4BCYQhQ7AjTjqIDXv7Lq9H64tZ/Vcr8SBrnMjA8zbBShxVRn4bJKLeAI85UIBef1DBOT2dJdSn6gQ86A==}
     engines: {node: ^18.20.3 || ^20.0.0 || ^22.0.0}
 
   '@fuel-ts/math@0.94.6':
@@ -612,28 +612,28 @@ packages:
   end-of-stream@1.4.4:
     resolution: {integrity: sha512-+uw1inIHVPQoaVuHzRyXd21icM+cnt4CzD5rW+NC1wjOUSTOs+Te7FOv7AhN7vS9x/oIyhLP5PR1H+phQAHu5Q==}
 
-  envio-darwin-arm64@2.4.2:
-    resolution: {integrity: sha512-y7JKHwTjP4osqPQBDc7D+345sjqaR1/aXyRLhx1mqG0LPA65gvVhb7+mvHNkaVwkO7srr+Q1Bw7ajUfd0Y7a3g==}
+  envio-darwin-arm64@2.4.3:
+    resolution: {integrity: sha512-YkQ2c/GhEvvQ5l5jD7lc2llITXVG8q8oYyLNCzbqxcMMwo3K58zvTUtoxQBVRv4qyhWW68BJZs+vytCaecMJUA==}
     cpu: [arm64]
     os: [darwin]
 
-  envio-darwin-x64@2.4.2:
-    resolution: {integrity: sha512-A6WXksLV9HiLhFG7JCTaF2phnWBSUE9uT9TYld/SYoL6ukQ9baOPq/aM1HNeVi51tdtTnvjMoctDca6+ZTWgdQ==}
+  envio-darwin-x64@2.4.3:
+    resolution: {integrity: sha512-NWLlFu03avRisSX+vR6a9uUf8E4mtrUjbsCDHfrXfmFPdTZEVRYB3LDKboGMRR3S9JEPkTCfKaAaTDdW5TSTug==}
     cpu: [x64]
     os: [darwin]
 
-  envio-linux-arm64@2.4.2:
-    resolution: {integrity: sha512-qEnbCm22nO/KZdv5OVCA0A+vm7aGk4T+czAH3Kq9VF6lsPFO/+8seKtv4OBrxtStV6CGvtDdqN0RY4+PXP3bKg==}
+  envio-linux-arm64@2.4.3:
+    resolution: {integrity: sha512-ERuI769ULND/5iNQqv8S4t+iWYBYaMMmLfovgkWh0mLocjyeepUL4MZ+/Smm9b6iTFR946XCiSxHuvCEQafUUw==}
     cpu: [arm64]
     os: [linux]
 
-  envio-linux-x64@2.4.2:
-    resolution: {integrity: sha512-uf7xnlt6DdTkB8goD/tFVGM8NRuGvA+25JK8Ykdr5jkGp7qVhyaeAbk/0FkMNiqqJTirJ/tN+/zj9DHFDomWpA==}
+  envio-linux-x64@2.4.3:
+    resolution: {integrity: sha512-m/V4e3ubxWuH6XLeeu2jJ5+tHSJ2/HphoQwzmxXjpf61ieZ9zqEMLz4+unWEJ4iwDRDaXtJDQeDW6rdPiXrKPA==}
     cpu: [x64]
     os: [linux]
 
-  envio@2.4.2:
-    resolution: {integrity: sha512-ls9OxpAPsPob62iBM6K1Usw3CEYW4yV2NYyYLl+Ag15bR2SP27NPxUlsQmg4/Clul7Q/hUrLw14KaDVoGH6bKg==}
+  envio@2.4.3:
+    resolution: {integrity: sha512-1UeCo0n9n9TUsPGAvZfijiuuc+EIczsp0ujDbti4txPhn0fKxr8BiLfvSzcLc+ltIgND6VVdMvB/hPLuE3dFCw==}
     hasBin: true
 
   es-define-property@1.0.0:
@@ -1578,13 +1578,13 @@ snapshots:
   '@fuel-ts/hasher@0.94.6':
     dependencies:
       '@fuel-ts/crypto': 0.94.6
-      '@fuel-ts/interfaces': 0.94.8
+      '@fuel-ts/interfaces': 0.94.9
       '@fuel-ts/utils': 0.94.6
       '@noble/hashes': 1.5.0
 
   '@fuel-ts/interfaces@0.94.6': {}
 
-  '@fuel-ts/interfaces@0.94.8': {}
+  '@fuel-ts/interfaces@0.94.9': {}
 
   '@fuel-ts/math@0.94.6':
     dependencies:
@@ -1934,24 +1934,24 @@ snapshots:
     dependencies:
       once: 1.4.0
 
-  envio-darwin-arm64@2.4.2:
+  envio-darwin-arm64@2.4.3:
     optional: true
 
-  envio-darwin-x64@2.4.2:
+  envio-darwin-x64@2.4.3:
     optional: true
 
-  envio-linux-arm64@2.4.2:
+  envio-linux-arm64@2.4.3:
     optional: true
 
-  envio-linux-x64@2.4.2:
+  envio-linux-x64@2.4.3:
     optional: true
 
-  envio@2.4.2:
+  envio@2.4.3:
     optionalDependencies:
-      envio-darwin-arm64: 2.4.2
-      envio-darwin-x64: 2.4.2
-      envio-linux-arm64: 2.4.2
-      envio-linux-x64: 2.4.2
+      envio-darwin-arm64: 2.4.3
+      envio-darwin-x64: 2.4.3
+      envio-linux-arm64: 2.4.3
+      envio-linux-x64: 2.4.3
 
   es-define-property@1.0.0:
     dependencies:
