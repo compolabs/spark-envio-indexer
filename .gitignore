@@ -30,7 +30,7 @@ artifacts
 cache
 build
 *.bs.js
-# generated
+generated
 .idea
 .env
 target
