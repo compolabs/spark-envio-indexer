@@ -862,7 +862,6 @@ let type18Schema = S.union([S.object((s): type18 =>
   s.tag("case", "ContractId")
   ContractId({payload: s.field("payload", type41Schema)})
 })])
-let type4Schema = S.tuple(s => (s.item(0, type40Schema), s.item(1, type47Schema), s.item(2, type40Schema), s.item(3, type47Schema), s.item(4, type19Schema(type18Schema)), s.item(5, type47Schema), s.item(6, type47Schema)))
 let type23Schema = S.object((s): type23 => {liquid: s.field("liquid", type24Schema), locked: s.field("locked", type24Schema)})
 let type25Schema = S.object((s): type25 => {amount: s.field("amount", type48Schema), asset_type: s.field("asset_type", type5Schema), order_type: s.field("order_type", type8Schema), owner: s.field("owner", type18Schema), price: s.field("price", type48Schema), block_height: s.field("block_height", type47Schema), order_height: s.field("order_height", type48Schema), matcher_fee: s.field("matcher_fee", type48Schema), protocol_maker_fee: s.field("protocol_maker_fee", type48Schema), protocol_taker_fee: s.field("protocol_taker_fee", type48Schema)})
 let type26Schema = S.object((s): type26 => {change_type: s.field("change_type", type7Schema), block_height: s.field("block_height", type47Schema), sender: s.field("sender", type18Schema), tx_id: s.field("tx_id", type45Schema), amount_before: s.field("amount_before", type48Schema), amount_after: s.field("amount_after", type48Schema)})
@@ -873,6 +872,7 @@ let type31Schema = S.object((s): type31 => {amount: s.field("amount", type48Sche
 let type36Schema = S.object((s): type36 => {base_sell_order_id: s.field("base_sell_order_id", type45Schema), base_buy_order_id: s.field("base_buy_order_id", type45Schema), base_sell_order_limit: s.field("base_sell_order_limit", type6Schema), base_buy_order_limit: s.field("base_buy_order_limit", type6Schema), order_matcher: s.field("order_matcher", type18Schema), trade_size: s.field("trade_size", type48Schema), trade_price: s.field("trade_price", type48Schema), block_height: s.field("block_height", type47Schema), tx_id: s.field("tx_id", type45Schema), order_seller: s.field("order_seller", type18Schema), order_buyer: s.field("order_buyer", type18Schema), s_balance: s.field("s_balance", type23Schema), b_balance: s.field("b_balance", type23Schema), seller_is_maker: s.field("seller_is_maker", type46Schema)})
 let type37Schema = S.object((s): type37 => {amount: s.field("amount", type48Schema), asset: s.field("asset", type40Schema), user: s.field("user", type18Schema), account: s.field("account", type23Schema)})
 let type38Schema = S.object((s): type38 => {amount: s.field("amount", type48Schema), asset: s.field("asset", type40Schema), user: s.field("user", type18Schema), account: s.field("account", type23Schema), market: s.field("market", type41Schema)})
+let type4Schema = S.tuple(s => (s.item(0, type40Schema), s.item(1, type47Schema), s.item(2, type40Schema), s.item(3, type47Schema), s.item(4, type19Schema(type18Schema)), s.item(5, type47Schema), s.item(6, type47Schema)))
 let type17Schema = S.union([S.object((s): type17 =>
 {
   s.tag("case", "Uninitialized")
