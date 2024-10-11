@@ -31,7 +31,7 @@ let registerContractHandlers = (
             Config.name: "Registry",
             abi: Types.Registry.abi,
             addresses: [
-              "0x194987ad2314d2de50646078ac1841f00b2dffda863a7d3dd421d220eb83d019"->Address.unsafeFromString
+              "0xfc3439e66c15c0b8e8e02e0fe4951eecd6001639a6aa8a650885af62ea92540f"->Address.unsafeFromString
               ,
             ],
             events: [

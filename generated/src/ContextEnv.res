@@ -568,14 +568,6 @@ let getLoaderContext = (contextEnv: t, ~inMemoryStore: InMemoryStore.t, ~loadLay
           ~logger,
         ),
       
-        seller_is_maker: loadLayer->makeWhereLoader(
-          ~entityMod=module(Entities.TradeOrderEvent),
-          ~inMemoryStore,
-          ~fieldName="seller_is_maker",
-          ~fieldValueSchema=S.bool,
-          ~logger,
-        ),
-      
         trade_price: loadLayer->makeWhereLoader(
           ~entityMod=module(Entities.TradeOrderEvent),
           ~inMemoryStore,

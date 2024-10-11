@@ -6,4 +6,3 @@ import "./withdrawToMarketEventHandler";
 import "./depositEventHandler";
 import "./depositForEventHandler";
 import "./marketRegisterEventHandler";
-

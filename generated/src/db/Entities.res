@@ -1170,7 +1170,6 @@ module TradeOrderEvent = {
     sell_order_id: string,
     seller: string,
     seller_base_amount: bigint,
-    seller_is_maker: bool,
     seller_quote_amount: bigint,
     timestamp: string,
     trade_price: bigint,
@@ -1187,7 +1186,6 @@ module TradeOrderEvent = {
     sell_order_id: s.field("sell_order_id", S.string),
     seller: s.field("seller", S.string),
     seller_base_amount: s.field("seller_base_amount", BigInt.schema),
-    seller_is_maker: s.field("seller_is_maker", S.bool),
     seller_quote_amount: s.field("seller_quote_amount", BigInt.schema),
     timestamp: s.field("timestamp", S.string),
     trade_price: s.field("trade_price", BigInt.schema),
@@ -1208,8 +1206,6 @@ module TradeOrderEvent = {
       @as("sell_order_id") sell_order_id: whereOperations<t, string>,
     
       @as("seller") seller: whereOperations<t, string>,
-    
-      @as("seller_is_maker") seller_is_maker: whereOperations<t, bool>,
     
       @as("trade_price") trade_price: whereOperations<t, bigint>,
     
@@ -1299,15 +1295,6 @@ module TradeOrderEvent = {
       
       
       
-      
-      ),
-      mkField(
-      "seller_is_maker", 
-      Boolean,
-      
-      
-      
-      ~isIndex,
       
       ),
       mkField(

@@ -83,7 +83,6 @@ type TradeOrderEvent {
   trade_price: BigInt! @index
   seller: String! @index
   buyer: String! @index
-  seller_is_maker: Boolean! @index
   seller_base_amount: BigInt!
   seller_quote_amount: BigInt!
   buyer_base_amount: BigInt!
