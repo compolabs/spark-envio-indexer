@@ -7,12 +7,17 @@ import { getHash } from "../utils/getHash";
 Market.CancelOrderEvent.handlerWithLoader({
 	// Loader function to pre-fetch the user's balance and order details for the specified market
 	loader: async ({ event, context }) => {
+		const order = await context.Order.get(event.params.order_id);
 		return {
-			// Fetch the balance and order of the user in the market (srcAddress)
 			balance: await context.Balance.get(
 				getHash(`${event.params.user.payload.bits}-${event.srcAddress}`),
 			),
-			order: await context.Order.get(event.params.order_id),
+			order,
+			activeOrder: order ? (
+				order.order_type === "Buy"
+					? await context.ActiveBuyOrder.get(event.params.order_id)
+					: await context.ActiveSellOrder.get(event.params.order_id)
+			) : null,
 		};
 	},
 
@@ -33,6 +38,18 @@ Market.CancelOrderEvent.handlerWithLoader({
 		// Retrieve the order and balance from the loader's return value
 		const order = loaderReturn.order;
 		const balance = loaderReturn.balance;
+		const activeOrder = loaderReturn.activeOrder;
+
+		// Remove the order from active orders depending on its type (Buy/Sell)
+		if (activeOrder) {
+			if (activeOrder.order_type === "Buy") {
+				context.ActiveBuyOrder.deleteUnsafe(event.params.order_id);
+			} else if (activeOrder.order_type === "Sell") {
+				context.ActiveSellOrder.deleteUnsafe(event.params.order_id);
+			}
+		} else {
+			context.log.error(`Cannot find an active order ${event.params.order_id}`);
+		}
 
 		// If the order exists, update its status to "Canceled" and reset its amount to 0
 		if (order) {
@@ -43,13 +60,6 @@ Market.CancelOrderEvent.handlerWithLoader({
 				timestamp: getISOTime(event.block.time),
 			};
 			context.Order.set(updatedOrder);
-
-			// Remove the order from active orders depending on its type (Buy/Sell)
-			if (order.order_type === "Buy") {
-				context.ActiveBuyOrder.deleteUnsafe(event.params.order_id);
-			} else if (order.order_type === "Sell") {
-				context.ActiveSellOrder.deleteUnsafe(event.params.order_id);
-			}
 		} else {
 			context.log.error(`Cannot find an order ${event.params.order_id}`);
 		}
