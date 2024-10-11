@@ -1,4 +1,10 @@
-import { type TradeOrderEvent, type Order, Market, type ActiveBuyOrder, type ActiveSellOrder } from "generated";
+import {
+	type TradeOrderEvent,
+	type Order,
+	Market,
+	type ActiveBuyOrder,
+	type ActiveSellOrder,
+} from "generated";
 import { getISOTime } from "../utils";
 import { getHash } from "../utils";
 
@@ -21,8 +27,12 @@ Market.TradeOrderEvent.handlerWithLoader({
 			sell_order: await context.Order.get(event.params.base_sell_order_id),
 			buy_order: await context.Order.get(event.params.base_buy_order_id),
 
-			active_sell_order: await context.ActiveSellOrder.get(event.params.base_sell_order_id),
-			active_buy_order: await context.ActiveBuyOrder.get(event.params.base_buy_order_id),
+			active_sell_order: await context.ActiveSellOrder.get(
+				event.params.base_sell_order_id,
+			),
+			active_buy_order: await context.ActiveBuyOrder.get(
+				event.params.base_buy_order_id,
+			),
 		};
 	},
 
@@ -70,7 +80,6 @@ Market.TradeOrderEvent.handlerWithLoader({
 				timestamp: getISOTime(event.block.time),
 			};
 			context.Order.set(updatedBuyOrder);
-
 		} else {
 			context.log.error(
 				`Cannot find buy order ${event.params.base_buy_order_id}`,
@@ -79,7 +88,8 @@ Market.TradeOrderEvent.handlerWithLoader({
 
 		// Process the active buy order, reducing the amount by the trade size and updating its status
 		if (active_buy_order) {
-			const updatedActiveBuyAmount = active_buy_order.amount - event.params.trade_size;
+			const updatedActiveBuyAmount =
+				active_buy_order.amount - event.params.trade_size;
 			const isActiveBuyOrderClosed = updatedActiveBuyAmount === 0n;
 
 			const updatedActiveBuyOrder: ActiveBuyOrder = {
@@ -115,7 +125,6 @@ Market.TradeOrderEvent.handlerWithLoader({
 				timestamp: getISOTime(event.block.time),
 			};
 			context.Order.set(updatedSellOrder);
-
 		} else {
 			context.log.error(
 				`Cannot find sell order ${event.params.base_sell_order_id}`,
@@ -124,7 +133,8 @@ Market.TradeOrderEvent.handlerWithLoader({
 
 		// Process the active sell order, reducing the amount by the trade size and updating its status
 		if (active_sell_order) {
-			const updatedActiveSellAmount = active_sell_order.amount - event.params.trade_size;
+			const updatedActiveSellAmount =
+				active_sell_order.amount - event.params.trade_size;
 			const isActiveSellOrderClosed = updatedActiveSellAmount === 0n;
 
 			const updatedActiveSellOrder: ActiveSellOrder = {

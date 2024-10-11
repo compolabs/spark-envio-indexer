@@ -1,6 +1,6 @@
 import { Market, MockDb } from "generated/src/TestHelpers.gen";
-import { getHash } from "../src/utils/getHash";
-import assert from "assert";
+import assert from "node:assert";
+import { getHash } from "../src/utils";
 
 const userAddress = "0x1ef4ca23f77ddd39400e32199f1e7e4a85dff2067a850ee0944ed6ece25c30fe";
 const marketAddress = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
@@ -11,7 +11,7 @@ const initialAmount = 400n;
 const depositAmount = 800n;
 const afterDepositAmount = initialAmount + depositAmount;
 
-const withdrawAmount = 1201n;
+const withdrawAmount = 1200n;
 const afterWithdrawAmount = afterDepositAmount - withdrawAmount;
 
 let sharedMockDb: any;
@@ -22,12 +22,13 @@ before(async () => {
 beforeEach(() => {
   const allBalances = sharedMockDb.entities.Balance.getAll();
 
-  allBalances.forEach((balance: { base_amount: number; user: any; market: any; }) => {
+  for (const balance of allBalances) {
     if (balance.base_amount < 0n) {
       throw new Error(`Test failed: balance for user ${balance.user} in market ${balance.market} is negative (${balance.base_amount})`);
     }
-  });
+  }
 });
+
 describe("Event Handlers", () => {
 
   it("Processes a deposit event and updates the user's balance", async () => {
