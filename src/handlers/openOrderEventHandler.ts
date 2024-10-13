@@ -1,4 +1,4 @@
-import { type OpenOrderEvent, type Order, Market } from "generated";
+import { type OpenOrderEvent, type ActiveBuyOrder, type ActiveSellOrder, Market } from "generated";
 import { getISOTime } from "../utils/getISOTime";
 import { getHash } from "../utils/getHash";
 
@@ -38,13 +38,13 @@ Market.OpenOrderEvent.handlerWithLoader({
 		const balance = loaderReturn.balance;
 
 		// Construct the Order object and save in context for tracking
-		const order: Order = {
+		const order: ActiveBuyOrder | ActiveSellOrder = {
 			...openOrderEvent,
 			id: event.params.order_id,
 			initial_amount: event.params.amount,
 			status: "Active",
 		};
-		context.Order.set(order);
+		// context.Order.set(order);
 
 		// Save the order in separate collections based on order type (Buy or Sell)
 		if (orderType === "Buy") {

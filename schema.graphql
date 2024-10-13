@@ -24,18 +24,18 @@ type OpenOrderEvent {
   # tx_id: String!
 }
 
-type Order {
-  id: ID!
-  market: String! @index
-  asset: String! @index
-  amount: BigInt!
-  order_type: OrderType! @index
-  price: BigInt! @index
-  user: String! @index
-  status: OrderStatus! @index
-  initial_amount: BigInt!
-  timestamp: String!
-}
+# type Order {
+#   id: ID!
+#   market: String! @index
+#   asset: String! @index
+#   amount: BigInt!
+#   order_type: OrderType! @index
+#   price: BigInt! @index
+#   user: String! @index
+#   status: OrderStatus! @index
+#   initial_amount: BigInt!
+#   timestamp: String!
+# }
 
 type ActiveSellOrder {
   id: ID!

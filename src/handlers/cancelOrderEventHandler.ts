@@ -1,4 +1,4 @@
-import { type CancelOrderEvent, type Order, Market } from "generated";
+import { type CancelOrderEvent,  Market } from "generated";
 import type { OrderStatus_t } from "generated/src/db/Enums.gen";
 import { getISOTime } from "../utils/getISOTime";
 import { getHash } from "../utils/getHash";
@@ -7,17 +7,22 @@ import { getHash } from "../utils/getHash";
 Market.CancelOrderEvent.handlerWithLoader({
 	// Loader function to pre-fetch the user's balance and order details for the specified market
 	loader: async ({ event, context }) => {
-		const order = await context.Order.get(event.params.order_id);
+		// const order = await context.Order.get(event.params.order_id);
+		const orderId = event.params.order_id;
+		const activeBuyOrder = await context.ActiveBuyOrder.get(orderId);
+		const activeOrder = activeBuyOrder ? activeBuyOrder : await context.ActiveSellOrder.get(orderId);
+
 		return {
 			balance: await context.Balance.get(
 				getHash(`${event.params.user.payload.bits}-${event.srcAddress}`),
 			),
-			order,
-			activeOrder: order ? (
-				order.order_type === "Buy"
-					? await context.ActiveBuyOrder.get(event.params.order_id)
-					: await context.ActiveSellOrder.get(event.params.order_id)
-			) : null,
+			activeOrder
+			// order,
+			// activeOrder: order ? (
+			// 	order.order_type === "Buy"
+			// 		? await context.ActiveBuyOrder.get(event.params.order_id)
+			// 		: await context.ActiveSellOrder.get(event.params.order_id)
+			// ) : null,
 		};
 	},
 
@@ -36,7 +41,7 @@ Market.CancelOrderEvent.handlerWithLoader({
 		context.CancelOrderEvent.set(cancelOrderEvent);
 
 		// Retrieve the order and balance from the loader's return value
-		const order = loaderReturn.order;
+		// const order = loaderReturn.order;
 		const balance = loaderReturn.balance;
 		const activeOrder = loaderReturn.activeOrder;
 
@@ -52,17 +57,17 @@ Market.CancelOrderEvent.handlerWithLoader({
 		}
 
 		// If the order exists, update its status to "Canceled" and reset its amount to 0
-		if (order) {
-			const updatedOrder: Order = {
-				...order,
-				amount: 0n,
-				status: "Canceled" as OrderStatus_t,
-				timestamp: getISOTime(event.block.time),
-			};
-			context.Order.set(updatedOrder);
-		} else {
-			context.log.error(`Cannot find an order ${event.params.order_id}`);
-		}
+		// if (order) {
+		// 	const updatedOrder: Order = {
+		// 		...order,
+		// 		amount: 0n,
+		// 		status: "Canceled" as OrderStatus_t,
+		// 		timestamp: getISOTime(event.block.time),
+		// 	};
+		// 	context.Order.set(updatedOrder);
+		// } else {
+		// 	context.log.error(`Cannot find an order ${event.params.order_id}`);
+		// }
 
 		// If the user's balance exists, update the balance with the new base and quote amounts
 		if (balance) {
