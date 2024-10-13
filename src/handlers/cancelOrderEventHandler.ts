@@ -1,5 +1,5 @@
-import { type CancelOrderEvent,  Market } from "generated";
-import type { OrderStatus_t } from "generated/src/db/Enums.gen";
+import { type CancelOrderEvent, Market } from "generated";
+// import type { OrderStatus_t } from "generated/src/db/Enums.gen";
 import { getISOTime } from "../utils/getISOTime";
 import { getHash } from "../utils/getHash";
 

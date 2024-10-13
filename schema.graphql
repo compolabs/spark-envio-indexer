@@ -3,11 +3,11 @@ enum OrderType {
   Buy
 }
 
-enum OrderStatus {
-  Active
-  Closed
-  Canceled
-}
+# enum OrderStatus {
+#   Active
+#   Closed
+#   Canceled
+# }
 
 type OpenOrderEvent {
   id: ID!
@@ -45,7 +45,7 @@ type ActiveSellOrder {
   order_type: OrderType! @index
   price: BigInt! @index
   user: String! @index
-  status: OrderStatus! @index
+  # status: OrderStatus! @index
   initial_amount: BigInt!
   timestamp: String!
 }
@@ -58,7 +58,7 @@ type ActiveBuyOrder {
   order_type: OrderType! @index
   price: BigInt! @index
   user: String! @index
-  status: OrderStatus! @index
+  # status: OrderStatus! @index
   initial_amount: BigInt!
   timestamp: String!
 }

@@ -42,7 +42,7 @@ Market.OpenOrderEvent.handlerWithLoader({
 			...openOrderEvent,
 			id: event.params.order_id,
 			initial_amount: event.params.amount,
-			status: "Active",
+			// status: "Active",
 		};
 		// context.Order.set(order);
 

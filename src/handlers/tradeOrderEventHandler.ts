@@ -64,7 +64,7 @@ Market.TradeOrderEvent.handlerWithLoader({
 			const updatedActiveBuyOrder: ActiveBuyOrder = {
 				...active_buy_order,
 				amount: updatedActiveBuyAmount,
-				status: isActiveBuyOrderClosed ? "Closed" : "Active",
+				// status: isActiveBuyOrderClosed ? "Closed" : "Active",
 				timestamp: getISOTime(event.block.time),
 			};
 			context.ActiveBuyOrder.set(updatedActiveBuyOrder);
@@ -89,7 +89,7 @@ Market.TradeOrderEvent.handlerWithLoader({
 			const updatedActiveSellOrder: ActiveSellOrder = {
 				...active_sell_order,
 				amount: updatedActiveSellAmount,
-				status: isActiveSellOrderClosed ? "Closed" : "Active",
+				// status: isActiveSellOrderClosed ? "Closed" : "Active",
 				timestamp: getISOTime(event.block.time),
 			};
 			context.ActiveSellOrder.set(updatedActiveSellOrder);
