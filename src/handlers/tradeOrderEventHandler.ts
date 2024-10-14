@@ -163,6 +163,7 @@ Market.TradeOrderEvent.handlerWithLoader({
 				};
 				context.Order.set(updatedSellOrder);
 			}
+			
 		} else {
 			context.log.error(
 				`Cannot find sell order ${event.params.base_sell_order_id}`,
