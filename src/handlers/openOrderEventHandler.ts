@@ -1,4 +1,4 @@
-import { type OpenOrderEvent, type Order, Market } from "generated";
+import { type OpenOrderEvent, type Order, type DustBuyOrder, type DustSellOrder, Market } from "generated";
 import { getISOTime } from "../utils/getISOTime";
 import { getHash } from "../utils/getHash";
 
@@ -38,19 +38,56 @@ Market.OpenOrderEvent.handlerWithLoader({
 		const balance = loaderReturn.balance;
 
 		// Construct the Order object and save in context for tracking
-		const order: Order = {
-			...openOrderEvent,
-			id: event.params.order_id,
-			initial_amount: event.params.amount,
-			status: "Active",
-		};
-		context.Order.set(order);
+		// const order: Order = {
+		// 	...openOrderEvent,
+		// 	id: event.params.order_id,
+		// 	initial_amount: event.params.amount,
+		// 	status: "Active",
+		// };
+		// context.Order.set(order);
 
 		// Save the order in separate collections based on order type (Buy or Sell)
-		if (orderType === "Buy") {
-			context.ActiveBuyOrder.set(order);
-		} else if (orderType === "Sell") {
-			context.ActiveSellOrder.set(order);
+		if (event.params.amount < 1000000n) {
+
+			if (orderType === "Buy") {
+				const order: Order = {
+					...openOrderEvent,
+					id: event.params.order_id,
+					initial_amount: event.params.amount,
+					status: "Dust",
+				};
+				context.Order.set(order);
+				context.DustBuyOrder.set(order);
+			} else if (orderType === "Sell") {
+				const order: Order = {
+					...openOrderEvent,
+					id: event.params.order_id,
+					initial_amount: event.params.amount,
+					status: "Dust",
+				};
+				context.Order.set(order);
+				context.DustSellOrder.set(order);
+			}
+		} else {
+			if (orderType === "Buy") {
+				const order: Order = {
+					...openOrderEvent,
+					id: event.params.order_id,
+					initial_amount: event.params.amount,
+					status: "Active",
+				};
+				context.Order.set(order);
+				context.ActiveBuyOrder.set(order);
+			} else if (orderType === "Sell") {
+				const order: Order = {
+					...openOrderEvent,
+					id: event.params.order_id,
+					initial_amount: event.params.amount,
+					status: "Active",
+				};
+				context.Order.set(order);
+				context.ActiveSellOrder.set(order);
+			}
 		}
 
 		// If a balance exists, update it with the new base and quote amounts

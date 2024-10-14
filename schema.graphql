@@ -7,6 +7,7 @@ enum OrderStatus {
   Active
   Closed
   Canceled
+  Dust
 }
 
 type OpenOrderEvent {
@@ -51,6 +52,32 @@ type ActiveSellOrder {
 }
 
 type ActiveBuyOrder {
+  id: ID!
+  market: String! @index
+  asset: String! @index
+  amount: BigInt!
+  order_type: OrderType! @index
+  price: BigInt! @index
+  user: String! @index
+  status: OrderStatus! @index
+  initial_amount: BigInt!
+  timestamp: String!
+}
+
+type DustSellOrder {
+  id: ID!
+  market: String! @index
+  asset: String! @index
+  amount: BigInt!
+  order_type: OrderType! @index
+  price: BigInt! @index
+  user: String! @index
+  status: OrderStatus! @index
+  initial_amount: BigInt!
+  timestamp: String!
+}
+
+type DustBuyOrder {
   id: ID!
   market: String! @index
   asset: String! @index
