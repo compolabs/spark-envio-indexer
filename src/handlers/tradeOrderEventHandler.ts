@@ -64,7 +64,7 @@ Market.TradeOrderEvent.handlerWithLoader({
 		if (active_buy_order) {
 			const updatedActiveBuyAmount = active_buy_order.amount - event.params.trade_size;
 
-			if (updatedActiveBuyAmount < 1000000n) {
+			if (updatedActiveBuyAmount < 1000n) {
 				const dustBuyOrder: DustBuyOrder = {
 					...active_buy_order,
 					amount: updatedActiveBuyAmount,
@@ -89,7 +89,7 @@ Market.TradeOrderEvent.handlerWithLoader({
 		if (active_sell_order) {
 			const updatedActiveSellAmount = active_sell_order.amount - event.params.trade_size;
 
-			if (updatedActiveSellAmount < 1000000n) {
+			if (updatedActiveSellAmount < 1000n) {
 				const dustSellOrder: DustSellOrder = {
 					...active_sell_order,
 					amount: updatedActiveSellAmount,
@@ -114,7 +114,7 @@ Market.TradeOrderEvent.handlerWithLoader({
 		if (buy_order) {
 			const updatedBuyAmount = buy_order.amount - event.params.trade_size;
 
-			if (updatedBuyAmount < 1_000_000n) {
+			if (updatedBuyAmount < 1000n) {
 				const updatedBuyOrder: Order = {
 					...buy_order,
 					amount: updatedBuyAmount,
@@ -144,7 +144,7 @@ Market.TradeOrderEvent.handlerWithLoader({
 		if (sell_order) {
 			const updatedSellAmount = sell_order.amount - event.params.trade_size;
 
-			if (updatedSellAmount < 1_000_000n) {
+			if (updatedSellAmount < 1000n) {
 				const updatedSellOrder: Order = {
 					...sell_order,
 					amount: updatedSellAmount,

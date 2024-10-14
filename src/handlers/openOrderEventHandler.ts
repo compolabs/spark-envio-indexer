@@ -17,6 +17,8 @@ Market.OpenOrderEvent.handlerWithLoader({
 	// Handler function that processes the evnet and updates the user's order and balance data
 	handler: async ({ event, context, loaderReturn }) => {
 		const orderType = event.params.order_type.case;
+		const isDustOrder = event.params.amount < 1000n;
+		const orderStatus = isDustOrder ? "Dust" : "Active";
 
 		// Construct the OpenOrderEvent object and save in context for tracking
 		const openOrderEvent: OpenOrderEvent = {
@@ -38,54 +40,25 @@ Market.OpenOrderEvent.handlerWithLoader({
 		const balance = loaderReturn.balance;
 
 		// Construct the Order object and save in context for tracking
-		// const order: Order = {
-		// 	...openOrderEvent,
-		// 	id: event.params.order_id,
-		// 	initial_amount: event.params.amount,
-		// 	status: "Active",
-		// };
-		// context.Order.set(order);
+		const order: Order = {
+			...openOrderEvent,
+			id: event.params.order_id,
+			initial_amount: event.params.amount,
+			status: orderStatus,
+			timestamp: getISOTime(event.block.time),
+		};
+		context.Order.set(order);
 
-		// Save the order in separate collections based on order type (Buy or Sell)
-		if (event.params.amount < 1000000n) {
-
+		if (isDustOrder) {
 			if (orderType === "Buy") {
-				const order: Order = {
-					...openOrderEvent,
-					id: event.params.order_id,
-					initial_amount: event.params.amount,
-					status: "Dust",
-				};
-				context.Order.set(order);
 				context.DustBuyOrder.set(order);
 			} else if (orderType === "Sell") {
-				const order: Order = {
-					...openOrderEvent,
-					id: event.params.order_id,
-					initial_amount: event.params.amount,
-					status: "Dust",
-				};
-				context.Order.set(order);
 				context.DustSellOrder.set(order);
 			}
 		} else {
 			if (orderType === "Buy") {
-				const order: Order = {
-					...openOrderEvent,
-					id: event.params.order_id,
-					initial_amount: event.params.amount,
-					status: "Active",
-				};
-				context.Order.set(order);
 				context.ActiveBuyOrder.set(order);
 			} else if (orderType === "Sell") {
-				const order: Order = {
-					...openOrderEvent,
-					id: event.params.order_id,
-					initial_amount: event.params.amount,
-					status: "Active",
-				};
-				context.Order.set(order);
 				context.ActiveSellOrder.set(order);
 			}
 		}
