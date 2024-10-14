@@ -7,7 +7,7 @@ networks:
       url: https://fuel-testnet.hypersync.xyz
     contracts:
       - name: Registry
-        address: 0xfc3439e66c15c0b8e8e02e0fe4951eecd6001639a6aa8a650885af62ea92540f
+        address: 0xd6474c9d90a4a4bcdb762f48d38afc8283799799d7e48e1055fb373ff87fb9d7
         abi_file_path: ./abis/registry.json
         handler: ./src/OrderBookHandlers.ts
         events:
@@ -17,7 +17,6 @@ networks:
         handler: ./src/OrderBookHandlers.ts
         events:
           - name: DepositEvent
-          - name: DepositForEvent
           - name: WithdrawEvent
           - name: WithdrawToMarketEvent
           - name: OpenOrderEvent
