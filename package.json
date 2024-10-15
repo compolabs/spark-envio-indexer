@@ -1,6 +1,6 @@
 {
   "name": "spark-indexer",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "scripts": {
     "clean": "tsc --clean",
     "build": "tsc --build",

@@ -41,6 +41,7 @@ Market.TradeOrderEvent.handlerWithLoader({
 			trade_size: event.params.trade_size,
 			trade_price: event.params.trade_price,
 			seller: event.params.order_seller.payload.bits,
+			seller_is_maker: event.params.seller_is_maker,
 			buyer: event.params.order_buyer.payload.bits,
 			seller_base_amount: event.params.s_balance.liquid.base,
 			seller_quote_amount: event.params.s_balance.liquid.quote,

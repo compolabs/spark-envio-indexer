@@ -109,6 +109,7 @@ type TradeOrderEvent {
   trade_size: BigInt! @index
   trade_price: BigInt! @index
   seller: String! @index
+  seller_is_maker: Boolean! @index
   buyer: String! @index
   seller_base_amount: BigInt!
   seller_quote_amount: BigInt!
@@ -130,18 +131,18 @@ type DepositEvent {
   # tx_id: String! @index
 }
 
-type DepositForEvent {
-  id: ID!
-  market: String! @index
-  user: String! @index
-  amount: BigInt!
-  asset: String! @index
-  base_amount: BigInt!
-  quote_amount: BigInt!
-  caller: String! @index
-  timestamp: String!
-  # tx_id: String! @index
-}
+# type DepositForEvent {
+#   id: ID!
+#   market: String! @index
+#   user: String! @index
+#   amount: BigInt!
+#   asset: String! @index
+#   base_amount: BigInt!
+#   quote_amount: BigInt!
+#   caller: String! @index
+#   timestamp: String!
+#   # tx_id: String! @index
+# }
 
 type WithdrawEvent {
   id: ID!
