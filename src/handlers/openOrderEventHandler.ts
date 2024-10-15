@@ -1,6 +1,6 @@
-import { type OpenOrderEvent, type Order, type DustBuyOrder, type DustSellOrder, Market } from "generated";
-import { getISOTime } from "../utils/getISOTime";
-import { getHash } from "../utils/getHash";
+import { type OpenOrderEvent, type Order, Market } from "generated";
+import { getISOTime } from "../utils";
+import { getHash } from "../utils";
 
 // Define a handler for the OpenOrderEvent within a specific market
 Market.OpenOrderEvent.handlerWithLoader({
@@ -17,8 +17,6 @@ Market.OpenOrderEvent.handlerWithLoader({
 	// Handler function that processes the evnet and updates the user's order and balance data
 	handler: async ({ event, context, loaderReturn }) => {
 		const orderType = event.params.order_type.case;
-		const isDustOrder = event.params.amount < 1000n;
-		const orderStatus = isDustOrder ? "Dust" : "Active";
 
 		// Construct the OpenOrderEvent object and save in context for tracking
 		const openOrderEvent: OpenOrderEvent = {
@@ -44,23 +42,15 @@ Market.OpenOrderEvent.handlerWithLoader({
 			...openOrderEvent,
 			id: event.params.order_id,
 			initial_amount: event.params.amount,
-			status: orderStatus,
-			timestamp: getISOTime(event.block.time),
+			status: "Active",
 		};
 		context.Order.set(order);
 
-		if (isDustOrder) {
-			if (orderType === "Buy") {
-				context.DustBuyOrder.set(order);
-			} else if (orderType === "Sell") {
-				context.DustSellOrder.set(order);
-			}
-		} else {
-			if (orderType === "Buy") {
-				context.ActiveBuyOrder.set(order);
-			} else if (orderType === "Sell") {
-				context.ActiveSellOrder.set(order);
-			}
+		// Save the order in separate collections based on order type (Buy or Sell)
+		if (orderType === "Buy") {
+			context.ActiveBuyOrder.set(order);
+		} else if (orderType === "Sell") {
+			context.ActiveSellOrder.set(order);
 		}
 
 		// If a balance exists, update it with the new base and quote amounts

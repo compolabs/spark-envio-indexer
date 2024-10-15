@@ -1,7 +1,7 @@
 import { type CancelOrderEvent, type Order, Market } from "generated";
 import type { OrderStatus_t } from "generated/src/db/Enums.gen";
-import { getISOTime } from "../utils/getISOTime";
-import { getHash } from "../utils/getHash";
+import { getISOTime } from "../utils";
+import { getHash } from "../utils";
 
 // Define a handler for the CancelOrderEvent within a specific market
 Market.CancelOrderEvent.handlerWithLoader({
@@ -9,23 +9,15 @@ Market.CancelOrderEvent.handlerWithLoader({
 	loader: async ({ event, context }) => {
 		const order = await context.Order.get(event.params.order_id);
 		return {
-			order,
-
 			balance: await context.Balance.get(
 				getHash(`${event.params.user.payload.bits}-${event.srcAddress}`),
 			),
-
-			activeOrder: order ? (
-				order.order_type === "Buy"
+			order,
+			activeOrder: order
+				? order.order_type === "Buy"
 					? await context.ActiveBuyOrder.get(event.params.order_id)
 					: await context.ActiveSellOrder.get(event.params.order_id)
-			) : null,
-
-			dustOrder: order ? (
-				order.order_type === "Buy"
-					? await context.DustBuyOrder.get(event.params.order_id)
-					: await context.DustSellOrder.get(event.params.order_id)
-			) : null,
+				: null,
 		};
 	},
 
@@ -47,7 +39,6 @@ Market.CancelOrderEvent.handlerWithLoader({
 		const order = loaderReturn.order;
 		const balance = loaderReturn.balance;
 		const activeOrder = loaderReturn.activeOrder;
-		const dustOrder = loaderReturn.dustOrder;
 
 		// Remove the order from active orders depending on its type (Buy/Sell)
 		if (activeOrder) {
@@ -60,22 +51,12 @@ Market.CancelOrderEvent.handlerWithLoader({
 			context.log.error(`Cannot find an active order ${event.params.order_id}`);
 		}
 
-		if (dustOrder) {
-			if (dustOrder.order_type === "Buy") {
-				context.DustBuyOrder.deleteUnsafe(event.params.order_id);
-			} else if (dustOrder.order_type === "Sell") {
-				context.DustSellOrder.deleteUnsafe(event.params.order_id);
-			}
-		} else {
-			context.log.error(`Cannot find an dust order ${event.params.order_id}`);
-		}
-
 		// If the order exists, update its status to "Canceled" and reset its amount to 0
 		if (order) {
 			const updatedOrder: Order = {
 				...order,
 				amount: 0n,
-				status: "Canceled",
+				status: "Canceled" as OrderStatus_t,
 				timestamp: getISOTime(event.block.time),
 			};
 			context.Order.set(updatedOrder);

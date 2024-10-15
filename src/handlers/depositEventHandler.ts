@@ -1,6 +1,6 @@
 import { type DepositEvent, Market } from "generated";
-import { getISOTime } from "../utils/getISOTime";
-import { getHash } from "../utils/getHash";
+import { getISOTime } from "../utils";
+import { getHash } from "../utils";
 
 // Define a handler for the DepositEvent within a specific market
 Market.DepositEvent.handlerWithLoader({

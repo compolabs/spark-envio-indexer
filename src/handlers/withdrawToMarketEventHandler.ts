@@ -1,6 +1,6 @@
 import { type WithdrawToMarketEvent, Market } from "generated";
-import { getISOTime } from "../utils/getISOTime";
-import { getHash } from "../utils/getHash";
+import { getISOTime } from "../utils";
+import { getHash } from "../utils";
 
 // Define a handler for the WithdrawToMarketEvent within a specific market
 Market.WithdrawToMarketEvent.handlerWithLoader({

@@ -1,6 +1,12 @@
-import { type TradeOrderEvent, type Order, Market, type ActiveBuyOrder, type ActiveSellOrder, type DustBuyOrder, type DustSellOrder } from "generated";
-import { getISOTime } from "../utils/getISOTime";
-import { getHash } from "../utils/getHash";
+import {
+	type TradeOrderEvent,
+	type Order,
+	Market,
+	type ActiveBuyOrder,
+	type ActiveSellOrder,
+} from "generated";
+import { getISOTime } from "../utils";
+import { getHash } from "../utils";
 
 // Define a handler for the TradeOrderEvent within a specific market
 Market.TradeOrderEvent.handlerWithLoader({
@@ -52,125 +58,104 @@ Market.TradeOrderEvent.handlerWithLoader({
 		context.TradeOrderEvent.set(tradeOrderEvent);
 
 		// Retrieve the buy and sell orders from the loader's return value
-		const active_buy_order = loaderReturn.active_buy_order;
-		const active_sell_order = loaderReturn.active_sell_order;
 		const buy_order = loaderReturn.buy_order;
 		const sell_order = loaderReturn.sell_order;
+		const active_buy_order = loaderReturn.active_buy_order;
+		const active_sell_order = loaderReturn.active_sell_order;
 
 		// Retrieve the balances for both the seller and the buyer from the loader's return value
 		const seller_balance = loaderReturn.seller_balance;
 		const buyer_balance = loaderReturn.buyer_balance;
 
-		// Process the active buy order, reducing the amount by the trade size and updating its status
-		if (active_buy_order) {
-			const updatedActiveBuyAmount = active_buy_order.amount - event.params.trade_size;
-
-			if (updatedActiveBuyAmount < 1000n) {
-				const dustBuyOrder: DustBuyOrder = {
-					...active_buy_order,
-					amount: updatedActiveBuyAmount,
-					status: "Dust",
-					timestamp: getISOTime(event.block.time),
-				};
-				context.DustBuyOrder.set(dustBuyOrder);
-				context.ActiveBuyOrder.deleteUnsafe(active_buy_order.id);
-
-			} else {
-				const updatedActiveBuyOrder: ActiveBuyOrder = {
-					...active_buy_order,
-					amount: updatedActiveBuyAmount,
-					status: updatedActiveBuyAmount === 0n ? "Closed" : "Active",
-					timestamp: getISOTime(event.block.time),
-				};
-				context.ActiveBuyOrder.set(updatedActiveBuyOrder);
-			}
-		}
-
-		// Process the active sell order, reducing the amount by the trade size and updating its status
-		if (active_sell_order) {
-			const updatedActiveSellAmount = active_sell_order.amount - event.params.trade_size;
-
-			if (updatedActiveSellAmount < 1000n) {
-				const dustSellOrder: DustSellOrder = {
-					...active_sell_order,
-					amount: updatedActiveSellAmount,
-					status: "Dust",
-					timestamp: getISOTime(event.block.time),
-				};
-				context.DustSellOrder.set(dustSellOrder);
-				context.ActiveSellOrder.deleteUnsafe(active_sell_order.id);
-
-			} else {
-				const updatedActiveSellOrder: ActiveSellOrder = {
-					...active_sell_order,
-					amount: updatedActiveSellAmount,
-					status: updatedActiveSellAmount === 0n ? "Closed" : "Active",
-					timestamp: getISOTime(event.block.time),
-				};
-				context.ActiveSellOrder.set(updatedActiveSellOrder);
-			}
-		}
-
 		// Process the buy order, reducing the amount by the trade size and updating its status
 		if (buy_order) {
 			const updatedBuyAmount = buy_order.amount - event.params.trade_size;
+			const isBuyOrderClosed = updatedBuyAmount === 0n;
 
-			if (updatedBuyAmount < 1000n) {
-				const updatedBuyOrder: Order = {
-					...buy_order,
-					amount: updatedBuyAmount,
-					status: "Dust",
-					timestamp: getISOTime(event.block.time),
-				};
-				context.Order.set(updatedBuyOrder);
-
-			} else {
-				const isBuyOrderClosed = updatedBuyAmount === 0n;
-				const updatedBuyOrder: Order = {
-					...buy_order,
-					amount: updatedBuyAmount,
-					status: isBuyOrderClosed ? "Closed" : "Active",
-					timestamp: getISOTime(event.block.time),
-				};
-				context.Order.set(updatedBuyOrder);
-			}
-
+			// Update the buy order status to "Closed" if fully executed, otherwise "Active"
+			const updatedBuyOrder: Order = {
+				...buy_order,
+				amount: updatedBuyAmount,
+				status: isBuyOrderClosed ? "Closed" : "Active",
+				timestamp: getISOTime(event.block.time),
+			};
+			context.Order.set(updatedBuyOrder);
 		} else {
 			context.log.error(
 				`Cannot find buy order ${event.params.base_buy_order_id}`,
 			);
 		}
 
+		// Process the active buy order, reducing the amount by the trade size and updating its status
+		if (active_buy_order) {
+			const updatedActiveBuyAmount =
+				active_buy_order.amount - event.params.trade_size;
+			const isActiveBuyOrderClosed = updatedActiveBuyAmount === 0n;
+
+			const updatedActiveBuyOrder: ActiveBuyOrder = {
+				...active_buy_order,
+				amount: updatedActiveBuyAmount,
+				status: isActiveBuyOrderClosed ? "Closed" : "Active",
+				timestamp: getISOTime(event.block.time),
+			};
+			context.ActiveBuyOrder.set(updatedActiveBuyOrder);
+
+			// Remove the buy order from active orders if fully executed
+			if (isActiveBuyOrderClosed) {
+				context.ActiveBuyOrder.deleteUnsafe(active_buy_order.id);
+			} else {
+				context.ActiveBuyOrder.set(updatedActiveBuyOrder);
+			}
+		} else {
+			context.log.error(
+				`Cannot find active buy order ${event.params.base_buy_order_id}`,
+			);
+		}
+
 		// Process the sell order similarly, updating its amount and status
 		if (sell_order) {
 			const updatedSellAmount = sell_order.amount - event.params.trade_size;
+			const isSellOrderClosed = updatedSellAmount === 0n;
 
-			if (updatedSellAmount < 1000n) {
-				const updatedSellOrder: Order = {
-					...sell_order,
-					amount: updatedSellAmount,
-					status: "Dust",
-					timestamp: getISOTime(event.block.time),
-				};
-				context.Order.set(updatedSellOrder);
-
-			} else {
-				const isSellOrderClosed = updatedSellAmount === 0n;
-				const updatedSellOrder: Order = {
-					...sell_order,
-					amount: updatedSellAmount,
-					status: isSellOrderClosed ? "Closed" : "Active",
-					timestamp: getISOTime(event.block.time),
-				};
-				context.Order.set(updatedSellOrder);
-			}
-			
+			// Update the sell order status to "Closed" if fully executed, otherwise "Active"
+			const updatedSellOrder: Order = {
+				...sell_order,
+				amount: updatedSellAmount,
+				status: isSellOrderClosed ? "Closed" : "Active",
+				timestamp: getISOTime(event.block.time),
+			};
+			context.Order.set(updatedSellOrder);
 		} else {
 			context.log.error(
 				`Cannot find sell order ${event.params.base_sell_order_id}`,
 			);
 		}
 
+		// Process the active sell order, reducing the amount by the trade size and updating its status
+		if (active_sell_order) {
+			const updatedActiveSellAmount =
+				active_sell_order.amount - event.params.trade_size;
+			const isActiveSellOrderClosed = updatedActiveSellAmount === 0n;
+
+			const updatedActiveSellOrder: ActiveSellOrder = {
+				...active_sell_order,
+				amount: updatedActiveSellAmount,
+				status: isActiveSellOrderClosed ? "Closed" : "Active",
+				timestamp: getISOTime(event.block.time),
+			};
+			context.ActiveSellOrder.set(updatedActiveSellOrder);
+
+			// Remove the sell order from active orders if fully executed
+			if (isActiveSellOrderClosed) {
+				context.ActiveSellOrder.deleteUnsafe(active_sell_order.id);
+			} else {
+				context.ActiveSellOrder.set(updatedActiveSellOrder);
+			}
+		} else {
+			context.log.error(
+				`Cannot find active sell order ${event.params.base_sell_order_id}`,
+			);
+		}
 
 		// Update the buyer's balance with the new base and quote amounts
 		if (buyer_balance) {

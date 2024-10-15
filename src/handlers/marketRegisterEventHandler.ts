@@ -1,5 +1,5 @@
 import { Registry } from "generated/src/Handlers.gen";
-import { getISOTime } from "../utils/getISOTime";
+import { getISOTime } from "../utils";
 import type { MarketRegisterEvent } from "generated";
 
 Registry.MarketRegisterEvent.handler(async ({ event, context }) => {
