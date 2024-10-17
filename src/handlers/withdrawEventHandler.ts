@@ -6,12 +6,8 @@ import { getHash } from "../utils";
 Market.WithdrawEvent.handlerWithLoader({
 	// Loader function to pre-fetch the user's balance for the specified market
 	loader: async ({ event, context }) => {
-		return {
-			// Fetch the balance using a unique hash based on the user and market (srcAddress)
-			balance: await context.Balance.get(
-				getHash(`${event.params.user.payload.bits}-${event.srcAddress}`),
-			),
-		};
+		// Fetch the balance using a unique hash based on the user and market (srcAddress)
+		return { balance: await context.Balance.get(getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)) };
 	},
 
 	// Handler function that processes the withdraw event and updates the user's balance
@@ -23,8 +19,8 @@ Market.WithdrawEvent.handlerWithLoader({
 			user: event.params.user.payload.bits,
 			amount: event.params.amount,
 			asset: event.params.asset.bits,
-			base_amount: event.params.account.liquid.base,
-			quote_amount: event.params.account.liquid.quote,
+			baseAmount: event.params.account.liquid.base,
+			quoteAmount: event.params.account.liquid.quote,
 			timestamp: getISOTime(event.block.time),
 		};
 		context.WithdrawEvent.set(withdrawEvent);
@@ -36,15 +32,13 @@ Market.WithdrawEvent.handlerWithLoader({
 		if (balance) {
 			const updatedBalance = {
 				...balance,
-				base_amount: event.params.account.liquid.base,
-				quote_amount: event.params.account.liquid.quote,
+				baseAmount: event.params.account.liquid.base,
+				quoteAmount: event.params.account.liquid.quote,
 				timestamp: getISOTime(event.block.time),
 			};
 			context.Balance.set(updatedBalance);
 		} else {
-			context.log.error(
-				`Cannot find an balance ${event.params.user.payload.bits}`,
-			);
+			context.log.error(`Cannot find an balance ${event.params.user.payload.bits}`);
 		}
 	},
 });

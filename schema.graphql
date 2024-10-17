@@ -13,12 +13,12 @@ type OpenOrderEvent {
   id: ID!
   market: String! @index
   user: String! @index
-  order_id: String! @index
-  base_amount: BigInt!
-  quote_amount: BigInt!
+  orderId: String! @index
+  baseAmount: BigInt!
+  quoteAmount: BigInt!
   asset: String!
   amount: BigInt!
-  order_type: OrderType!
+  orderType: OrderType!
   price: BigInt!
   timestamp: String!
   # tx_id: String!
@@ -29,11 +29,11 @@ type Order {
   market: String! @index
   asset: String! @index
   amount: BigInt!
-  order_type: OrderType! @index
+  orderType: OrderType! @index
   price: BigInt! @index
   user: String! @index
   status: OrderStatus! @index
-  initial_amount: BigInt!
+  initialAmount: BigInt!
   timestamp: String!
 }
 
@@ -42,11 +42,11 @@ type ActiveSellOrder {
   market: String! @index
   asset: String! @index
   amount: BigInt!
-  order_type: OrderType! @index
+  orderType: OrderType! @index
   price: BigInt! @index
   user: String! @index
   status: OrderStatus! @index
-  initial_amount: BigInt!
+  initialAmount: BigInt!
   timestamp: String!
 }
 
@@ -55,11 +55,11 @@ type ActiveBuyOrder {
   market: String! @index
   asset: String! @index
   amount: BigInt!
-  order_type: OrderType! @index
+  orderType: OrderType! @index
   price: BigInt! @index
   user: String! @index
   status: OrderStatus! @index
-  initial_amount: BigInt!
+  initialAmount: BigInt!
   timestamp: String!
 }
 
@@ -67,9 +67,9 @@ type CancelOrderEvent {
   id: ID!
   market: String! @index
   user: String! @index
-  order_id: String! @index
-  base_amount: BigInt!
-  quote_amount: BigInt!
+  orderId: String! @index
+  baseAmount: BigInt!
+  quoteAmount: BigInt!
   timestamp: String!
   # tx_id: String!
 }
@@ -77,17 +77,17 @@ type CancelOrderEvent {
 type TradeOrderEvent {
   id: ID!
   market: String! @index
-  sell_order_id: String! @index
-  buy_order_id: String! @index
-  trade_size: BigInt! @index
-  trade_price: BigInt! @index
+  sellOrderId: String! @index
+  buyOrderId: String! @index
+  tradeSize: BigInt! @index
+  tradePrice: BigInt! @index
   seller: String! @index
   buyer: String! @index
-  seller_is_maker: Boolean! @index
-  seller_base_amount: BigInt!
-  seller_quote_amount: BigInt!
-  buyer_base_amount: BigInt!
-  buyer_quote_amount: BigInt!
+  sellerIsMaker: Boolean! @index
+  sellerBaseAmount: BigInt!
+  sellerQuoteAmount: BigInt!
+  buyerBaseAmount: BigInt!
+  buyerQuoteAmount: BigInt!
   timestamp: String!
   # tx_id: String! @index
 }
@@ -98,8 +98,8 @@ type DepositEvent {
   user: String! @index
   amount: BigInt!
   asset: String! @index
-  base_amount: BigInt!
-  quote_amount: BigInt!
+  baseAmount: BigInt!
+  quoteAmount: BigInt!
   timestamp: String!
   # tx_id: String! @index
 }
@@ -110,8 +110,8 @@ type WithdrawEvent {
   user: String! @index
   amount: BigInt!
   asset: String! @index
-  base_amount: BigInt!
-  quote_amount: BigInt! 
+  baseAmount: BigInt!
+  quoteAmount: BigInt! 
   timestamp: String!
   # tx_id: String! @index
 }
@@ -119,12 +119,12 @@ type WithdrawEvent {
 type WithdrawToMarketEvent {
   id: ID!
   market: String! @index
-  to_market: String! @index
+  toMarket: String! @index
   user: String! @index
   amount: BigInt!
   asset: String! @index
-  base_amount: BigInt!
-  quote_amount: BigInt! 
+  baseAmount: BigInt!
+  quoteAmount: BigInt! 
   timestamp: String!
   # tx_id: String! @index
 }
@@ -133,15 +133,15 @@ type Balance {
   id: ID!
   user: String! @index
   market: String! @index
-  base_amount: BigInt!
-  quote_amount: BigInt!
+  baseAmount: BigInt!
+  quoteAmount: BigInt!
   timestamp: String!
 }
 
 type MarketRegisterEvent {
   id: ID!
-  base_asset: String! @index
-  quote_asset: String! @index
+  baseAsset: String! @index
+  quoteAsset: String! @index
   timestamp: String!
-  tx_id: String! @index
+  txId: String! @index
 }

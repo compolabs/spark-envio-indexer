@@ -5,10 +5,10 @@ import type { MarketRegisterEvent } from "generated";
 Registry.MarketRegisterEvent.handler(async ({ event, context }) => {
 	const marketRegisterEvent: MarketRegisterEvent = {
 		id: event.params.market.bits,
-		base_asset: event.params.base.bits,
-		quote_asset: event.params.quote.bits,
+		baseAsset: event.params.base.bits,
+		quoteAsset: event.params.quote.bits,
 		timestamp: getISOTime(event.block.time),
-		tx_id: event.transaction.id,
+		txId: event.transaction.id,
 	};
 	context.MarketRegisterEvent.set(marketRegisterEvent);
 });
