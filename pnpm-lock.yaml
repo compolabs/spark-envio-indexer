@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       envio:
-        specifier: 2.4.4
-        version: 2.4.4
+        specifier: 2.5.1
+        version: 2.5.1
     optionalDependencies:
       generated:
         specifier: link:generated
@@ -389,8 +389,8 @@ packages:
     resolution: {integrity: sha512-ueEepnujpqee2o5aIYnvHU6C0A42MNdsIDeqy5BydrkuC5R1ZuUFnm27EeFJGoEHJQgn3uleRvmTXaJgfXbt4g==}
     engines: {node: '>=0.4.0'}
 
-  acorn@8.12.1:
-    resolution: {integrity: sha512-tcpGyI9zbizT9JbV6oYE477V6mTlXvvi0T0G3SNIYE2apm/G5huBa1+K89VGeovbg+jycCrfhl3ADxErOuO6Jg==}
+  acorn@8.13.0:
+    resolution: {integrity: sha512-8zSiw54Oxrdym50NlZ9sUusyO1Z1ZchgRLWRaK6c86XJFClyCgFKetdowBg5bKxyp/u+CDBJG4Mpp0m3HLZl9w==}
     engines: {node: '>=0.4.0'}
     hasBin: true
 
@@ -664,28 +664,28 @@ packages:
   end-of-stream@1.4.4:
     resolution: {integrity: sha512-+uw1inIHVPQoaVuHzRyXd21icM+cnt4CzD5rW+NC1wjOUSTOs+Te7FOv7AhN7vS9x/oIyhLP5PR1H+phQAHu5Q==}
 
-  envio-darwin-arm64@2.4.4:
-    resolution: {integrity: sha512-LGOYDF9Ql/HdnNONUZN+SNqSWJ9h0kWT3IHg+BcCtYjLy0Xo23qEbzJin+qEdgha0MT3+A0NShHDV/E4vNdxPQ==}
+  envio-darwin-arm64@2.5.1:
+    resolution: {integrity: sha512-pJBPLe7EA/zLopE8UBgaSo3YL8oZa4z8iuuy73SHsYBwAWQAMZlZevg9gerfC9Lhg/zJIVKK56bAXZr7dlD69Q==}
     cpu: [arm64]
     os: [darwin]
 
-  envio-darwin-x64@2.4.4:
-    resolution: {integrity: sha512-VcNQ4OWefCUyA4+nnINMZ8mhTfxDqBv9g67tYGRd+jIalt5sQtuZO0AXOaFi7Fuq+fT+mZRwKmri545uyhe59g==}
+  envio-darwin-x64@2.5.1:
+    resolution: {integrity: sha512-tbY+S0NFCRGQPccIkqlxqf6PymvcBqdA09XS3O2ulNq2mkiE7EuuglPb3nU+TrYS7gRNtXN/plt1Pfgq+2QOGg==}
     cpu: [x64]
     os: [darwin]
 
-  envio-linux-arm64@2.4.4:
-    resolution: {integrity: sha512-UNnaeiOLBeRqSyFTJa59Zat1SclRTAZHj3M9UjFpiyuALnOJkY3b+SzCMzL93KXjx9Wnuokm0y5P85hhyKXMJw==}
+  envio-linux-arm64@2.5.1:
+    resolution: {integrity: sha512-INTrzPN5MvnfclGwwCvpQBfpAfEpyrDr0nwJlJGv2XCjdQNbIjs5/KZojeCE2J4WLAJFx/H6FhDfATQwqc2SWw==}
     cpu: [arm64]
     os: [linux]
 
-  envio-linux-x64@2.4.4:
-    resolution: {integrity: sha512-yItczUkuExhB8Mc/kUoZpiye4dhmSDtHAt5+KLU6voGLLq2lCknhS3FruymYIubqCl/i2/ne0JyZND2/1n6jeg==}
+  envio-linux-x64@2.5.1:
+    resolution: {integrity: sha512-/3QKM6ZvjW4zzFuNXuAfUvNlmP4NCzPh40zTcOXGeSfwp7jxb1+o+DVooDgyBFE7dtIUM+eh4ZSPRBVLbGzN9g==}
     cpu: [x64]
     os: [linux]
 
-  envio@2.4.4:
-    resolution: {integrity: sha512-4ZtUOgBZ8l2cDnmRW0d60AQ/A5q4DxfDd7I1MQxQiD48Pu5P/H/z6QPk2D7QdE2iza/T0IIVvmTCoubZGURVEw==}
+  envio@2.5.1:
+    resolution: {integrity: sha512-q3DYjEluvLN9hw6hM8tLMZi5OUWRiRqVX9TyPlqbZCQZbK5MIpRjEJlqm5/mL5tkxiwMIq9vm4V3kFzQ8kYQag==}
     hasBin: true
 
   es-define-property@1.0.0:
@@ -1021,10 +1021,6 @@ packages:
 
   minimatch@5.0.1:
     resolution: {integrity: sha512-nLDxIFRyhDblz3qMuq+SoRZED4+miJ/G+tdDrjkkkRnjAsBexeGpgjLEQ0blJy7rHhR2b93rhQY4SvyWu9v03g==}
-    engines: {node: '>=10'}
-
-  minimatch@5.1.6:
-    resolution: {integrity: sha512-lKwV/1brpG6mBUFHtb7NUmtABCb2WZZmm2wNiOA5hAb8VdCS4B3dtMWyvcoViccwAW/COERjXLt0zP1zXUN26g==}
     engines: {node: '>=10'}
 
   minimist@1.2.8:
@@ -1781,9 +1777,9 @@ snapshots:
 
   acorn-walk@8.3.4:
     dependencies:
-      acorn: 8.12.1
+      acorn: 8.13.0
 
-  acorn@8.12.1: {}
+  acorn@8.13.0: {}
 
   aes-js@4.0.0-beta.5: {}
 
@@ -2023,24 +2019,24 @@ snapshots:
     dependencies:
       once: 1.4.0
 
-  envio-darwin-arm64@2.4.4:
+  envio-darwin-arm64@2.5.1:
     optional: true
 
-  envio-darwin-x64@2.4.4:
+  envio-darwin-x64@2.5.1:
     optional: true
 
-  envio-linux-arm64@2.4.4:
+  envio-linux-arm64@2.5.1:
     optional: true
 
-  envio-linux-x64@2.4.4:
+  envio-linux-x64@2.5.1:
     optional: true
 
-  envio@2.4.4:
+  envio@2.5.1:
     optionalDependencies:
-      envio-darwin-arm64: 2.4.4
-      envio-darwin-x64: 2.4.4
-      envio-linux-arm64: 2.4.4
-      envio-linux-x64: 2.4.4
+      envio-darwin-arm64: 2.5.1
+      envio-darwin-x64: 2.5.1
+      envio-linux-arm64: 2.5.1
+      envio-linux-x64: 2.5.1
 
   es-define-property@1.0.0:
     dependencies:
@@ -2192,7 +2188,7 @@ snapshots:
       fs.realpath: 1.0.0
       inflight: 1.0.6
       inherits: 2.0.4
-      minimatch: 5.1.6
+      minimatch: 5.0.1
       once: 1.4.0
 
   gopd@1.0.1:
@@ -2392,10 +2388,6 @@ snapshots:
       brace-expansion: 1.1.11
 
   minimatch@5.0.1:
-    dependencies:
-      brace-expansion: 2.0.1
-
-  minimatch@5.1.6:
     dependencies:
       brace-expansion: 2.0.1
 
@@ -2800,7 +2792,7 @@ snapshots:
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
       '@types/node': 20.8.8
-      acorn: 8.12.1
+      acorn: 8.13.0
       acorn-walk: 8.3.4
       arg: 4.1.3
       create-require: 1.1.1

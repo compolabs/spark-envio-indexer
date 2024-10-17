@@ -50,6 +50,6 @@ Market.OpenOrderEvent.handlerWithLoader({
 		}
 
 		// If balance exists, update it with the new base and quote amounts
-		await updateUserBalance(context, balance, event.params.balance.liquid.base, event.params.balance.liquid.quote, event.params.user.payload.bits, event.block.time);
+		updateUserBalance("Open Event", context, event, balance, event.params.balance.liquid.base, event.params.balance.liquid.quote, event.params.user.payload.bits, event.block.time);
 	},
 });
