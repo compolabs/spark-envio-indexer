@@ -1,7 +1,7 @@
 import {
 	Market, type TradeOrderEvent, type Order, type ActiveBuyOrder, type ActiveSellOrder
 } from "generated";
-import { getISOTime } from "../utils";
+import { getISOTime, updateUserBalance } from "../utils";
 import { getHash } from "../utils";
 
 // Define a handler for the TradeOrderEvent within a specific market
@@ -133,30 +133,8 @@ Market.TradeOrderEvent.handlerWithLoader({
 			context.log.error(`Cannot find active sell order ${event.params.base_sell_order_id}`);
 		}
 
-		// Update the buyer's balance with the new base and quote amounts
-		if (buyerBalance) {
-			const updatedBuyerBalance = {
-				...buyerBalance,
-				baseAmount: event.params.b_balance.liquid.base,
-				quoteAmount: event.params.b_balance.liquid.quote,
-				timestamp: getISOTime(event.block.time),
-			};
-			context.Balance.set(updatedBuyerBalance);
-		} else {
-			context.log.error(`Cannot find buyer balance ${getHash(`${event.params.order_buyer.payload.bits}-${event.srcAddress}`)}`);
-		}
-
-		// Update the seller's balance with the new base and quote amounts
-		if (sellerBalance) {
-			const updatedSellerBalance = {
-				...sellerBalance,
-				baseAmount: event.params.s_balance.liquid.base,
-				quoteAmount: event.params.s_balance.liquid.quote,
-				timestamp: getISOTime(event.block.time),
-			};
-			context.Balance.set(updatedSellerBalance);
-		} else {
-			context.log.error(`Cannot find seller balance ${getHash(`${event.params.order_seller.payload.bits}-${event.srcAddress}`)}`);
-		}
+		// If balance exist, update the buyer and seller balance with the new base and quote amounts
+		await updateUserBalance(context, buyerBalance, event.params.b_balance.liquid.base, event.params.b_balance.liquid.quote, event.params.order_buyer.payload.bits, event.block.time);
+		await updateUserBalance(context, sellerBalance, event.params.s_balance.liquid.base, event.params.s_balance.liquid.quote, event.params.order_seller.payload.bits, event.block.time);
 	},
 });

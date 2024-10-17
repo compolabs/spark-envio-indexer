@@ -1,5 +1,5 @@
 import { type CancelOrderEvent, type Order, Market } from "generated";
-import { getISOTime } from "../utils";
+import { getISOTime, updateUserBalance } from "../utils";
 import { getHash } from "../utils";
 
 // Define a handler for the CancelOrderEvent within a specific market
@@ -60,17 +60,7 @@ Market.CancelOrderEvent.handlerWithLoader({
 			context.log.error(`Cannot find an order ${event.params.order_id}`);
 		}
 
-		// If the user's balance exists, update the balance with the new base and quote amounts
-		if (balance) {
-			const updatedBalance = {
-				...balance,
-				baseAmount: event.params.balance.liquid.base,
-				quoteAmount: event.params.balance.liquid.quote,
-				timestamp: getISOTime(event.block.time),
-			};
-			context.Balance.set(updatedBalance);
-		} else {
-			context.log.error(`Cannot find an balance ${event.params.user.payload.bits}`);
-		}
+		// If balance exists, update it with the new base and quote amounts
+		await updateUserBalance(context, balance, event.params.balance.liquid.base, event.params.balance.liquid.quote, event.params.user.payload.bits, event.block.time);
 	},
 });

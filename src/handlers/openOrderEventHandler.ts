@@ -1,5 +1,5 @@
 import { type OpenOrderEvent, type Order, Market } from "generated";
-import { getISOTime } from "../utils";
+import { getISOTime, updateUserBalance } from "../utils";
 import { getHash } from "../utils";
 
 // Define a handler for the OpenOrderEvent within a specific market
@@ -49,17 +49,7 @@ Market.OpenOrderEvent.handlerWithLoader({
 			context.ActiveSellOrder.set(order);
 		}
 
-		// If a balance exists, update it with the new base and quote amounts
-		if (balance) {
-			const updatedBalance = {
-				...balance,
-				baseAmount: event.params.balance.liquid.base,
-				quoteAmount: event.params.balance.liquid.quote,
-				timestamp: getISOTime(event.block.time),
-			};
-			context.Balance.set(updatedBalance);
-		} else {
-			context.log.error(`Cannot find an balance ${event.params.user.payload.bits}`);
-		}
+		// If balance exists, update it with the new base and quote amounts
+		await updateUserBalance(context, balance, event.params.balance.liquid.base, event.params.balance.liquid.quote, event.params.user.payload.bits, event.block.time);
 	},
 });

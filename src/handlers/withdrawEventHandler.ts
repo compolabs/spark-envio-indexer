@@ -1,5 +1,5 @@
 import { type WithdrawEvent, Market } from "generated";
-import { getISOTime } from "../utils";
+import { getISOTime, updateUserBalance } from "../utils";
 import { getHash } from "../utils";
 
 // Define a handler for the WithdrawEvent within a specific market
@@ -29,16 +29,6 @@ Market.WithdrawEvent.handlerWithLoader({
 		const balance = loaderReturn.balance;
 
 		// If balance exists, update it with the new base and quote amounts
-		if (balance) {
-			const updatedBalance = {
-				...balance,
-				baseAmount: event.params.account.liquid.base,
-				quoteAmount: event.params.account.liquid.quote,
-				timestamp: getISOTime(event.block.time),
-			};
-			context.Balance.set(updatedBalance);
-		} else {
-			context.log.error(`Cannot find an balance ${event.params.user.payload.bits}`);
-		}
+		await updateUserBalance(context, balance, event.params.account.liquid.base, event.params.account.liquid.quote, event.params.user.payload.bits, event.block.time);
 	},
 });
