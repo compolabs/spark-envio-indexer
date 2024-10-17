@@ -1,6 +1,5 @@
 import { type CancelOrderEvent, type Order, Market } from "generated";
-import type { OrderStatus_t } from "generated/src/db/Enums.gen";
-import { getISOTime } from "../utils";
+import { getISOTime, updateUserBalance } from "../utils";
 import { getHash } from "../utils";
 
 // Define a handler for the CancelOrderEvent within a specific market
@@ -9,14 +8,11 @@ Market.CancelOrderEvent.handlerWithLoader({
 	loader: async ({ event, context }) => {
 		const order = await context.Order.get(event.params.order_id);
 		return {
-			balance: await context.Balance.get(
-				getHash(`${event.params.user.payload.bits}-${event.srcAddress}`),
-			),
+			balance: await context.Balance.get(getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)),
 			order,
-			activeOrder: order
-				? order.order_type === "Buy"
-					? await context.ActiveBuyOrder.get(event.params.order_id)
-					: await context.ActiveSellOrder.get(event.params.order_id)
+			activeOrder: order ? order.orderType === "Buy"
+				? await context.ActiveBuyOrder.get(event.params.order_id)
+				: await context.ActiveSellOrder.get(event.params.order_id)
 				: null,
 		};
 	},
@@ -28,9 +24,9 @@ Market.CancelOrderEvent.handlerWithLoader({
 			id: event.transaction.id,
 			market: event.srcAddress,
 			user: event.params.user.payload.bits,
-			order_id: event.params.order_id,
-			base_amount: event.params.balance.liquid.base,
-			quote_amount: event.params.balance.liquid.quote,
+			orderId: event.params.order_id,
+			baseAmount: event.params.balance.liquid.base,
+			quoteAmount: event.params.balance.liquid.quote,
 			timestamp: getISOTime(event.block.time),
 		};
 		context.CancelOrderEvent.set(cancelOrderEvent);
@@ -42,9 +38,9 @@ Market.CancelOrderEvent.handlerWithLoader({
 
 		// Remove the order from active orders depending on its type (Buy/Sell)
 		if (activeOrder) {
-			if (activeOrder.order_type === "Buy") {
+			if (activeOrder.orderType === "Buy") {
 				context.ActiveBuyOrder.deleteUnsafe(event.params.order_id);
-			} else if (activeOrder.order_type === "Sell") {
+			} else if (activeOrder.orderType === "Sell") {
 				context.ActiveSellOrder.deleteUnsafe(event.params.order_id);
 			}
 		} else {
@@ -56,7 +52,7 @@ Market.CancelOrderEvent.handlerWithLoader({
 			const updatedOrder: Order = {
 				...order,
 				amount: 0n,
-				status: "Canceled" as OrderStatus_t,
+				status: "Canceled",
 				timestamp: getISOTime(event.block.time),
 			};
 			context.Order.set(updatedOrder);
@@ -64,19 +60,7 @@ Market.CancelOrderEvent.handlerWithLoader({
 			context.log.error(`Cannot find an order ${event.params.order_id}`);
 		}
 
-		// If the user's balance exists, update the balance with the new base and quote amounts
-		if (balance) {
-			const updatedBalance = {
-				...balance,
-				base_amount: event.params.balance.liquid.base,
-				quote_amount: event.params.balance.liquid.quote,
-				timestamp: getISOTime(event.block.time),
-			};
-			context.Balance.set(updatedBalance);
-		} else {
-			context.log.error(
-				`Cannot find an balance ${event.params.user.payload.bits}`,
-			);
-		}
+		// If balance exists, update it with the new base and quote amounts
+		await updateUserBalance(context, balance, event.params.balance.liquid.base, event.params.balance.liquid.quote, event.params.user.payload.bits, event.block.time);
 	},
 });

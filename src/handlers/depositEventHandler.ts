@@ -6,12 +6,8 @@ import { getHash } from "../utils";
 Market.DepositEvent.handlerWithLoader({
 	// Loader function to pre-fetch the user's balance data
 	loader: async ({ event, context }) => {
-		return {
-			// Fetch the balance by generating a unique hash for the user and market (srcAddress)
-			balance: await context.Balance.get(
-				getHash(`${event.params.user.payload.bits}-${event.srcAddress}`),
-			),
-		};
+		// Fetch the balance by generating a unique hash for the user and market (srcAddress)
+		return { balance: await context.Balance.get(getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)) };
 	},
 
 	// Handler function that processes the event and updates or creates balance data
@@ -23,8 +19,8 @@ Market.DepositEvent.handlerWithLoader({
 			user: event.params.user.payload.bits,
 			amount: event.params.amount,
 			asset: event.params.asset.bits,
-			base_amount: event.params.account.liquid.base,
-			quote_amount: event.params.account.liquid.quote,
+			baseAmount: event.params.account.liquid.base,
+			quoteAmount: event.params.account.liquid.quote,
 			timestamp: getISOTime(event.block.time),
 		};
 		context.DepositEvent.set(depositEvent);
@@ -36,8 +32,8 @@ Market.DepositEvent.handlerWithLoader({
 		if (balance) {
 			const updatedBalance = {
 				...balance,
-				base_amount: event.params.account.liquid.base,
-				quote_amount: event.params.account.liquid.quote,
+				baseAmount: event.params.account.liquid.base,
+				quoteAmount: event.params.account.liquid.quote,
 				timestamp: getISOTime(event.block.time),
 			};
 			context.Balance.set(updatedBalance);

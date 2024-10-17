@@ -1,17 +1,13 @@
 import { type OpenOrderEvent, type Order, Market } from "generated";
-import { getISOTime } from "../utils";
+import { getISOTime, updateUserBalance } from "../utils";
 import { getHash } from "../utils";
 
 // Define a handler for the OpenOrderEvent within a specific market
 Market.OpenOrderEvent.handlerWithLoader({
 	// Loader function to pre-fetch the user's balance data
 	loader: async ({ event, context }) => {
-		return {
-			// Fetch the balance by generating a unique hash for the user and market (srcAddress)
-			balance: await context.Balance.get(
-				getHash(`${event.params.user.payload.bits}-${event.srcAddress}`),
-			),
-		};
+		// Fetch the balance by generating a unique hash for the user and market (srcAddress)
+		return { balance: await context.Balance.get(getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)) };
 	},
 
 	// Handler function that processes the evnet and updates the user's order and balance data
@@ -22,14 +18,14 @@ Market.OpenOrderEvent.handlerWithLoader({
 		const openOrderEvent: OpenOrderEvent = {
 			id: event.transaction.id,
 			market: event.srcAddress,
-			order_id: event.params.order_id,
+			orderId: event.params.order_id,
 			asset: event.params.asset.bits,
 			amount: event.params.amount,
-			order_type: orderType,
+			orderType: orderType,
 			price: event.params.price,
 			user: event.params.user.payload.bits,
-			base_amount: event.params.balance.liquid.base,
-			quote_amount: event.params.balance.liquid.quote,
+			baseAmount: event.params.balance.liquid.base,
+			quoteAmount: event.params.balance.liquid.quote,
 			timestamp: getISOTime(event.block.time),
 		};
 		context.OpenOrderEvent.set(openOrderEvent);
@@ -41,7 +37,7 @@ Market.OpenOrderEvent.handlerWithLoader({
 		const order: Order = {
 			...openOrderEvent,
 			id: event.params.order_id,
-			initial_amount: event.params.amount,
+			initialAmount: event.params.amount,
 			status: "Active",
 		};
 		context.Order.set(order);
@@ -53,19 +49,7 @@ Market.OpenOrderEvent.handlerWithLoader({
 			context.ActiveSellOrder.set(order);
 		}
 
-		// If a balance exists, update it with the new base and quote amounts
-		if (balance) {
-			const updatedBalance = {
-				...balance,
-				base_amount: event.params.balance.liquid.base,
-				quote_amount: event.params.balance.liquid.quote,
-				timestamp: getISOTime(event.block.time),
-			};
-			context.Balance.set(updatedBalance);
-		} else {
-			context.log.error(
-				`Cannot find an balance ${event.params.user.payload.bits}`,
-			);
-		}
+		// If balance exists, update it with the new base and quote amounts
+		await updateUserBalance(context, balance, event.params.balance.liquid.base, event.params.balance.liquid.quote, event.params.user.payload.bits, event.block.time);
 	},
 });
