@@ -10,7 +10,7 @@ export const getISOTime = (timeInSeconds: number) => {
 	return new Date(timeInSeconds * 1000).toISOString();
 };
 
-export async function updateUserBalance(context: handlerContext, balance: Balance_t | undefined, baseAmount: bigint, quoteAmount: bigint, user: string, time: number) {
+export function updateUserBalance(eventName: string, context: handlerContext, event: any, balance: Balance_t | undefined, baseAmount: bigint, quoteAmount: bigint, user: string, time: number) {
 	if (balance) {
 		const updatedBalance = {
 			...balance,
@@ -20,6 +20,6 @@ export async function updateUserBalance(context: handlerContext, balance: Balanc
 		};
 		context.Balance.set(updatedBalance);
 	} else {
-		context.log.error(`Cannot find a balance for user ${user}`);
+		context.log.error(`${eventName} no balance ${getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)} for user ${user}`);
 	}
 }

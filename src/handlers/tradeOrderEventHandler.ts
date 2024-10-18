@@ -134,7 +134,7 @@ Market.TradeOrderEvent.handlerWithLoader({
 		}
 
 		// If balance exist, update the buyer and seller balance with the new base and quote amounts
-		await updateUserBalance(context, buyerBalance, event.params.b_balance.liquid.base, event.params.b_balance.liquid.quote, event.params.order_buyer.payload.bits, event.block.time);
-		await updateUserBalance(context, sellerBalance, event.params.s_balance.liquid.base, event.params.s_balance.liquid.quote, event.params.order_seller.payload.bits, event.block.time);
+		updateUserBalance("Trade Event", context, event, buyerBalance, event.params.b_balance.liquid.base, event.params.b_balance.liquid.quote, event.params.order_buyer.payload.bits, event.block.time);
+		updateUserBalance("Trade Event", context, event, sellerBalance, event.params.s_balance.liquid.base, event.params.s_balance.liquid.quote, event.params.order_seller.payload.bits, event.block.time);
 	},
 });

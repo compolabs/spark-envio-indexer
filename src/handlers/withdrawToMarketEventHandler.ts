@@ -30,6 +30,6 @@ Market.WithdrawToMarketEvent.handlerWithLoader({
 		const balance = loaderReturn.balance;
 
 		// If balance exists, update it with the new base and quote amounts
-		await updateUserBalance(context, balance, event.params.account.liquid.base, event.params.account.liquid.quote, event.params.user.payload.bits, event.block.time);
+		updateUserBalance("WithdrawTo Event", context, event, balance, event.params.account.liquid.base, event.params.account.liquid.quote, event.params.user.payload.bits, event.block.time);
 	},
 });
