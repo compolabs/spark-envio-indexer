@@ -14,7 +14,7 @@ Market.WithdrawEvent.handlerWithLoader({
 	handler: async ({ event, context, loaderReturn }) => {
 		// Construct the WithdrawEvent object and save in context for tracking
 		const withdrawEvent: WithdrawEvent = {
-			id: event.transaction.id,
+			id: getHash(`${event.transaction.id}-${event.logIndex}`),
 			market: event.srcAddress,
 			user: event.params.user.payload.bits,
 			amount: event.params.amount,
@@ -22,6 +22,7 @@ Market.WithdrawEvent.handlerWithLoader({
 			baseAmount: event.params.account.liquid.base,
 			quoteAmount: event.params.account.liquid.quote,
 			timestamp: getISOTime(event.block.time),
+			txId: event.transaction.id
 		};
 		context.WithdrawEvent.set(withdrawEvent);
 

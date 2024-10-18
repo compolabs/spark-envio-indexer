@@ -21,7 +21,7 @@ type OpenOrderEvent {
   orderType: OrderType!
   price: BigInt!
   timestamp: String!
-  # tx_id: String!
+  txId: String! @index
 }
 
 type Order {
@@ -71,7 +71,7 @@ type CancelOrderEvent {
   baseAmount: BigInt!
   quoteAmount: BigInt!
   timestamp: String!
-  # tx_id: String!
+  txId: String! @index
 }
 
 type TradeOrderEvent {
@@ -89,7 +89,7 @@ type TradeOrderEvent {
   buyerBaseAmount: BigInt!
   buyerQuoteAmount: BigInt!
   timestamp: String!
-  # tx_id: String! @index
+  txId: String! @index
 }
 
 type DepositEvent {
@@ -101,7 +101,7 @@ type DepositEvent {
   baseAmount: BigInt!
   quoteAmount: BigInt!
   timestamp: String!
-  # tx_id: String! @index
+  txId: String! @index
 }
 
 type WithdrawEvent {
@@ -113,7 +113,7 @@ type WithdrawEvent {
   baseAmount: BigInt!
   quoteAmount: BigInt! 
   timestamp: String!
-  # tx_id: String! @index
+  txId: String! @index
 }
 
 type WithdrawToMarketEvent {
@@ -126,7 +126,7 @@ type WithdrawToMarketEvent {
   baseAmount: BigInt!
   quoteAmount: BigInt! 
   timestamp: String!
-  # tx_id: String! @index
+  txId: String! @index
 }
 
 type Balance {

@@ -26,7 +26,7 @@ Market.TradeOrderEvent.handlerWithLoader({
 	handler: async ({ event, context, loaderReturn }) => {
 		// Construct the TradeOrderEvent object and save in context for tracking
 		const tradeOrderEvent: TradeOrderEvent = {
-			id: event.transaction.id,
+			id: getHash(`${event.transaction.id}-${event.logIndex}`),
 			market: event.srcAddress,
 			sellOrderId: event.params.base_sell_order_id,
 			buyOrderId: event.params.base_buy_order_id,
@@ -40,6 +40,7 @@ Market.TradeOrderEvent.handlerWithLoader({
 			buyerBaseAmount: event.params.b_balance.liquid.base,
 			buyerQuoteAmount: event.params.b_balance.liquid.quote,
 			timestamp: getISOTime(event.block.time),
+			txId: event.transaction.id
 		};
 		context.TradeOrderEvent.set(tradeOrderEvent);
 

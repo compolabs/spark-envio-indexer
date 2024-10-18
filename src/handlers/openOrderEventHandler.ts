@@ -16,7 +16,7 @@ Market.OpenOrderEvent.handlerWithLoader({
 
 		// Construct the OpenOrderEvent object and save in context for tracking
 		const openOrderEvent: OpenOrderEvent = {
-			id: event.transaction.id,
+			id: getHash(`${event.transaction.id}-${event.logIndex}`),
 			market: event.srcAddress,
 			orderId: event.params.order_id,
 			asset: event.params.asset.bits,
@@ -27,6 +27,7 @@ Market.OpenOrderEvent.handlerWithLoader({
 			baseAmount: event.params.balance.liquid.base,
 			quoteAmount: event.params.balance.liquid.quote,
 			timestamp: getISOTime(event.block.time),
+			txId: event.transaction.id
 		};
 		context.OpenOrderEvent.set(openOrderEvent);
 
