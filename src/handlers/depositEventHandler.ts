@@ -14,7 +14,7 @@ Market.DepositEvent.handlerWithLoader({
 	handler: async ({ event, context, loaderReturn }) => {
 		// Construct the DepositEvent object and save in context for tracking
 		const depositEvent: DepositEvent = {
-			id: getHash(`${event.transaction.id}-${event.logIndex}`),
+			id: event.transaction.id,
 			market: event.srcAddress,
 			user: event.params.user.payload.bits,
 			amount: event.params.amount,
@@ -22,7 +22,7 @@ Market.DepositEvent.handlerWithLoader({
 			baseAmount: event.params.account.liquid.base,
 			quoteAmount: event.params.account.liquid.quote,
 			timestamp: getISOTime(event.block.time),
-			txId: event.transaction.id
+			// txId: event.transaction.id
 		};
 		context.DepositEvent.set(depositEvent);
 
