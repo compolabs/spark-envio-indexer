@@ -1,20 +1,30 @@
 import { type WithdrawToMarketEvent, Market } from "generated";
 import { getISOTime, updateUserBalance } from "../utils";
 import { getHash } from "../utils";
+import { nanoid } from "nanoid";
 
 // Define a handler for the WithdrawToMarketEvent within a specific market
 Market.WithdrawToMarketEvent.handlerWithLoader({
 	// Loader function to pre-fetch the user's balance for the specified market
 	loader: async ({ event, context }) => {
+
+		const baseEventId = event.transaction.id;
+		let eventId = baseEventId;
+		const existingEvent = await context.WithdrawToMarketEvent.get(baseEventId);
+
+		if (existingEvent) {
+			eventId = getHash(`${event.transaction.id}-${nanoid()}`);
+			context.log.info(`Using unique eventId in WITHDRAW_TO: ${eventId}`);
+		}
 		// Fetch the balance using a unique hash based on the user and market (srcAddress)
-		return { balance: await context.Balance.get(getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)) }
+		return { eventId, balance: await context.Balance.get(getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)) }
 	},
 
 	// Handler function that processes the event and updates the user's balance
 	handler: async ({ event, context, loaderReturn }) => {
 		// Construct the WithdrawToMarketEvent object and save in context for tracking
 		const withdrawToMarketEvent: WithdrawToMarketEvent = {
-			id: event.transaction.id,
+			id: loaderReturn.eventId,
 			market: event.srcAddress,
 			toMarket: event.params.market.bits,
 			user: event.params.user.payload.bits,
@@ -23,7 +33,7 @@ Market.WithdrawToMarketEvent.handlerWithLoader({
 			baseAmount: event.params.account.liquid.base,
 			quoteAmount: event.params.account.liquid.quote,
 			timestamp: getISOTime(event.block.time),
-			// txId: event.transaction.id
+			txId: event.transaction.id
 		};
 		context.WithdrawToMarketEvent.set(withdrawToMarketEvent);
 
