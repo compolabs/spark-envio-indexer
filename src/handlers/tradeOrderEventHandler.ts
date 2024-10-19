@@ -4,11 +4,32 @@ import {
 import { getISOTime, updateUserBalance } from "../utils";
 import { getHash } from "../utils";
 
+function generateUniqueId(baseId: string, counter: number): string {
+	return getHash(`${baseId}-${counter}`);
+}
+
 // Define a handler for the TradeOrderEvent within a specific market
 Market.TradeOrderEvent.handlerWithLoader({
 	// Loader function to pre-fetch the necessary data for both buyer and seller
 	loader: async ({ event, context }) => {
+		const baseEventId = getHash(`${event.transaction.id}-${event.params.base_sell_order_id}-${event.params.base_buy_order_id}`);
+
+		let counter = 0;
+		let eventId = baseEventId;
+		let existingTradeEvent = await context.TradeOrderEvent.get(eventId);
+
+		while (existingTradeEvent) {
+			counter += 1;
+			eventId = generateUniqueId(baseEventId, counter);
+			existingTradeEvent = await context.TradeOrderEvent.get(eventId);
+		}
+
+		if (eventId !== baseEventId) {
+			context.log.info(`Generated unique event id: ${eventId} (baseEventId was: ${baseEventId})`);
+		}
+
 		return {
+			eventId,
 			// Fetch balances for both the seller and the buyer in the market (srcAddress)
 			sellerBalance: await context.Balance.get(getHash(`${event.params.order_seller.payload.bits}-${event.srcAddress}`)),
 			buyerBalance: await context.Balance.get(getHash(`${event.params.order_buyer.payload.bits}-${event.srcAddress}`)),
@@ -24,9 +45,11 @@ Market.TradeOrderEvent.handlerWithLoader({
 
 	// Handler function that processes the trade event and updates orders and balances
 	handler: async ({ event, context, loaderReturn }) => {
+		const eventId = loaderReturn.eventId;
+
 		// Construct the TradeOrderEvent object and save in context for tracking
 		const tradeOrderEvent: TradeOrderEvent = {
-			id: getHash(`${event.transaction.id}-${event.params.base_sell_order_id}-${event.params.base_buy_order_id}`),
+			id: eventId,
 			market: event.srcAddress,
 			sellOrderId: event.params.base_sell_order_id,
 			buyOrderId: event.params.base_buy_order_id,
