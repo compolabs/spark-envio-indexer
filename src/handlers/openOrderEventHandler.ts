@@ -1,32 +1,43 @@
 import { type OpenOrderEvent, type Order, Market } from "generated";
 import { getISOTime, updateUserBalance } from "../utils";
 import { getHash } from "../utils";
+import { nanoid } from "nanoid";
 
 // Define a handler for the OpenOrderEvent within a specific market
 Market.OpenOrderEvent.handlerWithLoader({
 	// Loader function to pre-fetch the user's balance data
 	loader: async ({ event, context }) => {
+
+		const baseEventId = event.transaction.id;
+		let eventId = baseEventId;
+		const existingEvent = await context.OpenOrderEvent.get(baseEventId);
+
+		if (existingEvent) {
+			eventId = getHash(`${event.transaction.id}-${nanoid()}`);
+			context.log.info(`Using unique eventId in OPEN: ${eventId}`);
+		}
+
 		// Fetch the balance by generating a unique hash for the user and market (srcAddress)
-		return { balance: await context.Balance.get(getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)) };
+		return { eventId, balance: await context.Balance.get(getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)) };
 	},
 
 	// Handler function that processes the evnet and updates the user's order and balance data
 	handler: async ({ event, context, loaderReturn }) => {
-		const orderType = event.params.order_type.case;
 
 		// Construct the OpenOrderEvent object and save in context for tracking
 		const openOrderEvent: OpenOrderEvent = {
-			id: event.transaction.id,
+			id: loaderReturn.eventId,
 			market: event.srcAddress,
 			orderId: event.params.order_id,
 			asset: event.params.asset.bits,
 			amount: event.params.amount,
-			orderType: orderType,
+			orderType: event.params.order_type.case,
 			price: event.params.price,
 			user: event.params.user.payload.bits,
 			baseAmount: event.params.balance.liquid.base,
 			quoteAmount: event.params.balance.liquid.quote,
 			timestamp: getISOTime(event.block.time),
+			txId: event.transaction.id
 		};
 		context.OpenOrderEvent.set(openOrderEvent);
 
@@ -43,9 +54,9 @@ Market.OpenOrderEvent.handlerWithLoader({
 		context.Order.set(order);
 
 		// Save the order in separate collections based on order type (Buy or Sell)
-		if (orderType === "Buy") {
+		if (event.params.order_type.case === "Buy") {
 			context.ActiveBuyOrder.set(order);
-		} else if (orderType === "Sell") {
+		} else if (event.params.order_type.case === "Sell") {
 			context.ActiveSellOrder.set(order);
 		}
 
