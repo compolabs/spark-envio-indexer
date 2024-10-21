@@ -1,68 +1,97 @@
-import { type TradeOrderEvent, type Order, Market, type ActiveBuyOrder, type ActiveSellOrder } from "generated";
-import { getISOTime } from "../utils/getISOTime";
-import { getHash } from "../utils/getHash";
+import {
+	Market, type TradeOrderEvent, type Order, type ActiveBuyOrder, type ActiveSellOrder
+} from "generated";
+import { getISOTime, updateUserBalance } from "../utils";
+import { getHash } from "../utils";
+import { nanoid } from "nanoid";
+
 
 // Define a handler for the TradeOrderEvent within a specific market
 Market.TradeOrderEvent.handlerWithLoader({
 	// Loader function to pre-fetch the necessary data for both buyer and seller
 	loader: async ({ event, context }) => {
+
+		const baseEventId = event.transaction.id;
+		let eventId = baseEventId;
+		const existingEvent = await context.TradeOrderEvent.get(baseEventId);
+
+		if (existingEvent) {
+			eventId = getHash(`${event.transaction.id}-${nanoid()}`);
+			context.log.info(`Using unique eventId in TRADE: ${eventId}`);
+		}
+
 		return {
+			eventId,
 			// Fetch balances for both the seller and the buyer in the market (srcAddress)
-			seller_balance: await context.Balance.get(
-				getHash(
-					`${event.params.order_seller.payload.bits}-${event.srcAddress}`,
-				),
-			),
-			buyer_balance: await context.Balance.get(
-				getHash(`${event.params.order_buyer.payload.bits}-${event.srcAddress}`),
-			),
+			sellerBalance: await context.Balance.get(getHash(`${event.params.order_seller.payload.bits}-${event.srcAddress}`)),
+			buyerBalance: await context.Balance.get(getHash(`${event.params.order_buyer.payload.bits}-${event.srcAddress}`)),
 
 			// Fetch both the buy and sell orders using their respective order IDs
-			sell_order: await context.Order.get(event.params.base_sell_order_id),
-			buy_order: await context.Order.get(event.params.base_buy_order_id),
+			sellOrder: await context.Order.get(event.params.base_sell_order_id),
+			buyOrder: await context.Order.get(event.params.base_buy_order_id),
 
-			active_sell_order: await context.ActiveSellOrder.get(event.params.base_sell_order_id),
-			active_buy_order: await context.ActiveBuyOrder.get(event.params.base_buy_order_id),
+			activeSellOrder: await context.ActiveSellOrder.get(event.params.base_sell_order_id),
+			activeBuyOrder: await context.ActiveBuyOrder.get(event.params.base_buy_order_id),
 		};
 	},
 
 	// Handler function that processes the trade event and updates orders and balances
 	handler: async ({ event, context, loaderReturn }) => {
+
 		// Construct the TradeOrderEvent object and save in context for tracking
 		const tradeOrderEvent: TradeOrderEvent = {
-			id: event.transaction.id,
+			id: loaderReturn.eventId,
 			market: event.srcAddress,
-			sell_order_id: event.params.base_sell_order_id,
-			buy_order_id: event.params.base_buy_order_id,
-			trade_size: event.params.trade_size,
-			trade_price: event.params.trade_price,
+			sellOrderId: event.params.base_sell_order_id,
+			buyOrderId: event.params.base_buy_order_id,
+			tradeSize: event.params.trade_size,
+			tradePrice: event.params.trade_price,
 			seller: event.params.order_seller.payload.bits,
+			sellerIsMaker: event.params.seller_is_maker,
 			buyer: event.params.order_buyer.payload.bits,
-			seller_base_amount: event.params.s_balance.liquid.base,
-			seller_quote_amount: event.params.s_balance.liquid.quote,
-			buyer_base_amount: event.params.b_balance.liquid.base,
-			buyer_quote_amount: event.params.b_balance.liquid.quote,
+			sellerBaseAmount: event.params.s_balance.liquid.base,
+			sellerQuoteAmount: event.params.s_balance.liquid.quote,
+			buyerBaseAmount: event.params.b_balance.liquid.base,
+			buyerQuoteAmount: event.params.b_balance.liquid.quote,
 			timestamp: getISOTime(event.block.time),
+			txId: event.transaction.id
 		};
 		context.TradeOrderEvent.set(tradeOrderEvent);
 
 		// Retrieve the buy and sell orders from the loader's return value
-		const active_buy_order = loaderReturn.active_buy_order;
-		const active_sell_order = loaderReturn.active_sell_order;
-		const buy_order = loaderReturn.buy_order;
-		const sell_order = loaderReturn.sell_order;
+		const buyOrder = loaderReturn.buyOrder;
+		const sellOrder = loaderReturn.sellOrder;
+		const activeBuyOrder = loaderReturn.activeBuyOrder;
+		const activeSellOrder = loaderReturn.activeSellOrder;
 
 		// Retrieve the balances for both the seller and the buyer from the loader's return value
-		const seller_balance = loaderReturn.seller_balance;
-		const buyer_balance = loaderReturn.buyer_balance;
+		const sellerBalance = loaderReturn.sellerBalance;
+		const buyerBalance = loaderReturn.buyerBalance;
+
+		// Process the buy order, reducing the amount by the trade size and updating its status
+		if (buyOrder) {
+			const updatedBuyAmount = buyOrder.amount - event.params.trade_size;
+			const isBuyOrderClosed = updatedBuyAmount === 0n;
+
+			// Update the buy order status to "Closed" if fully executed, otherwise "Active"
+			const updatedBuyOrder: Order = {
+				...buyOrder,
+				amount: updatedBuyAmount,
+				status: isBuyOrderClosed ? "Closed" : "Active",
+				timestamp: getISOTime(event.block.time),
+			};
+			context.Order.set(updatedBuyOrder);
+		} else {
+			context.log.error(`Cannot find buy order ${event.params.base_buy_order_id}`);
+		}
 
 		// Process the active buy order, reducing the amount by the trade size and updating its status
-		if (active_buy_order) {
-			const updatedActiveBuyAmount = active_buy_order.amount - event.params.trade_size;
+		if (activeBuyOrder) {
+			const updatedActiveBuyAmount = activeBuyOrder.amount - event.params.trade_size;
 			const isActiveBuyOrderClosed = updatedActiveBuyAmount === 0n;
 
 			const updatedActiveBuyOrder: ActiveBuyOrder = {
-				...active_buy_order,
+				...activeBuyOrder,
 				amount: updatedActiveBuyAmount,
 				status: isActiveBuyOrderClosed ? "Closed" : "Active",
 				timestamp: getISOTime(event.block.time),
@@ -71,23 +100,38 @@ Market.TradeOrderEvent.handlerWithLoader({
 
 			// Remove the buy order from active orders if fully executed
 			if (isActiveBuyOrderClosed) {
-				context.ActiveBuyOrder.deleteUnsafe(active_buy_order.id);
+				context.ActiveBuyOrder.deleteUnsafe(activeBuyOrder.id);
 			} else {
 				context.ActiveBuyOrder.set(updatedActiveBuyOrder);
 			}
 		} else {
-			context.log.error(
-				`Cannot find active buy order ${event.params.base_buy_order_id}`,
-			);
+			context.log.error(`Cannot find active buy order ${event.params.base_buy_order_id}`);
+		}
+
+		// Process the sell order similarly, updating its amount and status
+		if (sellOrder) {
+			const updatedSellAmount = sellOrder.amount - event.params.trade_size;
+			const isSellOrderClosed = updatedSellAmount === 0n;
+
+			// Update the sell order status to "Closed" if fully executed, otherwise "Active"
+			const updatedSellOrder: Order = {
+				...sellOrder,
+				amount: updatedSellAmount,
+				status: isSellOrderClosed ? "Closed" : "Active",
+				timestamp: getISOTime(event.block.time),
+			};
+			context.Order.set(updatedSellOrder);
+		} else {
+			context.log.error(`Cannot find sell order ${event.params.base_sell_order_id}`);
 		}
 
 		// Process the active sell order, reducing the amount by the trade size and updating its status
-		if (active_sell_order) {
-			const updatedActiveSellAmount = active_sell_order.amount - event.params.trade_size;
+		if (activeSellOrder) {
+			const updatedActiveSellAmount = activeSellOrder.amount - event.params.trade_size;
 			const isActiveSellOrderClosed = updatedActiveSellAmount === 0n;
 
 			const updatedActiveSellOrder: ActiveSellOrder = {
-				...active_sell_order,
+				...activeSellOrder,
 				amount: updatedActiveSellAmount,
 				status: isActiveSellOrderClosed ? "Closed" : "Active",
 				timestamp: getISOTime(event.block.time),
@@ -96,85 +140,16 @@ Market.TradeOrderEvent.handlerWithLoader({
 
 			// Remove the sell order from active orders if fully executed
 			if (isActiveSellOrderClosed) {
-				context.ActiveSellOrder.deleteUnsafe(active_sell_order.id);
+				context.ActiveSellOrder.deleteUnsafe(activeSellOrder.id);
 			} else {
 				context.ActiveSellOrder.set(updatedActiveSellOrder);
 			}
 		} else {
-			context.log.error(
-				`Cannot find active sell order ${event.params.base_sell_order_id}`,
-			);
+			context.log.error(`Cannot find active sell order ${event.params.base_sell_order_id}`);
 		}
 
-		// Process the buy order, reducing the amount by the trade size and updating its status
-		if (buy_order) {
-			const updatedBuyAmount = buy_order.amount - event.params.trade_size;
-			const isBuyOrderClosed = updatedBuyAmount === 0n;
-
-			// Update the buy order status to "Closed" if fully executed, otherwise "Active"
-			const updatedBuyOrder: Order = {
-				...buy_order,
-				amount: updatedBuyAmount,
-				status: isBuyOrderClosed ? "Closed" : "Active",
-				timestamp: getISOTime(event.block.time),
-			};
-			context.Order.set(updatedBuyOrder);
-
-		} else {
-			context.log.error(
-				`Cannot find buy order ${event.params.base_buy_order_id}`,
-			);
-		}
-
-		// Process the sell order similarly, updating its amount and status
-		if (sell_order) {
-			const updatedSellAmount = sell_order.amount - event.params.trade_size;
-			const isSellOrderClosed = updatedSellAmount === 0n;
-
-			// Update the sell order status to "Closed" if fully executed, otherwise "Active"
-			const updatedSellOrder: Order = {
-				...sell_order,
-				amount: updatedSellAmount,
-				status: isSellOrderClosed ? "Closed" : "Active",
-				timestamp: getISOTime(event.block.time),
-			};
-			context.Order.set(updatedSellOrder);
-
-		} else {
-			context.log.error(
-				`Cannot find sell order ${event.params.base_sell_order_id}`,
-			);
-		}
-
-
-		// Update the buyer's balance with the new base and quote amounts
-		if (buyer_balance) {
-			const updatedBuyerBalance = {
-				...buyer_balance,
-				base_amount: event.params.b_balance.liquid.base,
-				quote_amount: event.params.b_balance.liquid.quote,
-				timestamp: getISOTime(event.block.time),
-			};
-			context.Balance.set(updatedBuyerBalance);
-		} else {
-			context.log.error(
-				`Cannot find buyer balance ${getHash(`${event.params.order_buyer.payload.bits}-${event.srcAddress}`)}`,
-			);
-		}
-
-		// Update the seller's balance with the new base and quote amounts
-		if (seller_balance) {
-			const updatedSellerBalance = {
-				...seller_balance,
-				base_amount: event.params.s_balance.liquid.base,
-				quote_amount: event.params.s_balance.liquid.quote,
-				timestamp: getISOTime(event.block.time),
-			};
-			context.Balance.set(updatedSellerBalance);
-		} else {
-			context.log.error(
-				`Cannot find seller balance ${getHash(`${event.params.order_seller.payload.bits}-${event.srcAddress}`)}`,
-			);
-		}
+		// If balance exist, update the buyer and seller balance with the new base and quote amounts
+		updateUserBalance("Trade Event", context, event, buyerBalance, event.params.b_balance.liquid.base, event.params.b_balance.liquid.quote, event.params.order_buyer.payload.bits, event.block.time);
+		updateUserBalance("Trade Event", context, event, sellerBalance, event.params.s_balance.liquid.base, event.params.s_balance.liquid.quote, event.params.order_seller.payload.bits, event.block.time);
 	},
 });

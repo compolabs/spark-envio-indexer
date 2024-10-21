@@ -35,6 +35,6 @@ generated
 .env
 target
 .DS_Store
-order_checker
+*.rs
 *.toml
 *.lock

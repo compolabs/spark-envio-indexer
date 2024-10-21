@@ -24,17 +24,23 @@ _Please refer to the [documentation website](https://docs.envio.dev) for a thoro
    pnpm i
    ```
 
-4. Run envio
+4. Run envio codegen
 
    ```sh
-   pnpm dev
+   pnpm envio codegen
    ```
 
-5. Verify it's working correctly by checking the Hasura:
+5. Run envio
+
+   ```sh
+   pnpm envio dev
+   ```
+
+6. Verify it's working correctly by checking the Hasura:
    1. Open http://localhost:8080
    2. Enter admin-secret `testing`
 
-6. Query the Indexer
+7. Query the Indexer
 
 ```
 query MyQuery {
