@@ -1,4 +1,4 @@
-import { type OpenOrderEvent, type Order, Market } from "generated";
+import { type OpenOrderEvent, type Order, Market, type User } from "generated";
 import { getISOTime, updateUserBalance } from "../utils";
 import { getHash } from "../utils";
 import { nanoid } from "nanoid";
@@ -7,18 +7,9 @@ import { nanoid } from "nanoid";
 Market.OpenOrderEvent.handlerWithLoader({
 	// Loader function to pre-fetch the user's balance data
 	loader: async ({ event, context }) => {
-
-		const baseEventId = event.transaction.id;
-		let eventId = baseEventId;
-		const existingEvent = await context.OpenOrderEvent.get(baseEventId);
-
-		if (existingEvent) {
-			eventId = getHash(`${event.transaction.id}-${nanoid()}`);
-			context.log.info(`Using unique eventId in OPEN: ${eventId}`);
-		}
-
 		// Fetch the balance by generating a unique hash for the user and market (srcAddress)
-		return { eventId, balance: await context.Balance.get(getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)) };
+		const user = await context.User.get(event.params.user.payload.bits);
+		return { user, balance: await context.Balance.get(getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)) };
 	},
 
 	// Handler function that processes the evnet and updates the user's order and balance data
@@ -26,7 +17,7 @@ Market.OpenOrderEvent.handlerWithLoader({
 
 		// Construct the OpenOrderEvent object and save in context for tracking
 		const openOrderEvent: OpenOrderEvent = {
-			id: loaderReturn.eventId,
+			id: getHash(`${event.transaction.id}-${nanoid()}`),
 			market: event.srcAddress,
 			orderId: event.params.order_id,
 			asset: event.params.asset.bits,
@@ -43,6 +34,7 @@ Market.OpenOrderEvent.handlerWithLoader({
 
 		// Retrieve the user's balance from the loader's return value
 		const balance = loaderReturn.balance;
+		const user = loaderReturn.user;
 
 		// Construct the Order object and save in context for tracking
 		const order: Order = {
@@ -52,6 +44,17 @@ Market.OpenOrderEvent.handlerWithLoader({
 			status: "Active",
 		};
 		context.Order.set(order);
+
+		if (user) {
+			const updatedUser: User = {
+				...user,
+				active: user.active + 1,
+				timestamp: getISOTime(event.block.time),
+			};
+			context.User.set(updatedUser);
+		} else {
+			context.log.error(`OPEN EVENT. NO USER ${event.params.user.payload.bits}`);
+		}
 
 		// Save the order in separate collections based on order type (Buy or Sell)
 		if (event.params.order_type.case === "Buy") {

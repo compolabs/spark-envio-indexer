@@ -7,24 +7,15 @@ import { nanoid } from "nanoid";
 Market.WithdrawEvent.handlerWithLoader({
 	// Loader function to pre-fetch the user's balance for the specified market
 	loader: async ({ event, context }) => {
-
-		const baseEventId = event.transaction.id;
-		let eventId = baseEventId;
-		const existingEvent = await context.WithdrawEvent.get(baseEventId);
-
-		if (existingEvent) {
-			eventId = getHash(`${event.transaction.id}-${nanoid()}`);
-			context.log.info(`Using unique eventId in WITHDRAW: ${eventId}`);
-		}
 		// Fetch the balance using a unique hash based on the user and market (srcAddress)
-		return { eventId, balance: await context.Balance.get(getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)) };
+		return { balance: await context.Balance.get(getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)) };
 	},
 
 	// Handler function that processes the withdraw event and updates the user's balance
 	handler: async ({ event, context, loaderReturn }) => {
 		// Construct the WithdrawEvent object and save in context for tracking
 		const withdrawEvent: WithdrawEvent = {
-			id: loaderReturn.eventId,
+			id: getHash(`${event.transaction.id}-${nanoid()}`),
 			market: event.srcAddress,
 			user: event.params.user.payload.bits,
 			amount: event.params.amount,

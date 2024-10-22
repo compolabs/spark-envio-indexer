@@ -1,4 +1,4 @@
-import { type CancelOrderEvent, type Order, Market } from "generated";
+import { type CancelOrderEvent, type Order, Market, type User } from "generated";
 import { getISOTime, updateUserBalance } from "../utils";
 import { getHash } from "../utils";
 import { nanoid } from "nanoid";
@@ -7,18 +7,10 @@ import { nanoid } from "nanoid";
 Market.CancelOrderEvent.handlerWithLoader({
 	// Loader function to pre-fetch the user's balance and order details for the specified market
 	loader: async ({ event, context }) => {
-
-		const baseEventId = event.transaction.id;
-		let eventId = baseEventId;
-		const existingEvent = await context.CancelOrderEvent.get(baseEventId);
-
-		if (existingEvent) {
-			eventId = getHash(`${event.transaction.id}-${nanoid()}`);
-			context.log.info(`Using unique eventId in CANCEL: ${eventId}`);
-		}
+		const user = await context.User.get(event.params.user.payload.bits);
 		const order = await context.Order.get(event.params.order_id);
 		return {
-			eventId,
+			user,
 			balance: await context.Balance.get(getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)),
 			order,
 			activeOrder: order ? order.orderType === "Buy"
@@ -32,7 +24,7 @@ Market.CancelOrderEvent.handlerWithLoader({
 	handler: async ({ event, context, loaderReturn }) => {
 		// Construct the cancelOrderEvent object and save in context for tracking
 		const cancelOrderEvent: CancelOrderEvent = {
-			id: loaderReturn.eventId,
+			id: getHash(`${event.transaction.id}-${nanoid()}`),
 			market: event.srcAddress,
 			user: event.params.user.payload.bits,
 			orderId: event.params.order_id,
@@ -45,6 +37,7 @@ Market.CancelOrderEvent.handlerWithLoader({
 
 		// Retrieve the order and balance from the loader's return value
 		const order = loaderReturn.order;
+		const user = loaderReturn.user;
 		const balance = loaderReturn.balance;
 		const activeOrder = loaderReturn.activeOrder;
 
@@ -68,6 +61,18 @@ Market.CancelOrderEvent.handlerWithLoader({
 				timestamp: getISOTime(event.block.time),
 			};
 			context.Order.set(updatedOrder);
+
+			if (user) {
+				const updatedUser: User = {
+					...user,
+					active: user.active - 1,
+					canceled: user.canceled + 1,
+					timestamp: getISOTime(event.block.time),
+				};
+				context.User.set(updatedUser);
+			} else {
+				context.log.error(`CANCEL EVENT. NO USER ${event.params.user.payload.bits}`);
+			}
 		} else {
 			context.log.error(`Cannot find an order ${event.params.order_id}`);
 		}
