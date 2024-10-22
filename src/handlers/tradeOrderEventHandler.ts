@@ -1,5 +1,6 @@
 import {
-	Market, type TradeOrderEvent, type Order, type ActiveBuyOrder, type ActiveSellOrder
+	Market, type TradeOrderEvent, type Order, type ActiveBuyOrder, type ActiveSellOrder,
+	type User
 } from "generated";
 import { getISOTime, updateUserBalance } from "../utils";
 import { getHash } from "../utils";
@@ -10,18 +11,12 @@ import { nanoid } from "nanoid";
 Market.TradeOrderEvent.handlerWithLoader({
 	// Loader function to pre-fetch the necessary data for both buyer and seller
 	loader: async ({ event, context }) => {
-
-		const baseEventId = event.transaction.id;
-		let eventId = baseEventId;
-		const existingEvent = await context.TradeOrderEvent.get(baseEventId);
-
-		if (existingEvent) {
-			eventId = getHash(`${event.transaction.id}-${nanoid()}`);
-			context.log.info(`Using unique eventId in TRADE: ${eventId}`);
-		}
+		const seller = await context.User.get(event.params.order_seller.payload.bits)
+		const buyer = await context.User.get(event.params.order_buyer.payload.bits)
 
 		return {
-			eventId,
+			seller,
+			buyer,
 			// Fetch balances for both the seller and the buyer in the market (srcAddress)
 			sellerBalance: await context.Balance.get(getHash(`${event.params.order_seller.payload.bits}-${event.srcAddress}`)),
 			buyerBalance: await context.Balance.get(getHash(`${event.params.order_buyer.payload.bits}-${event.srcAddress}`)),
@@ -40,7 +35,7 @@ Market.TradeOrderEvent.handlerWithLoader({
 
 		// Construct the TradeOrderEvent object and save in context for tracking
 		const tradeOrderEvent: TradeOrderEvent = {
-			id: loaderReturn.eventId,
+			id: getHash(`${event.transaction.id}-${nanoid()}`),
 			market: event.srcAddress,
 			sellOrderId: event.params.base_sell_order_id,
 			buyOrderId: event.params.base_buy_order_id,
@@ -67,6 +62,8 @@ Market.TradeOrderEvent.handlerWithLoader({
 		// Retrieve the balances for both the seller and the buyer from the loader's return value
 		const sellerBalance = loaderReturn.sellerBalance;
 		const buyerBalance = loaderReturn.buyerBalance;
+		const seller = loaderReturn.seller;
+		const buyer = loaderReturn.buyer;
 
 		// Process the buy order, reducing the amount by the trade size and updating its status
 		if (buyOrder) {
@@ -81,6 +78,16 @@ Market.TradeOrderEvent.handlerWithLoader({
 				timestamp: getISOTime(event.block.time),
 			};
 			context.Order.set(updatedBuyOrder);
+
+			if (buyer && isBuyOrderClosed) {
+				const updatedBuyer: User = {
+					...buyer,
+					active: buyer.active - 1,
+					closed: buyer.closed + 1,
+					timestamp: getISOTime(event.block.time),
+				};
+				context.User.set(updatedBuyer);
+			}
 		} else {
 			context.log.error(`Cannot find buy order ${event.params.base_buy_order_id}`);
 		}
@@ -121,6 +128,16 @@ Market.TradeOrderEvent.handlerWithLoader({
 				timestamp: getISOTime(event.block.time),
 			};
 			context.Order.set(updatedSellOrder);
+
+			if (seller && isSellOrderClosed) {
+				const updatedSeller: User = {
+					...seller,
+					active: seller.active - 1,
+					closed: seller.closed + 1,
+					timestamp: getISOTime(event.block.time),
+				};
+				context.User.set(updatedSeller);
+			}
 		} else {
 			context.log.error(`Cannot find sell order ${event.params.base_sell_order_id}`);
 		}

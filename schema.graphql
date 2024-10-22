@@ -9,6 +9,14 @@ enum OrderStatus {
   Canceled
 }
 
+type User {
+  id: ID!
+  active: Int!
+  closed: Int!
+  canceled: Int!
+  timestamp: String!
+}
+
 type OpenOrderEvent {
   id: ID!
   market: String! @index
