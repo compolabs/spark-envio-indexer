@@ -49,7 +49,7 @@ Market.CancelOrderEvent.handlerWithLoader({
 				context.ActiveSellOrder.deleteUnsafe(event.params.order_id);
 			}
 		} else {
-			context.log.error(`Cannot find an active order ${event.params.order_id}`);
+			context.log.error(`CANCEL. NO ACTIVE ORDER ${event.params.order_id}`);
 		}
 
 		// If the order exists, update its status to "Canceled" and reset its amount to 0
@@ -71,13 +71,13 @@ Market.CancelOrderEvent.handlerWithLoader({
 				};
 				context.User.set(updatedUser);
 			} else {
-				context.log.error(`CANCEL EVENT. NO USER ${event.params.user.payload.bits}`);
+				context.log.error(`CANCEL. NO USER ${event.params.user.payload.bits}`);
 			}
 		} else {
-			context.log.error(`Cannot find an order ${event.params.order_id}`);
+			context.log.error(`CANCEL. NO ORDER ${event.params.order_id}`);
 		}
 
 		// If balance exists, update it with the new base and quote amounts
-		updateUserBalance("Cancel Event", context, event, balance, event.params.balance.liquid.base, event.params.balance.liquid.quote, event.params.user.payload.bits, event.block.time);
+		updateUserBalance("CANCEL.", context, event, balance, event.params.balance.liquid.base, event.params.balance.liquid.quote, event.params.user.payload.bits, event.block.time);
 	},
 });

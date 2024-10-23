@@ -53,7 +53,7 @@ Market.OpenOrderEvent.handlerWithLoader({
 			};
 			context.User.set(updatedUser);
 		} else {
-			context.log.error(`OPEN EVENT. NO USER ${event.params.user.payload.bits}`);
+			context.log.error(`OPEN. NO USER ${event.params.user.payload.bits}`);
 		}
 
 		// Save the order in separate collections based on order type (Buy or Sell)
@@ -64,6 +64,6 @@ Market.OpenOrderEvent.handlerWithLoader({
 		}
 
 		// If balance exists, update it with the new base and quote amounts
-		updateUserBalance("Open Event", context, event, balance, event.params.balance.liquid.base, event.params.balance.liquid.quote, event.params.user.payload.bits, event.block.time);
+		updateUserBalance("OPEN.", context, event, balance, event.params.balance.liquid.base, event.params.balance.liquid.quote, event.params.user.payload.bits, event.block.time);
 	},
 });
