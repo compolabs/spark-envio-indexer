@@ -8,69 +8,217 @@
       "concreteTypeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
     },
     {
-      "type": "(enum std::option::Option<enum std::identity::Identity>, u32)",
-      "concreteTypeId": "7d13ddc56e7d2e69ab8239cf4b50d65f186f9a4a10a5a88eccd85b954ef09539",
+      "type": "(struct std::asset_id::AssetId, u32, struct std::asset_id::AssetId, u32, enum std::option::Option<enum std::identity::Identity>, u32, u32)",
+      "concreteTypeId": "3e7a6a4509a70e0325e037e535f071faad89d32fab90574bdc42fdd96ebba3d5",
+      "metadataTypeId": 4
+    },
+    {
+      "type": "(u64, u64)",
+      "concreteTypeId": "41bd1a98f0a59642d8f824c805b798a5f268d1f7d05808eb05c4189c493f1be0",
       "metadataTypeId": 0
     },
     {
-      "type": "(struct std::asset_id::AssetId, struct std::asset_id::AssetId)",
-      "concreteTypeId": "d3ddf84f691d572b4313a7be3ae1d8b67fe9061c281ff6ae955e4c4441524f92",
-      "metadataTypeId": 1
+      "type": "b256",
+      "concreteTypeId": "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b"
     },
     {
-      "type": "(struct std::asset_id::AssetId, struct std::asset_id::AssetId, enum std::option::Option<struct std::contract_id::ContractId>)",
-      "concreteTypeId": "ebac2eda4e76df30d6c6d33c546e9423167d2e38b538752e7ae5b31e6fc772df",
-      "metadataTypeId": 2
+      "type": "bool",
+      "concreteTypeId": "b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903"
     },
     {
-      "type": "enum errors::MarketRegistryError",
-      "concreteTypeId": "b264f9929edaded198c8f74b64111f328a2b6d8aed859ae00d025e0f17a2a0f8",
-      "metadataTypeId": 4
+      "type": "enum data_structures::asset_type::AssetType",
+      "concreteTypeId": "4c4bcee5a492c5113714e96c87704a3af9b8bd766ce5da2ca716a6564da06ba3",
+      "metadataTypeId": 5
+    },
+    {
+      "type": "enum data_structures::limit_type::LimitType",
+      "concreteTypeId": "d9c35258b461d6cc17f23d4d7c184b37b99882e5c80d683a5826bcb9b2494e86",
+      "metadataTypeId": 6
+    },
+    {
+      "type": "enum data_structures::order_type::OrderType",
+      "concreteTypeId": "87d371fb295bf9d2ae8ded087940e8d0b097ddef40d8499ac650a22985df2682",
+      "metadataTypeId": 8
+    },
+    {
+      "type": "enum errors::AccountError",
+      "concreteTypeId": "d4bce56f7daed5c8d2b62c0f0745c18d9fdd0b2f0dafecf85ebdd9c7378b5c63",
+      "metadataTypeId": 9
+    },
+    {
+      "type": "enum errors::AssetError",
+      "concreteTypeId": "e0676030b211eb9ed3b9837fc852a3cf3b6533a31533dd3ab957e8b3f6e77dd3",
+      "metadataTypeId": 10
+    },
+    {
+      "type": "enum errors::AuthError",
+      "concreteTypeId": "06c3d78f1057db580eb36dc2fc04ebd7407f4a4e954417b6761844fe38ee1a5d",
+      "metadataTypeId": 11
+    },
+    {
+      "type": "enum errors::MatchError",
+      "concreteTypeId": "dbce8f9c6be61d876835d7a0b5794cfc25fc3b171ba3748ec4c8f2e7ce426cf6",
+      "metadataTypeId": 12
+    },
+    {
+      "type": "enum errors::MathError",
+      "concreteTypeId": "60f84769b56edc1bfc54f08c4393c6d30612549f4952a1b7d4e08b1eeced9039",
+      "metadataTypeId": 13
+    },
+    {
+      "type": "enum errors::OrderError",
+      "concreteTypeId": "0ddf63471f7b27c54c55fd3d75fe37594fb1b07a496dba57eb8fc56497e9d9c1",
+      "metadataTypeId": 14
+    },
+    {
+      "type": "enum errors::ValueError",
+      "concreteTypeId": "380bd4d6b96f9eaa3a3d8db8bb9753399443715fb3fd65460cc28d6ab4d3659b",
+      "metadataTypeId": 15
     },
     {
       "type": "enum standards::src5::AccessError",
       "concreteTypeId": "3f702ea3351c9c1ece2b84048006c8034a24cbc2bad2e740d0412b4172951d3d",
-      "metadataTypeId": 5
+      "metadataTypeId": 16
     },
     {
       "type": "enum standards::src5::State",
       "concreteTypeId": "192bc7098e2fe60635a9918afb563e4e5419d386da2bdbf0d716b4bc8549802c",
-      "metadataTypeId": 6
+      "metadataTypeId": 17
     },
     {
-      "type": "struct events::MarketRegisterEvent",
-      "concreteTypeId": "e559511bc70821c6e5333f8fe558060c41a83e157902640537145a83fe39911c",
-      "metadataTypeId": 11
+      "type": "enum std::identity::Identity",
+      "concreteTypeId": "ab7cd04e05be58e3fc15d424c2c4a57f824a2a2d97d67252440a3925ebdc1335",
+      "metadataTypeId": 18
     },
     {
-      "type": "struct events::MarketUnregisterEvent",
-      "concreteTypeId": "78914643255fa4cad1546556baf0eb607cc71b603273e23c79caef436311a897",
-      "metadataTypeId": 12
+      "type": "enum std::option::Option<struct data_structures::order::Order>",
+      "concreteTypeId": "af7345d115f618be19cd709b6734bdd5fd52bb0c27617a74a9564e4cea947d01",
+      "metadataTypeId": 19,
+      "typeArguments": [
+        "d0d7221d2233a12a685667b843d8aab0c0b82407fc47b719c07aeb77dfcaed6a"
+      ]
+    },
+    {
+      "type": "enum sway_libs::reentrancy::errors::ReentrancyError",
+      "concreteTypeId": "4d216c57b3357523323f59401c7355785b41bdf832f6e1106272186b94797038",
+      "metadataTypeId": 20
+    },
+    {
+      "type": "struct data_structures::account::Account",
+      "concreteTypeId": "10410fea5a6cba4a6b6079f9d804c0daf23980a360d009048ecb36118036c28e",
+      "metadataTypeId": 23
+    },
+    {
+      "type": "struct data_structures::order::Order",
+      "concreteTypeId": "d0d7221d2233a12a685667b843d8aab0c0b82407fc47b719c07aeb77dfcaed6a",
+      "metadataTypeId": 25
+    },
+    {
+      "type": "struct data_structures::order_change::OrderChangeInfo",
+      "concreteTypeId": "29bc325768e93baaa35ac6e466461baa03f97fb67a0a328521afacca7d3bf987",
+      "metadataTypeId": 26
+    },
+    {
+      "type": "struct data_structures::protocol_fee::ProtocolFee",
+      "concreteTypeId": "009d87c3f03cbc1373d98411934ee7648a3922e9adcbafd190ce4d1618b6e5a2",
+      "metadataTypeId": 27
+    },
+    {
+      "type": "struct events::CancelOrderEvent",
+      "concreteTypeId": "cbadef79adf1e6906cac7404759d7d55a9eaa9f1e6d479ecbbfa76f727486081",
+      "metadataTypeId": 28
+    },
+    {
+      "type": "struct events::DepositEvent",
+      "concreteTypeId": "aeb9b947da259c606e2c25be1150e2150f609fe5f2ec593c9a7ebb771e4e7065",
+      "metadataTypeId": 29
+    },
+    {
+      "type": "struct events::OpenOrderEvent",
+      "concreteTypeId": "6c6a47ac80e7110dd8666e169f0fffe2d1378df88cf8960bb9dfe14a84ac3495",
+      "metadataTypeId": 30
+    },
+    {
+      "type": "struct events::SetEpochEvent",
+      "concreteTypeId": "4fb77907614eb05d769b487a16469bfaac5278323bc54bddccd790cc4e00428e",
+      "metadataTypeId": 31
+    },
+    {
+      "type": "struct events::SetMatcherRewardEvent",
+      "concreteTypeId": "090412be710caebee4e019479841ea0100912819a3e1c52ba39b1faa7b778c83",
+      "metadataTypeId": 32
+    },
+    {
+      "type": "struct events::SetMinOrderSizeEvent",
+      "concreteTypeId": "7542dfa693d485551511758498255bf7e73c2835604bdffc22262d0ea2326c16",
+      "metadataTypeId": 33
+    },
+    {
+      "type": "struct events::SetProtocolFeeEvent",
+      "concreteTypeId": "957dde23e9fbd44b1bada18eae8b84f6d868be2fe55b721ce24b54cdcdafda79",
+      "metadataTypeId": 34
+    },
+    {
+      "type": "struct events::SetStoreOrderChangeInfoEvent",
+      "concreteTypeId": "34a2b5822332a827c494d0a8cfc543cb5e50d6e02ac23d9886c94f9a7572d18c",
+      "metadataTypeId": 35
+    },
+    {
+      "type": "struct events::TradeOrderEvent",
+      "concreteTypeId": "fe08cb2392b6eb92ee6b7868e2877ca0630f87f543acc63897f7d806229379d5",
+      "metadataTypeId": 36
+    },
+    {
+      "type": "struct events::WithdrawEvent",
+      "concreteTypeId": "9787083b0003f388ec6bf30609ff6a10c76fada67314a162841a445b07a17168",
+      "metadataTypeId": 37
+    },
+    {
+      "type": "struct events::WithdrawToMarketEvent",
+      "concreteTypeId": "ae2f6315bc0c35670e520b82df972bee3ba559d15fb2ef3864cfe265f3802fb6",
+      "metadataTypeId": 38
+    },
+    {
+      "type": "struct std::asset_id::AssetId",
+      "concreteTypeId": "c0710b6731b1dd59799cf6bef33eee3b3b04a2e40e80a0724090215bbf2ca974",
+      "metadataTypeId": 40
     },
     {
       "type": "struct std::contract_id::ContractId",
       "concreteTypeId": "29c10735d33b5159f0c71ee1dbd17b36a3e69e41f00fab0d42e1bd9f428d8a54",
-      "metadataTypeId": 15
+      "metadataTypeId": 41
     },
     {
-      "type": "struct std::vec::Vec<(struct std::asset_id::AssetId, struct std::asset_id::AssetId)>",
-      "concreteTypeId": "6447a267e9d2fb14747f1d0aac4c6698545574e97ab28e075201fd7fa1f0400e",
-      "metadataTypeId": 17,
+      "type": "struct std::vec::Vec<b256>",
+      "concreteTypeId": "32559685d0c9845f059bf9d472a0a38cf77d36c23dfcffe5489e86a65cdd9198",
+      "metadataTypeId": 43,
       "typeArguments": [
-        "d3ddf84f691d572b4313a7be3ae1d8b67fe9061c281ff6ae955e4c4441524f92"
+        "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b"
       ]
     },
     {
-      "type": "struct std::vec::Vec<(struct std::asset_id::AssetId, struct std::asset_id::AssetId, enum std::option::Option<struct std::contract_id::ContractId>)>",
-      "concreteTypeId": "1188c4d215c8979c27750c27dbb0e8ab6b1a113d969fb16256fee601c9dc8f73",
-      "metadataTypeId": 17,
+      "type": "struct std::vec::Vec<struct data_structures::order_change::OrderChangeInfo>",
+      "concreteTypeId": "742fbfc9dbc675c4bb942c1c3d87581f5da5c5a8b0fc21e0d1f8d873328d5e5a",
+      "metadataTypeId": 43,
       "typeArguments": [
-        "ebac2eda4e76df30d6c6d33c546e9423167d2e38b538752e7ae5b31e6fc772df"
+        "29bc325768e93baaa35ac6e466461baa03f97fb67a0a328521afacca7d3bf987"
+      ]
+    },
+    {
+      "type": "struct std::vec::Vec<struct data_structures::protocol_fee::ProtocolFee>",
+      "concreteTypeId": "4b03eb3d5d8751745804ec649d33055ca43456407d3991177f51a1397cd4da50",
+      "metadataTypeId": 43,
+      "typeArguments": [
+        "009d87c3f03cbc1373d98411934ee7648a3922e9adcbafd190ce4d1618b6e5a2"
       ]
     },
     {
       "type": "u32",
       "concreteTypeId": "d7649d428b9ff33d188ecbf38a7e4d8fd167fa01b2e10fe9a8f9308e52f1d7cc"
+    },
+    {
+      "type": "u64",
+      "concreteTypeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
     }
   ],
   "metadataTypes": [
@@ -80,17 +228,11 @@
       "components": [
         {
           "name": "__tuple_element",
-          "typeId": 8,
-          "typeArguments": [
-            {
-              "name": "",
-              "typeId": 7
-            }
-          ]
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
         },
         {
           "name": "__tuple_element",
-          "typeId": "d7649d428b9ff33d188ecbf38a7e4d8fd167fa01b2e10fe9a8f9308e52f1d7cc"
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
         }
       ]
     },
@@ -100,11 +242,11 @@
       "components": [
         {
           "name": "__tuple_element",
-          "typeId": 14
+          "typeId": "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b"
         },
         {
           "name": "__tuple_element",
-          "typeId": 14
+          "typeId": "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b"
         }
       ]
     },
@@ -114,45 +256,297 @@
       "components": [
         {
           "name": "__tuple_element",
-          "typeId": 14
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
         },
         {
           "name": "__tuple_element",
-          "typeId": 14
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
         },
         {
           "name": "__tuple_element",
-          "typeId": 8,
-          "typeArguments": [
-            {
-              "name": "",
-              "typeId": 15
-            }
-          ]
+          "typeId": "b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903"
         }
       ]
     },
     {
-      "type": "b256",
-      "metadataTypeId": 3
+      "type": "(_, _, _, _)",
+      "metadataTypeId": 3,
+      "components": [
+        {
+          "name": "__tuple_element",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "__tuple_element",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "__tuple_element",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "__tuple_element",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        }
+      ]
     },
     {
-      "type": "enum errors::MarketRegistryError",
+      "type": "(_, _, _, _, _, _, _)",
       "metadataTypeId": 4,
       "components": [
         {
-          "name": "MarketAlreadyRegistered",
+          "name": "__tuple_element",
+          "typeId": 40
+        },
+        {
+          "name": "__tuple_element",
+          "typeId": "d7649d428b9ff33d188ecbf38a7e4d8fd167fa01b2e10fe9a8f9308e52f1d7cc"
+        },
+        {
+          "name": "__tuple_element",
+          "typeId": 40
+        },
+        {
+          "name": "__tuple_element",
+          "typeId": "d7649d428b9ff33d188ecbf38a7e4d8fd167fa01b2e10fe9a8f9308e52f1d7cc"
+        },
+        {
+          "name": "__tuple_element",
+          "typeId": 19,
+          "typeArguments": [
+            {
+              "name": "",
+              "typeId": 18
+            }
+          ]
+        },
+        {
+          "name": "__tuple_element",
+          "typeId": "d7649d428b9ff33d188ecbf38a7e4d8fd167fa01b2e10fe9a8f9308e52f1d7cc"
+        },
+        {
+          "name": "__tuple_element",
+          "typeId": "d7649d428b9ff33d188ecbf38a7e4d8fd167fa01b2e10fe9a8f9308e52f1d7cc"
+        }
+      ]
+    },
+    {
+      "type": "enum data_structures::asset_type::AssetType",
+      "metadataTypeId": 5,
+      "components": [
+        {
+          "name": "Base",
           "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
         },
         {
-          "name": "MarketNotRegistered",
+          "name": "Quote",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        }
+      ]
+    },
+    {
+      "type": "enum data_structures::limit_type::LimitType",
+      "metadataTypeId": 6,
+      "components": [
+        {
+          "name": "GTC",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        },
+        {
+          "name": "IOC",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        },
+        {
+          "name": "FOK",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        }
+      ]
+    },
+    {
+      "type": "enum data_structures::order_change::OrderChangeType",
+      "metadataTypeId": 7,
+      "components": [
+        {
+          "name": "OrderOpened",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        },
+        {
+          "name": "OrderCancelled",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        },
+        {
+          "name": "OrderMatched",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        }
+      ]
+    },
+    {
+      "type": "enum data_structures::order_type::OrderType",
+      "metadataTypeId": 8,
+      "components": [
+        {
+          "name": "Buy",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        },
+        {
+          "name": "Sell",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        }
+      ]
+    },
+    {
+      "type": "enum errors::AccountError",
+      "metadataTypeId": 9,
+      "components": [
+        {
+          "name": "InsufficientBalance",
+          "typeId": 2
+        }
+      ]
+    },
+    {
+      "type": "enum errors::AssetError",
+      "metadataTypeId": 10,
+      "components": [
+        {
+          "name": "InvalidAsset",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        },
+        {
+          "name": "InvalidFeeAsset",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        },
+        {
+          "name": "InvalidMarketAsset",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        }
+      ]
+    },
+    {
+      "type": "enum errors::AuthError",
+      "metadataTypeId": 11,
+      "components": [
+        {
+          "name": "Unauthorized",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        }
+      ]
+    },
+    {
+      "type": "enum errors::MatchError",
+      "metadataTypeId": 12,
+      "components": [
+        {
+          "name": "CantMatch",
+          "typeId": 1
+        },
+        {
+          "name": "CantMatchMany",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        },
+        {
+          "name": "CantFulfillMany",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        },
+        {
+          "name": "CantFulfillFOK",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        }
+      ]
+    },
+    {
+      "type": "enum errors::MathError",
+      "metadataTypeId": 13,
+      "components": [
+        {
+          "name": "Overflow",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        }
+      ]
+    },
+    {
+      "type": "enum errors::OrderError",
+      "metadataTypeId": 14,
+      "components": [
+        {
+          "name": "OrderDuplicate",
+          "typeId": "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b"
+        },
+        {
+          "name": "OrderNotFound",
+          "typeId": "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b"
+        },
+        {
+          "name": "PriceTooSmall",
+          "typeId": 0
+        },
+        {
+          "name": "OrderSizeTooSmall",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "ZeroLockAmount",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        },
+        {
+          "name": "ZeroUnlockAmount",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        },
+        {
+          "name": "ZeroTransferAmount",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        },
+        {
+          "name": "FailedToRemove",
+          "typeId": "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b"
+        }
+      ]
+    },
+    {
+      "type": "enum errors::ValueError",
+      "metadataTypeId": 15,
+      "components": [
+        {
+          "name": "InvalidAmount",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        },
+        {
+          "name": "InvalidSlippage",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        },
+        {
+          "name": "InvalidArrayLength",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        },
+        {
+          "name": "InvalidFeeAmount",
+          "typeId": 0
+        },
+        {
+          "name": "InvalidEpoch",
+          "typeId": 3
+        },
+        {
+          "name": "InvalidFeeSorting",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        },
+        {
+          "name": "InvalidFeeZeroBased",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        },
+        {
+          "name": "InvalidValueSame",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        },
+        {
+          "name": "InvalidMarketSame",
           "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
         }
       ]
     },
     {
       "type": "enum standards::src5::AccessError",
-      "metadataTypeId": 5,
+      "metadataTypeId": 16,
       "components": [
         {
           "name": "NotOwner",
@@ -162,7 +556,7 @@
     },
     {
       "type": "enum standards::src5::State",
-      "metadataTypeId": 6,
+      "metadataTypeId": 17,
       "components": [
         {
           "name": "Uninitialized",
@@ -170,7 +564,7 @@
         },
         {
           "name": "Initialized",
-          "typeId": 7
+          "typeId": 18
         },
         {
           "name": "Revoked",
@@ -180,21 +574,21 @@
     },
     {
       "type": "enum std::identity::Identity",
-      "metadataTypeId": 7,
+      "metadataTypeId": 18,
       "components": [
         {
           "name": "Address",
-          "typeId": 13
+          "typeId": 39
         },
         {
           "name": "ContractId",
-          "typeId": 15
+          "typeId": 41
         }
       ]
     },
     {
       "type": "enum std::option::Option",
-      "metadataTypeId": 8,
+      "metadataTypeId": 19,
       "components": [
         {
           "name": "None",
@@ -202,130 +596,470 @@
         },
         {
           "name": "Some",
-          "typeId": 9
+          "typeId": 21
         }
       ],
       "typeParameters": [
-        9
+        21
+      ]
+    },
+    {
+      "type": "enum sway_libs::reentrancy::errors::ReentrancyError",
+      "metadataTypeId": 20,
+      "components": [
+        {
+          "name": "NonReentrant",
+          "typeId": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d"
+        }
       ]
     },
     {
       "type": "generic T",
-      "metadataTypeId": 9
+      "metadataTypeId": 21
     },
     {
       "type": "raw untyped ptr",
-      "metadataTypeId": 10
+      "metadataTypeId": 22
     },
     {
-      "type": "struct events::MarketRegisterEvent",
-      "metadataTypeId": 11,
+      "type": "struct data_structures::account::Account",
+      "metadataTypeId": 23,
       "components": [
         {
-          "name": "base",
-          "typeId": 14
+          "name": "liquid",
+          "typeId": 24
         },
         {
-          "name": "quote",
-          "typeId": 14
-        },
-        {
-          "name": "market",
-          "typeId": 15
+          "name": "locked",
+          "typeId": 24
         }
       ]
     },
     {
-      "type": "struct events::MarketUnregisterEvent",
-      "metadataTypeId": 12,
+      "type": "struct data_structures::balance::Balance",
+      "metadataTypeId": 24,
       "components": [
         {
           "name": "base",
-          "typeId": 14
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
         },
         {
           "name": "quote",
-          "typeId": 14
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        }
+      ]
+    },
+    {
+      "type": "struct data_structures::order::Order",
+      "metadataTypeId": 25,
+      "components": [
+        {
+          "name": "amount",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "asset_type",
+          "typeId": 5
+        },
+        {
+          "name": "order_type",
+          "typeId": 8
+        },
+        {
+          "name": "owner",
+          "typeId": 18
+        },
+        {
+          "name": "price",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "block_height",
+          "typeId": "d7649d428b9ff33d188ecbf38a7e4d8fd167fa01b2e10fe9a8f9308e52f1d7cc"
+        },
+        {
+          "name": "order_height",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "matcher_fee",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "protocol_maker_fee",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "protocol_taker_fee",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        }
+      ]
+    },
+    {
+      "type": "struct data_structures::order_change::OrderChangeInfo",
+      "metadataTypeId": 26,
+      "components": [
+        {
+          "name": "change_type",
+          "typeId": 7
+        },
+        {
+          "name": "block_height",
+          "typeId": "d7649d428b9ff33d188ecbf38a7e4d8fd167fa01b2e10fe9a8f9308e52f1d7cc"
+        },
+        {
+          "name": "sender",
+          "typeId": 18
+        },
+        {
+          "name": "tx_id",
+          "typeId": "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b"
+        },
+        {
+          "name": "amount_before",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "amount_after",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        }
+      ]
+    },
+    {
+      "type": "struct data_structures::protocol_fee::ProtocolFee",
+      "metadataTypeId": 27,
+      "components": [
+        {
+          "name": "maker_fee",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "taker_fee",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "volume_threshold",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        }
+      ]
+    },
+    {
+      "type": "struct events::CancelOrderEvent",
+      "metadataTypeId": 28,
+      "components": [
+        {
+          "name": "order_id",
+          "typeId": "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b"
+        },
+        {
+          "name": "user",
+          "typeId": 18
+        },
+        {
+          "name": "balance",
+          "typeId": 23
+        }
+      ]
+    },
+    {
+      "type": "struct events::DepositEvent",
+      "metadataTypeId": 29,
+      "components": [
+        {
+          "name": "amount",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "asset",
+          "typeId": 40
+        },
+        {
+          "name": "user",
+          "typeId": 18
+        },
+        {
+          "name": "account",
+          "typeId": 23
+        },
+        {
+          "name": "caller",
+          "typeId": 18
+        }
+      ]
+    },
+    {
+      "type": "struct events::OpenOrderEvent",
+      "metadataTypeId": 30,
+      "components": [
+        {
+          "name": "amount",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "asset",
+          "typeId": 40
+        },
+        {
+          "name": "order_type",
+          "typeId": 8
+        },
+        {
+          "name": "order_id",
+          "typeId": "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b"
+        },
+        {
+          "name": "price",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "user",
+          "typeId": 18
+        },
+        {
+          "name": "balance",
+          "typeId": 23
+        }
+      ]
+    },
+    {
+      "type": "struct events::SetEpochEvent",
+      "metadataTypeId": 31,
+      "components": [
+        {
+          "name": "epoch",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "epoch_duration",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        }
+      ]
+    },
+    {
+      "type": "struct events::SetMatcherRewardEvent",
+      "metadataTypeId": 32,
+      "components": [
+        {
+          "name": "amount",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        }
+      ]
+    },
+    {
+      "type": "struct events::SetMinOrderSizeEvent",
+      "metadataTypeId": 33,
+      "components": [
+        {
+          "name": "size",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        }
+      ]
+    },
+    {
+      "type": "struct events::SetProtocolFeeEvent",
+      "metadataTypeId": 34,
+      "components": [
+        {
+          "name": "protocol_fee",
+          "typeId": 43,
+          "typeArguments": [
+            {
+              "name": "",
+              "typeId": 27
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "struct events::SetStoreOrderChangeInfoEvent",
+      "metadataTypeId": 35,
+      "components": [
+        {
+          "name": "store",
+          "typeId": "b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903"
+        }
+      ]
+    },
+    {
+      "type": "struct events::TradeOrderEvent",
+      "metadataTypeId": 36,
+      "components": [
+        {
+          "name": "base_sell_order_id",
+          "typeId": "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b"
+        },
+        {
+          "name": "base_buy_order_id",
+          "typeId": "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b"
+        },
+        {
+          "name": "base_sell_order_limit",
+          "typeId": 6
+        },
+        {
+          "name": "base_buy_order_limit",
+          "typeId": 6
+        },
+        {
+          "name": "order_matcher",
+          "typeId": 18
+        },
+        {
+          "name": "trade_size",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "trade_price",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "block_height",
+          "typeId": "d7649d428b9ff33d188ecbf38a7e4d8fd167fa01b2e10fe9a8f9308e52f1d7cc"
+        },
+        {
+          "name": "tx_id",
+          "typeId": "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b"
+        },
+        {
+          "name": "order_seller",
+          "typeId": 18
+        },
+        {
+          "name": "order_buyer",
+          "typeId": 18
+        },
+        {
+          "name": "s_balance",
+          "typeId": 23
+        },
+        {
+          "name": "b_balance",
+          "typeId": 23
+        },
+        {
+          "name": "seller_is_maker",
+          "typeId": "b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903"
+        }
+      ]
+    },
+    {
+      "type": "struct events::WithdrawEvent",
+      "metadataTypeId": 37,
+      "components": [
+        {
+          "name": "amount",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "asset",
+          "typeId": 40
+        },
+        {
+          "name": "user",
+          "typeId": 18
+        },
+        {
+          "name": "account",
+          "typeId": 23
+        }
+      ]
+    },
+    {
+      "type": "struct events::WithdrawToMarketEvent",
+      "metadataTypeId": 38,
+      "components": [
+        {
+          "name": "amount",
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "asset",
+          "typeId": 40
+        },
+        {
+          "name": "user",
+          "typeId": 18
+        },
+        {
+          "name": "account",
+          "typeId": 23
         },
         {
           "name": "market",
-          "typeId": 15
+          "typeId": 41
         }
       ]
     },
     {
       "type": "struct std::address::Address",
-      "metadataTypeId": 13,
+      "metadataTypeId": 39,
       "components": [
         {
           "name": "bits",
-          "typeId": 3
+          "typeId": "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b"
         }
       ]
     },
     {
       "type": "struct std::asset_id::AssetId",
-      "metadataTypeId": 14,
+      "metadataTypeId": 40,
       "components": [
         {
           "name": "bits",
-          "typeId": 3
+          "typeId": "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b"
         }
       ]
     },
     {
       "type": "struct std::contract_id::ContractId",
-      "metadataTypeId": 15,
+      "metadataTypeId": 41,
       "components": [
         {
           "name": "bits",
-          "typeId": 3
+          "typeId": "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b"
         }
       ]
     },
     {
       "type": "struct std::vec::RawVec",
-      "metadataTypeId": 16,
+      "metadataTypeId": 42,
       "components": [
         {
           "name": "ptr",
-          "typeId": 10
+          "typeId": 22
         },
         {
           "name": "cap",
-          "typeId": 18
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
         }
       ],
       "typeParameters": [
-        9
+        21
       ]
     },
     {
       "type": "struct std::vec::Vec",
-      "metadataTypeId": 17,
+      "metadataTypeId": 43,
       "components": [
         {
           "name": "buf",
-          "typeId": 16,
+          "typeId": 42,
           "typeArguments": [
             {
               "name": "",
-              "typeId": 9
+              "typeId": 21
             }
           ]
         },
         {
           "name": "len",
-          "typeId": 18
+          "typeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
         }
       ],
       "typeParameters": [
-        9
+        21
       ]
-    },
-    {
-      "type": "u64",
-      "metadataTypeId": 18
     }
   ],
   "functions": [
@@ -373,224 +1107,19 @@
       ]
     },
     {
-      "inputs": [],
-      "name": "config",
-      "output": "7d13ddc56e7d2e69ab8239cf4b50d65f186f9a4a10a5a88eccd85b954ef09539",
-      "attributes": [
-        {
-          "name": "doc-comment",
-          "arguments": [
-            " Retrieves the contract's configuration details, including the owner address and version number."
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            ""
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            " ### Additional Information"
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            ""
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            " This function returns the owner address and the version number of the contract."
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            ""
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            " ### Returns"
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            ""
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            " * [(Option<Identity>, u32)] - A tuple containing the Otion of owner's Identity and the contract's version number as a 'u32'."
-          ]
-        }
-      ]
-    },
-    {
       "inputs": [
         {
-          "name": "market_assets",
-          "concreteTypeId": "6447a267e9d2fb14747f1d0aac4c6698545574e97ab28e075201fd7fa1f0400e"
+          "name": "order_id",
+          "concreteTypeId": "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b"
         }
       ],
-      "name": "markets",
-      "output": "1188c4d215c8979c27750c27dbb0e8ab6b1a113d969fb16256fee601c9dc8f73",
-      "attributes": [
-        {
-          "name": "doc-comment",
-          "arguments": [
-            " Retrieves the contract IDs of markets for a given list of base and quote asset pairs."
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            ""
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            " ### Additional Information"
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            ""
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            " This function takes a list of asset pairs and returns a vector containing each pair along with the corresponding market's contract ID if it is registered."
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            " If a market is not registered, 'None' is returned for the contract ID."
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            ""
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            " ### Arguments"
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            ""
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            " * `market_assets`: [Vec<(AssetId, AssetId)>] - A vector of tuples, where each tuple contains a base 'AssetId' and a quote 'AssetId'."
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            ""
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            " ### Returns"
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            ""
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            " * [Vec<(AssetId, AssetId, Option<ContractId>)>] - A vector of tuples, where each tuple contains the base 'AssetId', the quote 'AssetId', and an 'Option<ContractId>' representing the market's contract ID."
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            "         The 'Option<ContractId>' is 'None' if the market is not registered."
-          ]
-        },
-        {
-          "name": "storage",
-          "arguments": [
-            "read"
-          ]
-        }
-      ]
-    },
-    {
-      "inputs": [
-        {
-          "name": "market",
-          "concreteTypeId": "29c10735d33b5159f0c71ee1dbd17b36a3e69e41f00fab0d42e1bd9f428d8a54"
-        }
-      ],
-      "name": "register_market",
+      "name": "cancel_order",
       "output": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
       "attributes": [
         {
           "name": "doc-comment",
           "arguments": [
-            " Registers a new market with the given contract ID."
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            ""
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            " ### Additional Information"
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            ""
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            " This function allows the contract owner to register a new market. It retrieves the base and quote assets associated with the market,"
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            " generates a unique market ID, and checks if the market is already registered. If the market is not registered, it is stored in the"
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            " contract's storage and a 'MarketRegisterEvent' is logged. The function enforces that only the contract owner can call it."
+            " Cancels an existing order with the specified order ID."
           ]
         },
         {
@@ -614,7 +1143,7 @@
         {
           "name": "doc-comment",
           "arguments": [
-            " * `market`: [ContractId] - The 'ContractId' of the market to be registered."
+            " * `order_id`: [b256] - The unique identifier of the order to be canceled."
           ]
         },
         {
@@ -638,13 +1167,399 @@
         {
           "name": "doc-comment",
           "arguments": [
-            " * When called by non-owner."
+            " * When an order with `order_id` doesn't exist in the storage (not opened/matched/cancelled)."
           ]
         },
         {
           "name": "doc-comment",
           "arguments": [
-            " * When a token pair market already registered"
+            " * When a caller is not an owner of the order."
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read",
+            "write"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [],
+      "name": "deposit",
+      "output": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Deposits a specified amount of an asset into the caller's account."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Additional Information"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " The function requires that the sender sends a non-zero amount of the specified asset."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Reverts"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When `msg_amount` == 0."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When `msg_asset` is neither BASE_ASSET nor QUOTE_ASSET."
+          ]
+        },
+        {
+          "name": "payable",
+          "arguments": []
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read",
+            "write"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "user",
+          "concreteTypeId": "ab7cd04e05be58e3fc15d424c2c4a57f824a2a2d97d67252440a3925ebdc1335"
+        }
+      ],
+      "name": "deposit_for",
+      "output": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Deposits a specified amount of an asset into the user specified account."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Additional Information"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " The function requires that the sender sends a non-zero amount of the specified asset."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Arguments"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `user`: [Identity] - The deposit's account."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Reverts"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When `msg_amount` == 0."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When `msg_asset` is neither BASE_ASSET nor QUOTE_ASSET."
+          ]
+        },
+        {
+          "name": "payable",
+          "arguments": []
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read",
+            "write"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "amount",
+          "concreteTypeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "order_type",
+          "concreteTypeId": "87d371fb295bf9d2ae8ded087940e8d0b097ddef40d8499ac650a22985df2682"
+        },
+        {
+          "name": "limit_type",
+          "concreteTypeId": "d9c35258b461d6cc17f23d4d7c184b37b99882e5c80d683a5826bcb9b2494e86"
+        },
+        {
+          "name": "price",
+          "concreteTypeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "slippage",
+          "concreteTypeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "orders",
+          "concreteTypeId": "32559685d0c9845f059bf9d472a0a38cf77d36c23dfcffe5489e86a65cdd9198"
+        }
+      ],
+      "name": "fulfill_order_many",
+      "output": "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Attempts to fulfill a single order by matching it against multiple orders from a provided list."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Additional Information"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " This function creates a new order with the given parameters and iterates through the list of existing orders,"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " attempting to match the new order with existing orders. It handles full and partial matches according to the specified limit type:"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            "      - 'GTC' (Good-Til-Canceled): The order remains active until it is either fully filled or canceled."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            "      - 'IOC' (Immediate-Or-Cancel): The order can be partially filled immediately, and any unfilled portion is canceled."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            "      - 'FOK' (Fill-Or-Kill): The order must be fully filled immediately, or the entire transaction fails."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Arguments"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `amount`: [u64] - The amount of the asset to be fulfilled in the new order."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `order_type`: [OrderType] - The type of the order being fulfilled (e.g., buy or sell)."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `limit_type`: [LimitType] - The limit type for the new order: 'GTC', 'IOC', or 'FOK'."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `price`: [u64] - The price at which the new order is to be fulfilled."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `slippage`: [u64] - The maximum allowable slippage (as a percentage) for the price during the matching process."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `orders`: [Vec<b256>] - A vector of order IDs representing the existing orders to match against the new order."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Returns"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * [b256] - The unique identifier of the newly created order. If the order is partially matched and canceled (in the case of 'IOC'), the ID corresponds to the canceled order."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Reverts"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When order vector length is less than 1."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When no any orders can be fulfilled."
           ]
         },
         {
@@ -659,53 +1574,17 @@
     {
       "inputs": [
         {
-          "name": "market",
-          "concreteTypeId": "29c10735d33b5159f0c71ee1dbd17b36a3e69e41f00fab0d42e1bd9f428d8a54"
+          "name": "orders",
+          "concreteTypeId": "32559685d0c9845f059bf9d472a0a38cf77d36c23dfcffe5489e86a65cdd9198"
         }
       ],
-      "name": "unregister_market",
+      "name": "match_order_many",
       "output": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
       "attributes": [
         {
           "name": "doc-comment",
           "arguments": [
-            " Unregisters an existing market identified by the given contract ID."
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            ""
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            " ### Additional Information"
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            ""
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            " This function allows the contract owner to unregister a market. It retrieves the base and quote assets associated with the market,"
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            " generates the market ID, and checks if the market is currently registered. If the market is registered, it is removed from the"
-          ]
-        },
-        {
-          "name": "doc-comment",
-          "arguments": [
-            " contract's storage and a 'MarketUnregisterEvent' is logged. The function enforces that only the contract owner can call it."
+            " Attempts to match multiple orders provided in a list."
           ]
         },
         {
@@ -729,7 +1608,350 @@
         {
           "name": "doc-comment",
           "arguments": [
-            " * `market`: [ContractId] - The 'ContractId' of the market to be unregistered."
+            " * `orders`: [Vec<b256>] - A vector containing the unique identifiers of the orders to be matched."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Reverts"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When order vector length is less than 2."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When no any orders can be matched."
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read",
+            "write"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "order0_id",
+          "concreteTypeId": "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b"
+        },
+        {
+          "name": "order1_id",
+          "concreteTypeId": "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b"
+        }
+      ],
+      "name": "match_order_pair",
+      "output": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Matches two orders identified by their respective order IDs."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Arguments"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `order0_id`: [b256] - The unique identifier of the first order to be matched."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `order1_id`: [b256] - The unique identifier of the second order to be matched."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Reverts"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When orders with `order0_id` or `order1_id` not found."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When orders are in same direction ([sell, sell] or [buy, buy])."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When order buy price lower than order sell price."
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read",
+            "write"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "amount",
+          "concreteTypeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "order_type",
+          "concreteTypeId": "87d371fb295bf9d2ae8ded087940e8d0b097ddef40d8499ac650a22985df2682"
+        },
+        {
+          "name": "price",
+          "concreteTypeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        }
+      ],
+      "name": "open_order",
+      "output": "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Opens a new order with a specified amount, order type, and price."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Arguments"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `amount`: [u64] - The amount of the asset to be used in the order."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `order_type`: [OrderType] - The type of the order being created (e.g., buy or sell)."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `price`: [u64] - The price at which the order should be placed."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Returns"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * [b256] - The unique identifier of the newly opened order."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Reverts"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When `amount` == 0 or `amount` exeeds user unlocked asset amount."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When `price` == 0."
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read",
+            "write"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "epoch",
+          "concreteTypeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "epoch_duration",
+          "concreteTypeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        }
+      ],
+      "name": "set_epoch",
+      "output": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Sets the current epoch and its duration."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Additional Information"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " This function allows the contract owner to set a new epoch and its duration."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " It ensures that the new epoch is not in the past and that the epoch plus its duration extends beyond the current time."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " The function is restricted to the contract owner and logs an event after the epoch is set."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Arguments"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `epoch`: [u64] - The new epoch value to be set. Must be greater than or equal to the current epoch."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `epoch_duration`: [u64] - The duration of the epoch in seconds. The epoch plus its duration must extend beyond the current time."
           ]
         },
         {
@@ -759,7 +1981,13 @@
         {
           "name": "doc-comment",
           "arguments": [
-            " * When a market is not registered"
+            " * When epoch start less than current epoch start."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When epoch end less than current time."
           ]
         },
         {
@@ -769,37 +1997,1681 @@
           ]
         }
       ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "amount",
+          "concreteTypeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        }
+      ],
+      "name": "set_matcher_fee",
+      "output": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Sets the matcher fee to a specified amount."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Additional Information"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " This function allows the contract owner to update the matcher fee."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " It checks that the new fee amount is different from the current one to avoid redundant updates."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " The function is restricted to the contract owner and logs an event after the matcher fee is set."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Arguments"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `amount`: [u64] The new matcher fee amount to be set. It must be different from the current matcher fee."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Reverts"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When called by non-owner."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When `matcher_fee` is same as set before."
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read",
+            "write"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "size",
+          "concreteTypeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        }
+      ],
+      "name": "set_min_order_size",
+      "output": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Sets the minimum of order amount."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Additional Information"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " This function allows the contract owner to update the minimum of an order amount."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " It checks that the new amount is different from the current one to avoid redundant updates."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " The function is restricted to the contract owner and logs an event after the matcher fee is set."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Arguments"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `amount`: [u64] The new the minimum of an order amount to be set. It must be different from the current the minimum of an order amount."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Reverts"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When called by non-owner."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When `min_order_size` is same as set before."
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read",
+            "write"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "protocol_fee",
+          "concreteTypeId": "4b03eb3d5d8751745804ec649d33055ca43456407d3991177f51a1397cd4da50"
+        }
+      ],
+      "name": "set_protocol_fee",
+      "output": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Sets the protocol fees based on volume thresholds."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Additional Information"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " This function allows the contract owner to set a list of protocol fees."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " It ensures that the first fee in the list has a volume threshold of zero and that the fees are sorted by volume threshold."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " The function is restricted to the contract owner and logs an event after the protocol fees are set."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Arguments"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `protocol_fee`: [Vec<ProtocolFee>] - A vector of 'ProtocolFee' structures that define the fee rates and their corresponding volume thresholds."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            "    The first element must have a volume threshold of zero, and the list must be sorted by volume threshold."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Reverts"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When called by non-owner."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When `protocol_fee` vector length is zero."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When `protocol_fee` vector contains non-sorted volumes or volume duplicates."
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "write"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "store",
+          "concreteTypeId": "b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903"
+        }
+      ],
+      "name": "set_store_order_change_info",
+      "output": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Sets the matcher fee to a specified amount."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Additional Information"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " This function allows the contract owner to enable or disable storing of order change info."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Arguments"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `store`: [bool] The new store boolean value."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Reverts"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When called by non-owner."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When `store` is same as set before."
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read",
+            "write"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "amount",
+          "concreteTypeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "asset_type",
+          "concreteTypeId": "4c4bcee5a492c5113714e96c87704a3af9b8bd766ce5da2ca716a6564da06ba3"
+        }
+      ],
+      "name": "withdraw",
+      "output": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Withdraws a specified amount of a given asset from the caller's account."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Arguments"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `amount`: [u64] - The amount of the asset to be withdrawn. Must be greater than zero."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `asset_type`: [AssetType] - The type of the asset to be withdrawn."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Reverts"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When `amount` == 0 or `amount` exeeds user unlocked asset amount."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When `asset_type` is neither BASE_ASSET nor QUOTE_ASSET."
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read",
+            "write"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "amount",
+          "concreteTypeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "asset_type",
+          "concreteTypeId": "4c4bcee5a492c5113714e96c87704a3af9b8bd766ce5da2ca716a6564da06ba3"
+        },
+        {
+          "name": "market",
+          "concreteTypeId": "29c10735d33b5159f0c71ee1dbd17b36a3e69e41f00fab0d42e1bd9f428d8a54"
+        }
+      ],
+      "name": "withdraw_to_market",
+      "output": "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Withdraws a specified amount of a given asset from the caller's account."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Additional Information"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Then deposits amount to the another market for caller's account."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Arguments"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `amount`: [u64] - The amount of the asset to be withdrawn. Must be greater than zero."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `asset_type`: [AssetType] - The type of the asset to be withdrawn."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `market`: [ContractId] - The market ContractId."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Reverts"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When `amount` == 0 or `amount` exeeds user unlocked asset amount."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When `asset_type` is neither BASE_ASSET nor QUOTE_ASSET."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * When asset_id of `asset_type` is not present in `market` as base or quote asset."
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read",
+            "write"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "user",
+          "concreteTypeId": "ab7cd04e05be58e3fc15d424c2c4a57f824a2a2d97d67252440a3925ebdc1335"
+        }
+      ],
+      "name": "account",
+      "output": "10410fea5a6cba4a6b6079f9d804c0daf23980a360d009048ecb36118036c28e",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Get the user account information."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Arguments"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `user`: [Identity] The user id to retrive info."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Returns"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * [Account] - An user account information."
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [],
+      "name": "config",
+      "output": "3e7a6a4509a70e0325e037e535f071faad89d32fab90574bdc42fdd96ebba3d5",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Get contract configurables."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Returns"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * [AssetId, u32, AssetId, u32, Option<Identity>, u32, u32)] - The BASE_ASSET, BASE_ASSET_DECIMALS,"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            "     QUOTE_ASSET, QUOTE_ASSET_DECIMALS, OWNER.owner(), PRICE_DECIMALS, VERSION."
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [],
+      "name": "get_epoch",
+      "output": "41bd1a98f0a59642d8f824c805b798a5f268d1f7d05808eb05c4189c493f1be0",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Get the epoch start time and its duration."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Returns"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * [u64, u64] - An epoch and duration."
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [],
+      "name": "matcher_fee",
+      "output": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Get the matcher fee in `QUOTE_ASSET` units."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Returns"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * [u64] - A matcher fee."
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [],
+      "name": "min_order_size",
+      "output": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Get the minimum order size in BASE_ASSET units."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Returns"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * [u64] - A minimum order type size."
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "order",
+          "concreteTypeId": "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b"
+        }
+      ],
+      "name": "order",
+      "output": "af7345d115f618be19cd709b6734bdd5fd52bb0c27617a74a9564e4cea947d01",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Get the order info."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Arguments"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `order`: [b256] The order_id."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Returns"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * [Option<Order>] - The Some<Order> struct of found by id otherwise None."
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "order_id",
+          "concreteTypeId": "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b"
+        }
+      ],
+      "name": "order_change_info",
+      "output": "742fbfc9dbc675c4bb942c1c3d87581f5da5c5a8b0fc21e0d1f8d873328d5e5a",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Get order change list."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Arguments"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `order_id`: [b256] The order id."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Returns"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * [Vec<OrderChangeInfo>] - The vector of order change info."
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "order_type",
+          "concreteTypeId": "87d371fb295bf9d2ae8ded087940e8d0b097ddef40d8499ac650a22985df2682"
+        },
+        {
+          "name": "owner",
+          "concreteTypeId": "ab7cd04e05be58e3fc15d424c2c4a57f824a2a2d97d67252440a3925ebdc1335"
+        },
+        {
+          "name": "price",
+          "concreteTypeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "block_height",
+          "concreteTypeId": "d7649d428b9ff33d188ecbf38a7e4d8fd167fa01b2e10fe9a8f9308e52f1d7cc"
+        },
+        {
+          "name": "order_height",
+          "concreteTypeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        }
+      ],
+      "name": "order_id",
+      "output": "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Generate order id."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Arguments"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `order_type`: [OrderType] The order type."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `owner`: [Identity] The order owner."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `price`: [u64] The order price."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `block_height`: [u32] The order submission block number."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `order_height`: [u64] The order height (auto-incremented number)."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Returns"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * [b256] - The order id."
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [],
+      "name": "protocol_fee",
+      "output": "4b03eb3d5d8751745804ec649d33055ca43456407d3991177f51a1397cd4da50",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Get the protocol fee array."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Returns"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * [Vec<ProtocolFee>] - A protocol fee vector."
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "user",
+          "concreteTypeId": "ab7cd04e05be58e3fc15d424c2c4a57f824a2a2d97d67252440a3925ebdc1335"
+        }
+      ],
+      "name": "protocol_fee_user",
+      "output": "41bd1a98f0a59642d8f824c805b798a5f268d1f7d05808eb05c4189c493f1be0",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Get the user protocol fee of its current volume."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Arguments"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `user`: [Identity] The user id to retrive info."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Returns"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * [(u64, u64)] - A maker and taker user fee percent (10_000 == 100%)."
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "amount",
+          "concreteTypeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"
+        },
+        {
+          "name": "user",
+          "concreteTypeId": "ab7cd04e05be58e3fc15d424c2c4a57f824a2a2d97d67252440a3925ebdc1335"
+        }
+      ],
+      "name": "protocol_fee_user_amount",
+      "output": "41bd1a98f0a59642d8f824c805b798a5f268d1f7d05808eb05c4189c493f1be0",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Get the user protocol fee of its current volume and of amount."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Arguments"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `amount`: [u64] The amount of the order in `QUOTE_ASSET` units."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `user`: [Identity] The user id to retrive info."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Returns"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * [(u64, u64)] - A maker and taket user fee amount of `amount`."
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [],
+      "name": "store_order_change_info",
+      "output": "b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Get order change info flag."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Returns"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * [bool] - The True if order change info stores otherwise false."
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "user",
+          "concreteTypeId": "ab7cd04e05be58e3fc15d424c2c4a57f824a2a2d97d67252440a3925ebdc1335"
+        }
+      ],
+      "name": "user_order_height",
+      "output": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Get user order height."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Arguments"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `user`: [Identity] The user identity."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Returns"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * [u64] - The user order height."
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "user",
+          "concreteTypeId": "ab7cd04e05be58e3fc15d424c2c4a57f824a2a2d97d67252440a3925ebdc1335"
+        }
+      ],
+      "name": "user_orders",
+      "output": "32559685d0c9845f059bf9d472a0a38cf77d36c23dfcffe5489e86a65cdd9198",
+      "attributes": [
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " Get user order list."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Arguments"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * `user`: [Identity] The user identity."
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " ### Returns"
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            ""
+          ]
+        },
+        {
+          "name": "doc-comment",
+          "arguments": [
+            " * [Vec<b256>] - The vector of user order ids."
+          ]
+        },
+        {
+          "name": "storage",
+          "arguments": [
+            "read"
+          ]
+        }
+      ]
     }
   ],
   "loggedTypes": [
+    {
+      "logId": "5557842539076482339",
+      "concreteTypeId": "4d216c57b3357523323f59401c7355785b41bdf832f6e1106272186b94797038"
+    },
+    {
+      "logId": "999626799421532101",
+      "concreteTypeId": "0ddf63471f7b27c54c55fd3d75fe37594fb1b07a496dba57eb8fc56497e9d9c1"
+    },
+    {
+      "logId": "487470194140633944",
+      "concreteTypeId": "06c3d78f1057db580eb36dc2fc04ebd7407f4a4e954417b6761844fe38ee1a5d"
+    },
+    {
+      "logId": "6987413341206404123",
+      "concreteTypeId": "60f84769b56edc1bfc54f08c4393c6d30612549f4952a1b7d4e08b1eeced9039"
+    },
+    {
+      "logId": "15329379498675066312",
+      "concreteTypeId": "d4bce56f7daed5c8d2b62c0f0745c18d9fdd0b2f0dafecf85ebdd9c7378b5c63"
+    },
+    {
+      "logId": "14676650066558707344",
+      "concreteTypeId": "cbadef79adf1e6906cac7404759d7d55a9eaa9f1e6d479ecbbfa76f727486081"
+    },
+    {
+      "logId": "4038555509566971562",
+      "concreteTypeId": "380bd4d6b96f9eaa3a3d8db8bb9753399443715fb3fd65460cc28d6ab4d3659b"
+    },
+    {
+      "logId": "16169998749359270814",
+      "concreteTypeId": "e0676030b211eb9ed3b9837fc852a3cf3b6533a31533dd3ab957e8b3f6e77dd3"
+    },
+    {
+      "logId": "12590297951544646752",
+      "concreteTypeId": "aeb9b947da259c606e2c25be1150e2150f609fe5f2ec593c9a7ebb771e4e7065"
+    },
+    {
+      "logId": "7812135309850120461",
+      "concreteTypeId": "6c6a47ac80e7110dd8666e169f0fffe2d1378df88cf8960bb9dfe14a84ac3495"
+    },
+    {
+      "logId": "5744192922338635869",
+      "concreteTypeId": "4fb77907614eb05d769b487a16469bfaac5278323bc54bddccd790cc4e00428e"
+    },
+    {
+      "logId": "18305104039093136274",
+      "concreteTypeId": "fe08cb2392b6eb92ee6b7868e2877ca0630f87f543acc63897f7d806229379d5"
+    },
+    {
+      "logId": "15838754841496526215",
+      "concreteTypeId": "dbce8f9c6be61d876835d7a0b5794cfc25fc3b171ba3748ec4c8f2e7ce426cf6"
+    },
     {
       "logId": "4571204900286667806",
       "concreteTypeId": "3f702ea3351c9c1ece2b84048006c8034a24cbc2bad2e740d0412b4172951d3d"
     },
     {
-      "logId": "12854673644547923665",
-      "concreteTypeId": "b264f9929edaded198c8f74b64111f328a2b6d8aed859ae00d025e0f17a2a0f8"
+      "logId": "649664855397936830",
+      "concreteTypeId": "090412be710caebee4e019479841ea0100912819a3e1c52ba39b1faa7b778c83"
     },
     {
-      "logId": "16526329487357911494",
-      "concreteTypeId": "e559511bc70821c6e5333f8fe558060c41a83e157902640537145a83fe39911c"
+      "logId": "8449561757438215509",
+      "concreteTypeId": "7542dfa693d485551511758498255bf7e73c2835604bdffc22262d0ea2326c16"
     },
     {
-      "logId": "8687802410378175690",
-      "concreteTypeId": "78914643255fa4cad1546556baf0eb607cc71b603273e23c79caef436311a897"
+      "logId": "10772010129570911307",
+      "concreteTypeId": "957dde23e9fbd44b1bada18eae8b84f6d868be2fe55b721ce24b54cdcdafda79"
+    },
+    {
+      "logId": "3792793406740277287",
+      "concreteTypeId": "34a2b5822332a827c494d0a8cfc543cb5e50d6e02ac23d9886c94f9a7572d18c"
+    },
+    {
+      "logId": "10918704871079408520",
+      "concreteTypeId": "9787083b0003f388ec6bf30609ff6a10c76fada67314a162841a445b07a17168"
+    },
+    {
+      "logId": "12551359631505241447",
+      "concreteTypeId": "ae2f6315bc0c35670e520b82df972bee3ba559d15fb2ef3864cfe265f3802fb6"
     }
   ],
   "messagesTypes": [],
   "configurables": [
     {
+      "name": "BASE_ASSET",
+      "concreteTypeId": "c0710b6731b1dd59799cf6bef33eee3b3b04a2e40e80a0724090215bbf2ca974",
+      "offset": 102384
+    },
+    {
+      "name": "BASE_ASSET_DECIMALS",
+      "concreteTypeId": "d7649d428b9ff33d188ecbf38a7e4d8fd167fa01b2e10fe9a8f9308e52f1d7cc",
+      "offset": 102416
+    },
+    {
+      "name": "QUOTE_ASSET",
+      "concreteTypeId": "c0710b6731b1dd59799cf6bef33eee3b3b04a2e40e80a0724090215bbf2ca974",
+      "offset": 102480
+    },
+    {
+      "name": "QUOTE_ASSET_DECIMALS",
+      "concreteTypeId": "d7649d428b9ff33d188ecbf38a7e4d8fd167fa01b2e10fe9a8f9308e52f1d7cc",
+      "offset": 102512
+    },
+    {
       "name": "OWNER",
       "concreteTypeId": "192bc7098e2fe60635a9918afb563e4e5419d386da2bdbf0d716b4bc8549802c",
-      "offset": 19856
+      "offset": 102424
+    },
+    {
+      "name": "PRICE_DECIMALS",
+      "concreteTypeId": "d7649d428b9ff33d188ecbf38a7e4d8fd167fa01b2e10fe9a8f9308e52f1d7cc",
+      "offset": 102472
     },
     {
       "name": "VERSION",
       "concreteTypeId": "d7649d428b9ff33d188ecbf38a7e4d8fd167fa01b2e10fe9a8f9308e52f1d7cc",
-      "offset": 19904
+      "offset": 102520
     }
   ]
 }
