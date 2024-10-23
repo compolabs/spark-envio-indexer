@@ -13,8 +13,12 @@ Market.TradeOrderEvent.handlerWithLoader({
 	loader: async ({ event, context }) => {
 		const seller = await context.User.get(event.params.order_seller.payload.bits)
 		const buyer = await context.User.get(event.params.order_buyer.payload.bits)
-
+		let user
+		if (event.params.order_seller.payload.bits === event.params.order_buyer.payload.bits) {
+			user = seller
+		}
 		return {
+			user,
 			seller,
 			buyer,
 			// Fetch balances for both the seller and the buyer in the market (srcAddress)
@@ -64,9 +68,9 @@ Market.TradeOrderEvent.handlerWithLoader({
 		const buyerBalance = loaderReturn.buyerBalance;
 		const seller = loaderReturn.seller;
 		const buyer = loaderReturn.buyer;
-
+		const user = loaderReturn.user;
 		// Process the buy order, reducing the amount by the trade size and updating its status
-		if (buyOrder) {
+		if (buyOrder && sellOrder) {
 			const updatedBuyAmount = buyOrder.amount - event.params.trade_size;
 			const isBuyOrderClosed = updatedBuyAmount === 0n;
 
@@ -79,7 +83,7 @@ Market.TradeOrderEvent.handlerWithLoader({
 			};
 			context.Order.set(updatedBuyOrder);
 
-			if (buyer && isBuyOrderClosed) {
+			if (buyer && buyer !== seller && isBuyOrderClosed) {
 				const updatedBuyer: User = {
 					...buyer,
 					active: buyer.active - 1,
@@ -88,8 +92,58 @@ Market.TradeOrderEvent.handlerWithLoader({
 				};
 				context.User.set(updatedBuyer);
 			}
+
+			const updatedSellAmount = sellOrder.amount - event.params.trade_size;
+			const isSellOrderClosed = updatedSellAmount === 0n;
+
+			// Update the sell order status to "Closed" if fully executed, otherwise "Active"
+			const updatedSellOrder: Order = {
+				...sellOrder,
+				amount: updatedSellAmount,
+				status: isSellOrderClosed ? "Closed" : "Active",
+				timestamp: getISOTime(event.block.time),
+			};
+			context.Order.set(updatedSellOrder);
+
+			if (seller && buyer !== seller && isSellOrderClosed) {
+				const updatedSeller: User = {
+					...seller,
+					active: seller.active - 1,
+					closed: seller.closed + 1,
+					timestamp: getISOTime(event.block.time),
+				};
+				context.User.set(updatedSeller);
+			}
+
+
+			if (user && isSellOrderClosed && isBuyOrderClosed) {
+				const updatedUser: User = {
+					...user,
+					active: user.active - 2,
+					closed: user.closed + 2,
+					timestamp: getISOTime(event.block.time),
+				};
+				context.User.set(updatedUser);
+			} else if (user && isSellOrderClosed) {
+				const updatedUser: User = {
+					...user,
+					active: user.active - 1,
+					closed: user.closed + 1,
+					timestamp: getISOTime(event.block.time),
+				};
+				context.User.set(updatedUser);
+			} else if (user && isBuyOrderClosed) {
+				const updatedUser: User = {
+					...user,
+					active: user.active - 1,
+					closed: user.closed + 1,
+					timestamp: getISOTime(event.block.time),
+				};
+				context.User.set(updatedUser);
+			}
+
 		} else {
-			context.log.error(`Cannot find buy order ${event.params.base_buy_order_id}`);
+			context.log.error(`TRADE Cannot find order ${event.params.base_buy_order_id}`);
 		}
 
 		// Process the active buy order, reducing the amount by the trade size and updating its status
@@ -116,31 +170,31 @@ Market.TradeOrderEvent.handlerWithLoader({
 		}
 
 		// Process the sell order similarly, updating its amount and status
-		if (sellOrder) {
-			const updatedSellAmount = sellOrder.amount - event.params.trade_size;
-			const isSellOrderClosed = updatedSellAmount === 0n;
+		// if (sellOrder) {
+		// 	const updatedSellAmount = sellOrder.amount - event.params.trade_size;
+		// 	const isSellOrderClosed = updatedSellAmount === 0n;
 
-			// Update the sell order status to "Closed" if fully executed, otherwise "Active"
-			const updatedSellOrder: Order = {
-				...sellOrder,
-				amount: updatedSellAmount,
-				status: isSellOrderClosed ? "Closed" : "Active",
-				timestamp: getISOTime(event.block.time),
-			};
-			context.Order.set(updatedSellOrder);
+		// 	// Update the sell order status to "Closed" if fully executed, otherwise "Active"
+		// 	const updatedSellOrder: Order = {
+		// 		...sellOrder,
+		// 		amount: updatedSellAmount,
+		// 		status: isSellOrderClosed ? "Closed" : "Active",
+		// 		timestamp: getISOTime(event.block.time),
+		// 	};
+		// 	context.Order.set(updatedSellOrder);
 
-			if (seller && isSellOrderClosed) {
-				const updatedSeller: User = {
-					...seller,
-					active: seller.active - 1,
-					closed: seller.closed + 1,
-					timestamp: getISOTime(event.block.time),
-				};
-				context.User.set(updatedSeller);
-			}
-		} else {
-			context.log.error(`Cannot find sell order ${event.params.base_sell_order_id}`);
-		}
+		// 	if (seller && isSellOrderClosed) {
+		// 		const updatedSeller: User = {
+		// 			...seller,
+		// 			active: seller.active - 1,
+		// 			closed: seller.closed + 1,
+		// 			timestamp: getISOTime(event.block.time),
+		// 		};
+		// 		context.User.set(updatedSeller);
+		// 	}
+		// } else {
+		// 	context.log.error(`Cannot find sell order ${event.params.base_sell_order_id}`);
+		// }
 
 		// Process the active sell order, reducing the amount by the trade size and updating its status
 		if (activeSellOrder) {
