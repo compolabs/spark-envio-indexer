@@ -20,6 +20,6 @@ export function updateUserBalance(eventName: string, context: handlerContext, ev
 		};
 		context.Balance.set(updatedBalance);
 	} else {
-		context.log.error(`${eventName} no balance ${getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)} for user ${user}`);
+		context.log.error(`${eventName} NO BALANCE ${getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)} FOR USER ${user}`);
 	}
 }

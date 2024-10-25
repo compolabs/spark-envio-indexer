@@ -7,7 +7,7 @@ networks:
       url: https://fuel-testnet.hypersync.xyz
     contracts:
       - name: Registry
-        address: 0xd737149903a8b50d44111ae7728cbd14952faaa78718996d80a995cdf03a2ba5
+        address: 0x0c26b7134516773469cd02030a783e43776d1fd26e0698b51af3cef4938e2925
         abi_file_path: ./abis/registry.json
         handler: ./src/OrderBookHandlers.ts
         events:
