@@ -20,6 +20,18 @@ export function updateUserBalance(eventName: string, context: handlerContext, ev
 		};
 		context.Balance.set(updatedBalance);
 	} else {
-		context.log.error(`${eventName} NO BALANCE ${getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)} FOR USER ${user}`);
+		if (eventName === "WITHDRAW_TO.") {
+			const balance = {
+				id: getHash(`${user}-${event.srcAddress}`),
+				user,
+				market: event.params.market.bits,
+				baseAmount,
+				quoteAmount,
+				timestamp: getISOTime(time),
+			};
+			context.Balance.set(balance);
+		} else {
+			context.log.error(`${eventName} NO BALANCE ${getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)} FOR USER ${user}`);
+		}
 	}
 }
