@@ -1,13 +1,11 @@
 name: OrderBook
 ecosystem: fuel
 networks:
-  - id: 0
+  - id: 9889
     start_block: 0
-    hyperfuel_config:
-      url: https://fuel-testnet1.hypersync.xyz
     contracts:
       - name: Registry
-        address: 0x0c26b7134516773469cd02030a783e43776d1fd26e0698b51af3cef4938e2925
+        address: 0xbb91b7f9d31ee562b24e35d756ce20913f9752600582f51008c63b2d3792926b
         abi_file_path: ./abis/registry.json
         handler: ./src/OrderBookHandlers.ts
         events:
