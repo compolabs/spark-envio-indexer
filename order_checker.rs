@@ -10,7 +10,7 @@ use spark_market_sdk::SparkMarketContract;
 use std::env;
 use std::str::FromStr;
 
-const ORDER_ID: &str = "0x481fb6b7e4e404ccb528dde46ee8347484c055e0b0c0bb1d18bf6b3a5c947c4c";
+const ORDER_ID: &str = "0x94a9a3cc7ceac8b2fdcae0bbcd79c1137ddd9534b0e606bde321e63798646eb0";
 
 #[derive(Debug, Serialize)]
 struct OrderChangeInfoWithTxId {
