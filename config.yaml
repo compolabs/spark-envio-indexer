@@ -4,7 +4,7 @@ networks:
   - id: 0
     start_block: 0
     hyperfuel_config:
-      url: https://fuel-testnet.hypersync.xyz
+      url: https://fuel-testnet1.hypersync.xyz
     contracts:
       - name: Registry
         address: 0x0c26b7134516773469cd02030a783e43776d1fd26e0698b51af3cef4938e2925
