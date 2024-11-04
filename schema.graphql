@@ -43,6 +43,7 @@ type Order {
   status: OrderStatus! @index
   initialAmount: BigInt!
   timestamp: String!
+  matchedCount: Int!
 }
 
 type ActiveSellOrder {
@@ -56,6 +57,7 @@ type ActiveSellOrder {
   status: OrderStatus! @index
   initialAmount: BigInt!
   timestamp: String!
+  matchedCount: Int!
 }
 
 type ActiveBuyOrder {
@@ -69,6 +71,7 @@ type ActiveBuyOrder {
   status: OrderStatus! @index
   initialAmount: BigInt!
   timestamp: String!
+  matchedCount: Int!
 }
 
 type CancelOrderEvent {

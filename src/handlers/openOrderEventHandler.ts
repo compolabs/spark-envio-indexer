@@ -39,6 +39,7 @@ Market.OpenOrderEvent.handlerWithLoader({
 		// Construct the Order object and save in context for tracking
 		const order: Order = {
 			...openOrderEvent,
+			matchedCount: 0,
 			id: event.params.order_id,
 			initialAmount: event.params.amount,
 			status: "Active",

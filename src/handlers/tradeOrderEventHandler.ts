@@ -78,6 +78,7 @@ Market.TradeOrderEvent.handlerWithLoader({
 			// Update the buy order status to "Closed" if fully executed, otherwise "Active"
 			const updatedBuyOrder: Order = {
 				...buyOrder,
+				matchedCount: buyOrder.matchedCount + 1,
 				amount: updatedBuyAmount,
 				status: isBuyOrderClosed ? "Closed" : "Active",
 				timestamp: getISOTime(event.block.time),
@@ -101,6 +102,7 @@ Market.TradeOrderEvent.handlerWithLoader({
 			// Update the sell order status to "Closed" if fully executed, otherwise "Active"
 			const updatedSellOrder: Order = {
 				...sellOrder,
+				matchedCount: sellOrder.matchedCount + 1,
 				amount: updatedSellAmount,
 				status: isSellOrderClosed ? "Closed" : "Active",
 				timestamp: getISOTime(event.block.time),
@@ -156,6 +158,7 @@ Market.TradeOrderEvent.handlerWithLoader({
 
 			const updatedActiveBuyOrder: ActiveBuyOrder = {
 				...activeBuyOrder,
+				matchedCount: activeBuyOrder.matchedCount + 1,
 				amount: updatedActiveBuyAmount,
 				status: isActiveBuyOrderClosed ? "Closed" : "Active",
 				timestamp: getISOTime(event.block.time),
@@ -179,6 +182,7 @@ Market.TradeOrderEvent.handlerWithLoader({
 
 			const updatedActiveSellOrder: ActiveSellOrder = {
 				...activeSellOrder,
+				matchedCount: activeSellOrder.matchedCount + 1,
 				amount: updatedActiveSellAmount,
 				status: isActiveSellOrderClosed ? "Closed" : "Active",
 				timestamp: getISOTime(event.block.time),
