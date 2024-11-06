@@ -1,17 +1,16 @@
 import { type CancelOrderEvent, type Order, Market, type User } from "generated";
-import { getISOTime, updateUserBalance } from "../utils";
+import { getISOTime } from "../utils";
 import { getHash } from "../utils";
 import { nanoid } from "nanoid";
 
 // Define a handler for the CancelOrderEvent within a specific market
 Market.CancelOrderEvent.handlerWithLoader({
-	// Loader function to pre-fetch the user's balance and order details for the specified market
+	// Loader function to pre-fetch the user and order details for the specified market
 	loader: async ({ event, context }) => {
 		const user = await context.User.get(event.params.user.payload.bits);
 		const order = await context.Order.get(event.params.order_id);
 		return {
 			user,
-			balance: await context.Balance.get(getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)),
 			order,
 			activeOrder: order ? order.orderType === "Buy"
 				? await context.ActiveBuyOrder.get(event.params.order_id)
@@ -38,7 +37,6 @@ Market.CancelOrderEvent.handlerWithLoader({
 		// Retrieve the order and balance from the loader's return value
 		const order = loaderReturn.order;
 		const user = loaderReturn.user;
-		const balance = loaderReturn.balance;
 		const activeOrder = loaderReturn.activeOrder;
 
 		// Remove the order from active orders depending on its type (Buy/Sell)
@@ -76,8 +74,5 @@ Market.CancelOrderEvent.handlerWithLoader({
 		} else {
 			context.log.error(`CANCEL. NO ORDER ${event.params.order_id}`);
 		}
-
-		// If balance exists, update it with the new base and quote amounts
-		updateUserBalance("CANCEL.", context, event, balance, event.params.balance.liquid.base, event.params.balance.liquid.quote, event.params.user.payload.bits, event.block.time);
 	},
 });

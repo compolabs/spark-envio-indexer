@@ -2,7 +2,7 @@ import {
 	Market, type TradeOrderEvent, type Order, type ActiveBuyOrder, type ActiveSellOrder,
 	type User
 } from "generated";
-import { getISOTime, updateUserBalance } from "../utils";
+import { getISOTime } from "../utils";
 import { getHash } from "../utils";
 import { nanoid } from "nanoid";
 
@@ -21,10 +21,6 @@ Market.TradeOrderEvent.handlerWithLoader({
 			user,
 			seller,
 			buyer,
-			// Fetch balances for both the seller and the buyer in the market (srcAddress)
-			sellerBalance: await context.Balance.get(getHash(`${event.params.order_seller.payload.bits}-${event.srcAddress}`)),
-			buyerBalance: await context.Balance.get(getHash(`${event.params.order_buyer.payload.bits}-${event.srcAddress}`)),
-
 			// Fetch both the buy and sell orders using their respective order IDs
 			sellOrder: await context.Order.get(event.params.base_sell_order_id),
 			buyOrder: await context.Order.get(event.params.base_buy_order_id),
@@ -63,9 +59,6 @@ Market.TradeOrderEvent.handlerWithLoader({
 		const activeBuyOrder = loaderReturn.activeBuyOrder;
 		const activeSellOrder = loaderReturn.activeSellOrder;
 
-		// Retrieve the balances for both the seller and the buyer from the loader's return value
-		const sellerBalance = loaderReturn.sellerBalance;
-		const buyerBalance = loaderReturn.buyerBalance;
 		const seller = loaderReturn.seller;
 		const buyer = loaderReturn.buyer;
 		const user = loaderReturn.user;
@@ -194,9 +187,5 @@ Market.TradeOrderEvent.handlerWithLoader({
 		} else {
 			context.log.error(`TRADE. NO ACTIVE SELL ORDER ${event.params.base_sell_order_id}`);
 		}
-
-		// If balance exist, update the buyer and seller balance with the new base and quote amounts
-		updateUserBalance("TRADE.", context, event, buyerBalance, event.params.b_balance.liquid.base, event.params.b_balance.liquid.quote, event.params.order_buyer.payload.bits, event.block.time);
-		updateUserBalance("TRADE.", context, event, sellerBalance, event.params.s_balance.liquid.base, event.params.s_balance.liquid.quote, event.params.order_seller.payload.bits, event.block.time);
 	},
 });

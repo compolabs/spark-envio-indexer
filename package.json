@@ -1,6 +1,6 @@
 {
   "name": "spark-indexer",
-  "version": "0.6.3-mainnet",
+  "version": "0.6.3-mainnet-no-balances-no-registry-testing-markets",
   "scripts": {
     "clean": "tsc --clean",
     "build": "tsc --build",
