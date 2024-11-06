@@ -1,15 +1,14 @@
 import { type OpenOrderEvent, type Order, Market, type User } from "generated";
-import { getISOTime, updateUserBalance } from "../utils";
+import { getISOTime } from "../utils";
 import { getHash } from "../utils";
 import { nanoid } from "nanoid";
 
 // Define a handler for the OpenOrderEvent within a specific market
 Market.OpenOrderEvent.handlerWithLoader({
-	// Loader function to pre-fetch the user's balance data
+	// Loader function to pre-fetch the user
 	loader: async ({ event, context }) => {
-		// Fetch the balance by generating a unique hash for the user and market (srcAddress)
 		const user = await context.User.get(event.params.user.payload.bits);
-		return { user, balance: await context.Balance.get(getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)) };
+		return { user };
 	},
 
 	// Handler function that processes the evnet and updates the user's order and balance data
@@ -32,8 +31,7 @@ Market.OpenOrderEvent.handlerWithLoader({
 		};
 		context.OpenOrderEvent.set(openOrderEvent);
 
-		// Retrieve the user's balance from the loader's return value
-		const balance = loaderReturn.balance;
+		// Retrieve the user from the loader's return value
 		const user = loaderReturn.user;
 
 		// Construct the Order object and save in context for tracking
@@ -62,8 +60,5 @@ Market.OpenOrderEvent.handlerWithLoader({
 		} else if (event.params.order_type.case === "Sell") {
 			context.ActiveSellOrder.set(order);
 		}
-
-		// If balance exists, update it with the new base and quote amounts
-		updateUserBalance("OPEN.", context, event, balance, event.params.balance.liquid.base, event.params.balance.liquid.quote, event.params.user.payload.bits, event.block.time);
 	},
 });

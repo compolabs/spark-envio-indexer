@@ -135,20 +135,3 @@ type WithdrawToMarketEvent {
   timestamp: String!
   txId: String! @index
 }
-
-type Balance {
-  id: ID!
-  user: String! @index
-  market: String! @index
-  baseAmount: BigInt!
-  quoteAmount: BigInt!
-  timestamp: String!
-}
-
-type MarketRegisterEvent {
-  id: ID!
-  baseAsset: String! @index
-  quoteAsset: String! @index
-  timestamp: String!
-  txId: String! @index
-}

@@ -1,6 +1,6 @@
 {
   "name": "spark-indexer",
-  "version": "0.6.3-mainnet",
+  "version": "0.6.4-mainnet-no-balances-no-registry-real-money",
   "scripts": {
     "clean": "tsc --clean",
     "build": "tsc --build",
@@ -24,7 +24,7 @@
     "typescript": "5.2.2"
   },
   "dependencies": {
-    "envio": "2.7.2",
+    "envio": "2.7.3",
     "nanoid": "3.3.7"
   },
   "optionalDependencies": {
