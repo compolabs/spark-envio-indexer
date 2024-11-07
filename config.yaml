@@ -16,3 +16,4 @@ networks:
           - name: OpenOrderEvent
           - name: CancelOrderEvent
           - name: TradeOrderEvent
+            
