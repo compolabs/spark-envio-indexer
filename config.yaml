@@ -1,12 +1,15 @@
 name: OrderBook
 ecosystem: fuel
 networks:
-  - id: 9889
+  - id: 0
     start_block: 0
+    hyperfuel_config:
+      url: https://fuel-testnet.hypersync.xyz
     contracts:
       - name: Market
         address:
-          - 0xfe2c524ad8e088f33d232a45dbea43e792861640b71aa1814b30506bf8430ee5 #ETH-USDC
+          - 0x944a3d62e65f3aefa7ac4a065eb9390a98806ef254aaece6df239ee78e6c2998
+          - 0xc5ed0d9b17beedd1c6c10a84bb496f12a5082aa3ce2ad55630bbcac22c64fcf4
         abi_file_path: ./abis/market.json
         handler: ./src/OrderBookHandlers.ts
         events:
