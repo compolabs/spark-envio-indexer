@@ -7,6 +7,7 @@ networks:
       - name: Market
         address:
           - 0xfe2c524ad8e088f33d232a45dbea43e792861640b71aa1814b30506bf8430ee5 #ETH-USDC
+          - 0xdafe498b31f24ea5577055e86bf77e96bcba2c39a7ae47abaa819c303a45a352 #USDC-USDT
         abi_file_path: ./abis/market.json
         handler: ./src/OrderBookHandlers.ts
         events:
