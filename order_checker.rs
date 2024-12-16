@@ -10,7 +10,7 @@ use spark_market_sdk::SparkMarketContract;
 use std::env;
 use std::str::FromStr;
 
-const ORDER_ID: &str = "0xc32520c590b0bc24b6878b0ca41beffa47629eff028e015c2e0c473b42c63a77";
+const ORDER_ID: &str = "0xaad32b2dd0537499f78abbf21089ab2630abde10d5f61dca4f2eb8f51014da01";
 
 #[derive(Debug, Serialize)]
 struct OrderChangeInfoWithTxId {
@@ -24,7 +24,7 @@ struct OrderChangeInfoWithTxId {
 
 pub(crate) async fn setup() -> Result<WalletUnlocked> {
     // Connect to the provider
-    let provider = Provider::connect("testnet.fuel.network").await?;
+    let provider = Provider::connect("mainnet.fuel.network").await?;
 
     // Try to get the private key from environment
     if let Ok(private_key) = env::var("PRIVATE_KEY") {

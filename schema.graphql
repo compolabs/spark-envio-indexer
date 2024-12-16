@@ -9,6 +9,14 @@ enum OrderStatus {
   Canceled
 }
 
+type User {
+  id: ID!
+  active: Int!
+  closed: Int!
+  canceled: Int!
+  timestamp: String!
+}
+
 type OpenOrderEvent {
   id: ID!
   market: String! @index
@@ -103,7 +111,6 @@ type DepositEvent {
   timestamp: String!
   txId: String! @index
 }
-
 type WithdrawEvent {
   id: ID!
   market: String! @index
@@ -125,23 +132,6 @@ type WithdrawToMarketEvent {
   asset: String! @index
   baseAmount: BigInt!
   quoteAmount: BigInt! 
-  timestamp: String!
-  txId: String! @index
-}
-
-type Balance {
-  id: ID!
-  user: String! @index
-  market: String! @index
-  baseAmount: BigInt!
-  quoteAmount: BigInt!
-  timestamp: String!
-}
-
-type MarketRegisterEvent {
-  id: ID!
-  baseAsset: String! @index
-  quoteAsset: String! @index
   timestamp: String!
   txId: String! @index
 }

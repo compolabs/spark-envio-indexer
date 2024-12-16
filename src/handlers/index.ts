@@ -4,4 +4,3 @@ import "./tradeOrderEventHandler";
 import "./withdrawEventHandler";
 import "./withdrawToMarketEventHandler";
 import "./depositEventHandler";
-import "./marketRegisterEventHandler";

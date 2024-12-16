@@ -1,25 +1,16 @@
-import { type CancelOrderEvent, type Order, Market } from "generated";
-import { getISOTime, updateUserBalance } from "../utils";
+import { type CancelOrderEvent, type Order, Market, type User } from "generated";
+import { getISOTime } from "../utils";
 import { getHash } from "../utils";
 import { nanoid } from "nanoid";
 
 // Define a handler for the CancelOrderEvent within a specific market
 Market.CancelOrderEvent.handlerWithLoader({
-	// Loader function to pre-fetch the user's balance and order details for the specified market
+	// Loader function to pre-fetch the user and order details for the specified market
 	loader: async ({ event, context }) => {
-
-		const baseEventId = event.transaction.id;
-		let eventId = baseEventId;
-		const existingEvent = await context.CancelOrderEvent.get(baseEventId);
-
-		if (existingEvent) {
-			eventId = getHash(`${event.transaction.id}-${nanoid()}`);
-			context.log.info(`Using unique eventId in CANCEL: ${eventId}`);
-		}
+		const user = await context.User.get(event.params.user.payload.bits);
 		const order = await context.Order.get(event.params.order_id);
 		return {
-			eventId,
-			balance: await context.Balance.get(getHash(`${event.params.user.payload.bits}-${event.srcAddress}`)),
+			user,
 			order,
 			activeOrder: order ? order.orderType === "Buy"
 				? await context.ActiveBuyOrder.get(event.params.order_id)
@@ -32,7 +23,7 @@ Market.CancelOrderEvent.handlerWithLoader({
 	handler: async ({ event, context, loaderReturn }) => {
 		// Construct the cancelOrderEvent object and save in context for tracking
 		const cancelOrderEvent: CancelOrderEvent = {
-			id: loaderReturn.eventId,
+			id: getHash(`${event.transaction.id}-${nanoid()}`),
 			market: event.srcAddress,
 			user: event.params.user.payload.bits,
 			orderId: event.params.order_id,
@@ -45,7 +36,7 @@ Market.CancelOrderEvent.handlerWithLoader({
 
 		// Retrieve the order and balance from the loader's return value
 		const order = loaderReturn.order;
-		const balance = loaderReturn.balance;
+		const user = loaderReturn.user;
 		const activeOrder = loaderReturn.activeOrder;
 
 		// Remove the order from active orders depending on its type (Buy/Sell)
@@ -56,7 +47,7 @@ Market.CancelOrderEvent.handlerWithLoader({
 				context.ActiveSellOrder.deleteUnsafe(event.params.order_id);
 			}
 		} else {
-			context.log.error(`Cannot find an active order ${event.params.order_id}`);
+			context.log.error(`CANCEL. NO ACTIVE ORDER ${event.params.order_id}`);
 		}
 
 		// If the order exists, update its status to "Canceled" and reset its amount to 0
@@ -68,11 +59,20 @@ Market.CancelOrderEvent.handlerWithLoader({
 				timestamp: getISOTime(event.block.time),
 			};
 			context.Order.set(updatedOrder);
-		} else {
-			context.log.error(`Cannot find an order ${event.params.order_id}`);
-		}
 
-		// If balance exists, update it with the new base and quote amounts
-		updateUserBalance("Cancel Event", context, event, balance, event.params.balance.liquid.base, event.params.balance.liquid.quote, event.params.user.payload.bits, event.block.time);
+			if (user) {
+				const updatedUser: User = {
+					...user,
+					active: user.active - 1,
+					canceled: user.canceled + 1,
+					timestamp: getISOTime(event.block.time),
+				};
+				context.User.set(updatedUser);
+			} else {
+				context.log.error(`CANCEL. NO USER ${event.params.user.payload.bits}`);
+			}
+		} else {
+			context.log.error(`CANCEL. NO ORDER ${event.params.order_id}`);
+		}
 	},
 });
