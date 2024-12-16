@@ -3,6 +3,8 @@ ecosystem: fuel
 networks:
   - id: 9889
     start_block: 0
+    hyperfuel_config:
+      url: https://mainnet2.hypersync.xyz
     contracts:
       - name: Market
         address:
@@ -18,8 +20,3 @@ networks:
           - name: OpenOrderEvent
           - name: CancelOrderEvent
           - name: TradeOrderEvent
-            
-            
-            
-
-            
