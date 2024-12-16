@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       envio:
-        specifier: 2.8.2
-        version: 2.8.2(typescript@5.2.2)
+        specifier: 2.11.2
+        version: 2.11.2(typescript@5.2.2)
       nanoid:
         specifier: 3.3.7
         version: 3.3.7
@@ -73,9 +73,6 @@ importers:
       '@rescript/react':
         specifier: 0.12.1
         version: 0.12.1(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
-      '@ryyppy/rescript-promise':
-        specifier: 2.1.0
-        version: 2.1.0
       bignumber.js:
         specifier: 9.1.2
         version: 9.1.2
@@ -126,13 +123,10 @@ importers:
         version: 11.1.3
       rescript-envsafe:
         specifier: 4.2.0
-        version: 4.2.0(rescript-schema@8.2.0(rescript@11.1.3))(rescript@11.1.3)
-      rescript-express:
-        specifier: 0.4.1
-        version: 0.4.1(express@4.19.2)
+        version: 4.2.0(rescript-schema@8.1.0(rescript@11.1.3))(rescript@11.1.3)
       rescript-schema:
-        specifier: 8.2.0
-        version: 8.2.0(rescript@11.1.3)
+        specifier: 8.1.0
+        version: 8.1.0(rescript@11.1.3)
       root:
         specifier: ../.
         version: link:..
@@ -366,9 +360,6 @@ packages:
     peerDependencies:
       react: '>=18.0.0'
       react-dom: '>=18.0.0'
-
-  '@ryyppy/rescript-promise@2.1.0':
-    resolution: {integrity: sha512-+dW6msBrj2Lr2hbEMX+HoWCvN89qVjl94RwbYWJgHQuj8jm/izdPC0YzxgpGoEFdeAEW2sOozoLcYHxT6o5WXQ==}
 
   '@scure/base@1.1.9':
     resolution: {integrity: sha512-8YKhl8GHiNI/pU2VMaofa2Tor7PJRAjwQLBBuilkJ9L5+13yVbC7JO/wS7piioAvPSwR3JKM1IJ/u4xQzbcXKg==}
@@ -707,28 +698,28 @@ packages:
   end-of-stream@1.4.4:
     resolution: {integrity: sha512-+uw1inIHVPQoaVuHzRyXd21icM+cnt4CzD5rW+NC1wjOUSTOs+Te7FOv7AhN7vS9x/oIyhLP5PR1H+phQAHu5Q==}
 
-  envio-darwin-arm64@2.8.2:
-    resolution: {integrity: sha512-6FYf8/6qKRpdh8BuhylYtWsv/xW2Q1vkL9hYgy/VB0K1nMTBIfY83dDYDy2wHYSxg+R6gvawrI66L2bJ4rZn6g==}
+  envio-darwin-arm64@2.11.2:
+    resolution: {integrity: sha512-lsECIU5y3fP0829DEVBiOoii7dknt8QcSsiXBQO3zp6EcrDCAvPJV8WTBgrdAPdWCndAJojTKwLZ8q2uN484mg==}
     cpu: [arm64]
     os: [darwin]
 
-  envio-darwin-x64@2.8.2:
-    resolution: {integrity: sha512-t58SvMyyw3VOXW9CWrVkmxWDO7zACd56x5/sDZWFzcgGd0nOOYMkz2Gzag2VawsqqlZC0iyLQPE4HZiPPCcYZw==}
+  envio-darwin-x64@2.11.2:
+    resolution: {integrity: sha512-AxjMJSoMRiAd6HGKEbkzcO17zDAvZjnn4YIKQeKkWGRlCZ1DL+x78tNFnXGOzMvNWVVHdFemZXw9GeDsu6B8zw==}
     cpu: [x64]
     os: [darwin]
 
-  envio-linux-arm64@2.8.2:
-    resolution: {integrity: sha512-dMBRfCUB9S2fLAi88j3Fd8aftnwA4MGn5/VR1wK7VVtLFCCRKEjtNJqVyclt72UNYBw5wuhLei9U3KSiemAlDQ==}
+  envio-linux-arm64@2.11.2:
+    resolution: {integrity: sha512-MsRSwJAlVbFycZbEaq9gYZ46YGtpW3tyRyohGAVZ7zEUuSQ+RGBGbFK4U9ZdkEjp0h/Kx2S7q/agB3RHBGY8aA==}
     cpu: [arm64]
     os: [linux]
 
-  envio-linux-x64@2.8.2:
-    resolution: {integrity: sha512-u8tyNNbrEM8kbuqAy5YxNTOnpAg72DAY+5S0rxOv47RGAr9fXhmbo1EUBVwlV+Us6wz7gdcTtSId2e55Z/AzeQ==}
+  envio-linux-x64@2.11.2:
+    resolution: {integrity: sha512-8YjdFX2CWUwgn2KV9Zzmca6OMkggbm5axU02F54h+X4HRxxNJmpFlMqqES3bsnFunw/9IPTH1s3oMmY/q9mMrg==}
     cpu: [x64]
     os: [linux]
 
-  envio@2.8.2:
-    resolution: {integrity: sha512-Cg3O/1I78PPF1S3sV3ZRp1RAiaSFX2CKMFLcchbAgF7m1y/w9+OZKY4O0lhFCMNHLwmKyThnhfJI0JWxTEKs3g==}
+  envio@2.11.2:
+    resolution: {integrity: sha512-X132HfCds2iZAYQyftCLmDGtfDR5AJ/JhKFZYVgZpF7OVHDxgOwaou0U6/Aia5mFzxEKfvGdteYgfR8ZYUn4DA==}
     hasBin: true
 
   es-define-property@1.0.0:
@@ -853,8 +844,9 @@ packages:
     engines: {node: '>=12'}
     deprecated: Glob versions prior to v9 are no longer supported
 
-  gopd@1.0.1:
-    resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}
+  gopd@1.1.0:
+    resolution: {integrity: sha512-FQoVQnqcdk4hVM4JN1eromaun4iuS34oStkdlLENLdpULsuQcTyXj8w7ayhuUfPwEYZ1ZOooOTT6fdA9Vmx/RA==}
+    engines: {node: '>= 0.4'}
 
   has-flag@4.0.0:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
@@ -863,12 +855,12 @@ packages:
   has-property-descriptors@1.0.2:
     resolution: {integrity: sha512-55JNKuIW+vq4Ke1BjOTjM2YctQIvCT7GFzHwmfZPGo5wnrgkid0YQtnAleFSqumZm4az3n2BS+erby5ipJdgrg==}
 
-  has-proto@1.0.3:
-    resolution: {integrity: sha512-SJ1amZAJUiZS+PhsVLf5tGydlaVB8EdFpaSO4gmiUKUOxk8qzn5AIy4ZeJUmh22znIdk/uMAUT2pl3FxzVUH+Q==}
+  has-proto@1.1.0:
+    resolution: {integrity: sha512-QLdzI9IIO1Jg7f9GT1gXpPpXArAn6cS31R1eEZqz08Gc+uQ8/XiqHWt17Fiw+2p6oTTIq5GXEpQkAlA88YRl/Q==}
     engines: {node: '>= 0.4'}
 
-  has-symbols@1.0.3:
-    resolution: {integrity: sha512-l3LCuF6MgDNwTDKkdYGEihYjt5pRPbEg46rtlmnSPlUbgmB8LOIrKJbYYFBSbnPaJexMKtiPO8hmeRjRz2Td+A==}
+  has-symbols@1.1.0:
+    resolution: {integrity: sha512-1cDNdwJ2Jaohmb3sg4OmKaMBwuC48sYni5HUw2DvsC8LjGTLK9h+eb1X6RyuOHe4hT0ULCW68iomhjUoKUqlPQ==}
     engines: {node: '>= 0.4'}
 
   hasown@2.0.2:
@@ -1114,8 +1106,8 @@ packages:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
     engines: {node: '>=0.10.0'}
 
-  npm@10.9.1:
-    resolution: {integrity: sha512-yJUw03xLqjiv1D52oHeoS5qmOEC5hkJlhP1cWlSrCgshuxWVyFEEK3M3hLC0NwbTaklLTYrhoIanYsuNP5WUKg==}
+  npm@10.9.2:
+    resolution: {integrity: sha512-iriPEPIkoMYUy3F6f3wwSZAU93E0Eg6cHwIR6jzzOXWSy+SD/rOODEs74cVONHKSx2obXtuUoyidVEhISrisgQ==}
     engines: {node: ^18.17.0 || >=20.5.0}
     hasBin: true
     bundledDependencies:
@@ -1353,13 +1345,8 @@ packages:
       rescript: 11.x
       rescript-schema: 6.x || 7.x || 8.x
 
-  rescript-express@0.4.1:
-    resolution: {integrity: sha512-R+xAQKANfIFAIcxhQrkLn58IZQwhMZuQpVCH6UtTRNLWqlVtaogG9z4Rt0MQZgqYOjvrOtt51P0hOmYGg/90Fw==}
-    peerDependencies:
-      express: ^4.17.1
-
-  rescript-schema@8.2.0:
-    resolution: {integrity: sha512-pfRNB9kvafUYe+RgvsExiazJioi/iV8gmjK3xOw/jeSgPIIDoVhflnmpoz+vuiwlulYkNT/7u2+2EsCrph7QKA==}
+  rescript-schema@8.1.0:
+    resolution: {integrity: sha512-syU4Wvy2tJzBKkqa8ad1yYSDIh8EoKGUsZv6Wa0YpERqb7H6Kemtc6zU+BxIghahzShb6L7RMfVNuKC48KluIg==}
     peerDependencies:
       rescript: 11.x
 
@@ -1412,8 +1399,9 @@ packages:
   setprototypeof@1.2.0:
     resolution: {integrity: sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==}
 
-  shell-quote@1.8.1:
-    resolution: {integrity: sha512-6j1W9l1iAs/4xYBI1SYOVZyFcCis9b4KCLQ8fgAGG07QvzaRLVVRQvAy85yNmmZSjYjg4MWh4gNvlPujU/5LpA==}
+  shell-quote@1.8.2:
+    resolution: {integrity: sha512-AzqKpGKjrj7EM6rKVQEPpB288oCfnrEIuyoT9cyF4nmGa7V8Zk6f7RRqYisX8X9m+Q7bd632aZW4ky7EhbQztA==}
+    engines: {node: '>= 0.4'}
 
   side-channel@1.0.6:
     resolution: {integrity: sha512-fDW/EZ6Q9RiO8eFG8Hj+7u/oW+XrPTIChwCOM2+th2A6OblDtYYIpve9m+KvI9Z4C9qSEXlaGR6bTEYHReuglA==}
@@ -1788,7 +1776,7 @@ snapshots:
 
   '@envio-dev/hypersync-client@0.6.2':
     dependencies:
-      npm: 10.9.1
+      npm: 10.9.2
       yarn: 1.22.22
     optionalDependencies:
       '@envio-dev/hypersync-client-darwin-arm64': 0.6.2
@@ -1878,8 +1866,6 @@ snapshots:
     dependencies:
       react: 18.2.0
       react-dom: 18.3.1(react@18.2.0)
-
-  '@ryyppy/rescript-promise@2.1.0': {}
 
   '@scure/base@1.1.9': {}
 
@@ -2148,7 +2134,7 @@ snapshots:
     dependencies:
       es-define-property: 1.0.0
       es-errors: 1.3.0
-      gopd: 1.0.1
+      gopd: 1.1.0
 
   define-property@1.0.0:
     dependencies:
@@ -2176,29 +2162,29 @@ snapshots:
     dependencies:
       once: 1.4.0
 
-  envio-darwin-arm64@2.8.2:
+  envio-darwin-arm64@2.11.2:
     optional: true
 
-  envio-darwin-x64@2.8.2:
+  envio-darwin-x64@2.11.2:
     optional: true
 
-  envio-linux-arm64@2.8.2:
+  envio-linux-arm64@2.11.2:
     optional: true
 
-  envio-linux-x64@2.8.2:
+  envio-linux-x64@2.11.2:
     optional: true
 
-  envio@2.8.2(typescript@5.2.2):
+  envio@2.11.2(typescript@5.2.2):
     dependencies:
       '@envio-dev/hypersync-client': 0.6.2
       rescript: 11.1.3
-      rescript-schema: 8.2.0(rescript@11.1.3)
+      rescript-schema: 8.1.0(rescript@11.1.3)
       viem: 2.21.0(typescript@5.2.2)
     optionalDependencies:
-      envio-darwin-arm64: 2.8.2
-      envio-darwin-x64: 2.8.2
-      envio-linux-arm64: 2.8.2
-      envio-linux-x64: 2.8.2
+      envio-darwin-arm64: 2.11.2
+      envio-darwin-x64: 2.11.2
+      envio-linux-arm64: 2.11.2
+      envio-linux-x64: 2.11.2
     transitivePeerDependencies:
       - bufferutil
       - typescript
@@ -2333,8 +2319,8 @@ snapshots:
     dependencies:
       es-errors: 1.3.0
       function-bind: 1.1.2
-      has-proto: 1.0.3
-      has-symbols: 1.0.3
+      has-proto: 1.1.0
+      has-symbols: 1.1.0
       hasown: 2.0.2
 
   glob-parent@5.1.2:
@@ -2358,7 +2344,7 @@ snapshots:
       minimatch: 5.0.1
       once: 1.4.0
 
-  gopd@1.0.1:
+  gopd@1.1.0:
     dependencies:
       get-intrinsic: 1.2.4
 
@@ -2368,9 +2354,11 @@ snapshots:
     dependencies:
       es-define-property: 1.0.0
 
-  has-proto@1.0.3: {}
+  has-proto@1.1.0:
+    dependencies:
+      call-bind: 1.0.7
 
-  has-symbols@1.0.3: {}
+  has-symbols@1.1.0: {}
 
   hasown@2.0.2:
     dependencies:
@@ -2606,7 +2594,7 @@ snapshots:
 
   normalize-path@3.0.0: {}
 
-  npm@10.9.1: {}
+  npm@10.9.2: {}
 
   object-assign@4.1.1: {}
 
@@ -2739,7 +2727,7 @@ snapshots:
 
   react-devtools-core@4.28.5:
     dependencies:
-      shell-quote: 1.8.1
+      shell-quote: 1.8.2
       ws: 7.5.10
     transitivePeerDependencies:
       - bufferutil
@@ -2786,16 +2774,12 @@ snapshots:
 
   require-directory@2.1.1: {}
 
-  rescript-envsafe@4.2.0(rescript-schema@8.2.0(rescript@11.1.3))(rescript@11.1.3):
+  rescript-envsafe@4.2.0(rescript-schema@8.1.0(rescript@11.1.3))(rescript@11.1.3):
     dependencies:
       rescript: 11.1.3
-      rescript-schema: 8.2.0(rescript@11.1.3)
+      rescript-schema: 8.1.0(rescript@11.1.3)
 
-  rescript-express@0.4.1(express@4.19.2):
-    dependencies:
-      express: 4.19.2
-
-  rescript-schema@8.2.0(rescript@11.1.3):
+  rescript-schema@8.1.0(rescript@11.1.3):
     dependencies:
       rescript: 11.1.3
 
@@ -2862,12 +2846,12 @@ snapshots:
       es-errors: 1.3.0
       function-bind: 1.1.2
       get-intrinsic: 1.2.4
-      gopd: 1.0.1
+      gopd: 1.1.0
       has-property-descriptors: 1.0.2
 
   setprototypeof@1.2.0: {}
 
-  shell-quote@1.8.1: {}
+  shell-quote@1.8.2: {}
 
   side-channel@1.0.6:
     dependencies:
