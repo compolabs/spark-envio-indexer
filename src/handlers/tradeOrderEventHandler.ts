@@ -84,8 +84,8 @@ Market.TradeOrderEvent.handlerWithLoader({
 				...sellerValue,
 				value: sellerValue.value + eventVolume.toNumber(),
 				feesPaid: sellerValue.feesPaid + eventVolume.multipliedBy(BigDecimal(event.params.seller_is_maker
-								? feeSetup?.makerFee?.toString() || "0"
-								: feeSetup?.takerFee?.toString() || "0")).toNumber(),
+					? feeSetup?.makerFee?.toString() || "0"
+					: feeSetup?.takerFee?.toString() || "0")).dividedBy(100).toNumber(),
 			};
 			context.TraderValue.set(value);
 		} else {
@@ -96,7 +96,7 @@ Market.TradeOrderEvent.handlerWithLoader({
 				market: event.srcAddress,
 				feesPaid: eventVolume.multipliedBy(BigDecimal(event.params.seller_is_maker
 					? feeSetup?.makerFee?.toString() || "0"
-					: feeSetup?.takerFee?.toString() || "0")).toNumber(),
+					: feeSetup?.takerFee?.toString() || "0")).dividedBy(100).toNumber(),
 			};
 			context.TraderValue.set(value);
 		}
@@ -107,7 +107,7 @@ Market.TradeOrderEvent.handlerWithLoader({
 				value: buyerValue.value + eventVolume.toNumber(),
 				feesPaid: buyerValue.feesPaid + eventVolume.multipliedBy(BigDecimal(event.params.seller_is_maker
 					? feeSetup?.makerFee?.toString() || "0"
-					: feeSetup?.takerFee?.toString() || "0")).toNumber(),
+					: feeSetup?.takerFee?.toString() || "0")).dividedBy(100).toNumber(),
 			};
 			context.TraderValue.set(value);
 		} else {
@@ -118,7 +118,7 @@ Market.TradeOrderEvent.handlerWithLoader({
 				market: event.srcAddress,
 				feesPaid: eventVolume.multipliedBy(BigDecimal(event.params.seller_is_maker
 					? feeSetup?.makerFee?.toString() || "0"
-					: feeSetup?.takerFee?.toString() || "0")).toNumber(),
+					: feeSetup?.takerFee?.toString() || "0")).dividedBy(100).toNumber(),
 			};
 			context.TraderValue.set(value);
 		}
