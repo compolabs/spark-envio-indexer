@@ -20,3 +20,9 @@ networks:
           - name: OpenOrderEvent
           - name: CancelOrderEvent
           - name: TradeOrderEvent
+          - name: SetEpochEvent
+          - name: SetProtocolFeeEvent
+          - name: SetMatcherRewardEvent
+          - name: SetStoreOrderChangeInfoEvent
+          - name: SetMinOrderSizeEvent
+          - name: SetMinOrderPriceEvent

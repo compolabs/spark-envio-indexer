@@ -1,10 +1,13 @@
 import {
 	Market, type TradeOrderEvent, type Order, type ActiveBuyOrder, type ActiveSellOrder,
-	type User
+	type User,
+	TraderValue,
+	BigDecimal
 } from "generated";
 import { getISOTime } from "../utils";
 import { getHash } from "../utils";
 import { nanoid } from "nanoid";
+import { marketsConfig } from "../marketsConfig";
 
 
 // Define a handler for the TradeOrderEvent within a specific market
@@ -13,6 +16,10 @@ Market.TradeOrderEvent.handlerWithLoader({
 	loader: async ({ event, context }) => {
 		const seller = await context.User.get(event.params.order_seller.payload.bits);
 		const buyer = await context.User.get(event.params.order_buyer.payload.bits);
+		
+		const sellerValue = await context.TraderValue.get(getHash(`${event.params.order_seller.payload.bits}-${event.srcAddress}`));
+		const buyerValue = await context.TraderValue.get(getHash(`${event.params.order_buyer.payload.bits}-${event.srcAddress}`));
+		const feeSetup = await context.ProtocolFee.get(event.srcAddress);
 
 		// This line checks if the seller and buyer are the same user
 		// If they are, it assigns the seller object to 'user', otherwise 'user' is undefined
@@ -21,6 +28,9 @@ Market.TradeOrderEvent.handlerWithLoader({
 			user,
 			seller,
 			buyer,
+			sellerValue,
+			buyerValue,
+			feeSetup,
 			// Fetch both the buy and sell orders using their respective order IDs
 			sellOrder: await context.Order.get(event.params.base_sell_order_id),
 			buyOrder: await context.Order.get(event.params.base_buy_order_id),
@@ -44,6 +54,8 @@ Market.TradeOrderEvent.handlerWithLoader({
 			seller: event.params.order_seller.payload.bits,
 			sellerIsMaker: event.params.seller_is_maker,
 			buyer: event.params.order_buyer.payload.bits,
+			maker: event.params.seller_is_maker ? event.params.order_seller.payload.bits : event.params.order_buyer.payload.bits,
+			taker: event.params.seller_is_maker ? event.params.order_buyer.payload.bits : event.params.order_seller.payload.bits,
 			sellerBaseAmount: event.params.s_balance.liquid.base,
 			sellerQuoteAmount: event.params.s_balance.liquid.quote,
 			buyerBaseAmount: event.params.b_balance.liquid.base,
@@ -52,6 +64,64 @@ Market.TradeOrderEvent.handlerWithLoader({
 			txId: event.transaction.id
 		};
 		context.TradeOrderEvent.set(tradeOrderEvent);
+
+		const sellerValue = loaderReturn.sellerValue;
+		const buyerValue = loaderReturn.buyerValue;
+		const feeSetup = loaderReturn.feeSetup;
+
+		const marketConfig = Object.values(marketsConfig).find(
+			(config) => config.market === event.srcAddress
+		);
+
+		if (!marketConfig) {
+			throw new Error(`Market configuration not found for address: ${event.srcAddress}`);
+		}
+
+		const eventVolume = BigDecimal(tradeOrderEvent.tradePrice.toString()).div(BigDecimal(10).pow(marketConfig.priceDecimal)).multipliedBy(BigDecimal(tradeOrderEvent.tradeSize.toString()).div(BigDecimal(10).pow(marketConfig.baseDecimal)));
+
+		if (sellerValue) {
+			const value: TraderValue = {
+				...sellerValue,
+				value: sellerValue.value + eventVolume.toNumber(),
+				feesPaid: sellerValue.feesPaid + eventVolume.multipliedBy(BigDecimal(event.params.seller_is_maker
+								? feeSetup?.makerFee?.toString() || "0"
+								: feeSetup?.takerFee?.toString() || "0")).toNumber(),
+			};
+			context.TraderValue.set(value);
+		} else {
+			const value: TraderValue = {
+				id: getHash(`${event.params.order_seller.payload.bits}-${event.srcAddress}`),
+				value: eventVolume.toNumber(),
+				trader: event.params.order_seller.payload.bits,
+				market: event.srcAddress,
+				feesPaid: eventVolume.multipliedBy(BigDecimal(event.params.seller_is_maker
+					? feeSetup?.makerFee?.toString() || "0"
+					: feeSetup?.takerFee?.toString() || "0")).toNumber(),
+			};
+			context.TraderValue.set(value);
+		}
+
+		if (buyerValue) {
+			const value: TraderValue = {
+				...buyerValue,
+				value: buyerValue.value + eventVolume.toNumber(),
+				feesPaid: buyerValue.feesPaid + eventVolume.multipliedBy(BigDecimal(event.params.seller_is_maker
+					? feeSetup?.makerFee?.toString() || "0"
+					: feeSetup?.takerFee?.toString() || "0")).toNumber(),
+			};
+			context.TraderValue.set(value);
+		} else {
+			const value: TraderValue = {
+				id: getHash(`${event.params.order_buyer.payload.bits}-${event.srcAddress}`),
+				value: eventVolume.toNumber(),
+				trader: event.params.order_buyer.payload.bits,
+				market: event.srcAddress,
+				feesPaid: eventVolume.multipliedBy(BigDecimal(event.params.seller_is_maker
+					? feeSetup?.makerFee?.toString() || "0"
+					: feeSetup?.takerFee?.toString() || "0")).toNumber(),
+			};
+			context.TraderValue.set(value);
+		}
 
 		// Retrieve the buy and sell orders from the loader's return value
 		const buyOrder = loaderReturn.buyOrder;

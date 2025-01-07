@@ -15,6 +15,7 @@ type User {
   closed: Int!
   canceled: Int!
   timestamp: String!
+  # feesPaid: BigInt!
 }
 
 type OpenOrderEvent {
@@ -91,6 +92,8 @@ type TradeOrderEvent {
   tradePrice: BigInt! @index
   seller: String! @index
   buyer: String! @index
+  maker: String! @index
+  taker: String! @index
   sellerIsMaker: Boolean! @index
   sellerBaseAmount: BigInt!
   sellerQuoteAmount: BigInt!
@@ -98,6 +101,14 @@ type TradeOrderEvent {
   buyerQuoteAmount: BigInt!
   timestamp: String!
   txId: String! @index
+}
+
+type TraderValue {
+  id: ID!
+  trader: String! @index
+  market: String! @index
+  value: Float!
+  feesPaid: Float!
 }
 
 type DepositEvent {
@@ -134,4 +145,63 @@ type WithdrawToMarketEvent {
   quoteAmount: BigInt! 
   timestamp: String!
   txId: String! @index
+}
+
+type SetEpochEvent {
+  id: ID!
+  market: String! @index
+  epoch: BigInt!
+  epochDuration: BigInt!
+  timestamp: String!
+  txId: String! @index
+}
+
+type SetMatcherRewardEvent {
+  id: ID!
+  market: String! @index
+  amount: BigInt!
+  timestamp: String!
+  txId: String! @index
+}
+
+type SetStoreOrderChangeInfoEvent {
+  id: ID!
+  market: String! @index
+  store: Boolean!
+  timestamp: String!
+  txId: String! @index
+}
+
+type SetMinOrderSizeEvent {
+  id: ID!
+  market: String! @index
+  size: BigInt!
+  timestamp: String!
+  txId: String! @index
+}
+
+type SetMinOrderPriceEvent {
+  id: ID!
+  market: String! @index
+  price: BigInt!
+  timestamp: String!
+  txId: String! @index
+}
+
+type ProtocolFee @entity {
+    id: ID!    
+    # market: String! @index 
+    makerFee: BigInt!
+    takerFee: BigInt!
+    volumeThreshold: BigInt! 
+    eventId: String!
+    timestamp: String!  
+
+}
+
+type SetProtocolFeeEvent @entity {
+    id: ID!               
+    market: String! @index
+    timestamp: String!  
+    txId: String! @index
 }
